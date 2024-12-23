@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
-  font-family: 'Nunito', sans-serif !important;
+* {
+  font-family: "Nunito", sans-serif !important;
 }
 
 :root {
   overflow-x: hidden;
-  font-family: 'Nunito', sans-serif !important;
+  font-family: "Nunito", sans-serif !important;
   line-height: 1.5;
   font-weight: 400;
 
@@ -23,15 +23,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -39,7 +30,7 @@ body {
   width: 100vw;
   overflow-x: hidden;
   box-sizing: border-box;
-  font-family: 'Nunito', sans-serif !important;
+  font-family: "Nunito", sans-serif !important;
 }
 
 h1 {
@@ -47,54 +38,22 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 /* Scrollbar styles */
 ::-webkit-scrollbar {
-  width: 5px;  /* Width of the entire scrollbar */
+  width: 5px; /* Width of the entire scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;  /* Track background */
+  background: transparent; /* Track background */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;  /* Scrollbar handle */
-  border-radius: 4px;   /* Rounded corners */
+  background: #c1c1c1; /* Scrollbar handle */
+  border-radius: 4px; /* Rounded corners */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;   /* Handle on hover */
+  background: #a8a8a8; /* Handle on hover */
 }
 
 @media (prefers-color-scheme: light) {
@@ -108,11 +67,11 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: #c1c1c1;
   }
-  
+
   ::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
   }
