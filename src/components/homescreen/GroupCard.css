@@ -1,0 +1,87 @@
+
+  .group-cards-page {
+    text-align: center;
+    padding: 20px;
+    padding-top: 8rem;
+  }
+  
+  .heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .heading .highlight {
+    color: #e50914;
+  }
+  
+  .group-cards-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+    padding: 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .card {
+    background-color: #1a1a1a;
+    border: 1px solid #2d2d2d;
+    border-radius: 16px;
+    padding: 30px;
+    height: 350px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(196, 31, 31, 0.751);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 30px rgba(245, 9, 9, 1);
+  }
+  
+  .card-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px auto;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    line-height: 1.4;
+  }
+  
+  .card-button {
+    display: inline-block;
+    background-color: #e50914;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .card-button:hover {
+    background-color: #b00710;
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 1024px) {
+    .group-cards-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .group-cards-container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }

@@ -1,29 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db, storage } from "../../config/firebase";
 import { doc, getDoc, addDoc, updateDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import "./quill-editor.css";
+import { Editor } from '@tinymce/tinymce-react';
 
 const STORAGE_KEY = "badtalks_blog_draft";
-
-const formats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike',
-  'list', 'bullet',
-  'blockquote', 'code-block',
-  'align',
-  'link',
-];
 
 const BlogEditor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const quillRef = useRef(null);
   
   const [formData, setFormData] = useState(() => {
     const savedDraft = localStorage.getItem(STORAGE_KEY);
@@ -42,9 +30,10 @@ const BlogEditor = () => {
     };
   });
 
-  const handleImageUpload = async (file) => {
+  const handleImageUpload = async (blobInfo) => {
     try {
-      const imageRef = ref(storage, `blog/${Date.now()}-${file.name}`);
+      const file = blobInfo.blob();
+      const imageRef = ref(storage, `blog/${Date.now()}-${blobInfo.filename()}`);
       await uploadBytes(imageRef, file);
       const url = await getDownloadURL(imageRef);
       return url;
@@ -52,50 +41,6 @@ const BlogEditor = () => {
       console.error("Error uploading image:", error);
       throw new Error("Failed to upload image");
     }
-  };
-
-  const handleQuillImageUpload = () => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    
-    input.onchange = async () => {
-      const file = input.files[0];
-      if (file) {
-        try {
-          const url = await handleImageUpload(file);
-          const editor = quillRef.current.getEditor();
-          const range = editor.getSelection(true);
-          editor.insertEmbed(range.index, 'image', url);
-          editor.setSelection(range.index + 1);
-        } catch (error) {
-          console.error("Error uploading image:", error);
-          setError("Failed to upload image");
-        }
-      }
-    };
-    
-    input.click();
-  };
-
-  const modules = {
-    toolbar: {
-      container: [
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["blockquote", "code-block"],
-        [{ align: [] }],
-        ["link", "image"],
-        ["clean"],
-      ],
-      handlers: {
-        image: handleQuillImageUpload,
-      },
-    },
-    clipboard: {
-      matchVisual: false,
-    },
   };
 
   useEffect(() => {
@@ -162,7 +107,9 @@ const BlogEditor = () => {
     try {
       let coverImageUrl = formData.coverImageUrl;
       if (formData.coverImage) {
-        coverImageUrl = await handleImageUpload(formData.coverImage);
+        const imageRef = ref(storage, `blog/${Date.now()}-${formData.coverImage.name}`);
+        await uploadBytes(imageRef, formData.coverImage);
+        coverImageUrl = await getDownloadURL(imageRef);
       }
 
       const postData = {
@@ -232,9 +179,7 @@ const BlogEditor = () => {
             <input
               type="text"
               value={formData.title}
-              onChange={(e) =>
-                setFormData({ ...formData, title: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               className="w-full px-3 py-2 border rounded-lg"
               required
             />
@@ -246,9 +191,7 @@ const BlogEditor = () => {
             </label>
             <textarea
               value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="w-full px-3 py-2 border rounded-lg h-24"
               required
             />
@@ -260,9 +203,7 @@ const BlogEditor = () => {
             </label>
             <input
               type="file"
-              onChange={(e) =>
-                setFormData({ ...formData, coverImage: e.target.files[0] })
-              }
+              onChange={(e) => setFormData({ ...formData, coverImage: e.target.files[0] })}
               accept="image/*"
               className="w-full"
             />
@@ -279,27 +220,37 @@ const BlogEditor = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Content
             </label>
-            <div className="rich-editor-container">
-              <ReactQuill
-                ref={quillRef}
-                theme="snow"
-                value={formData.content}
-                onChange={(content) => setFormData({ ...formData, content })}
-                modules={modules}
-                formats={formats}
-                className="bg-white rounded-lg"
-                preserveWhitespace={true}
-              />
-            </div>
+            <Editor
+              apiKey="he46ikcftmnlxtfq097fzcff4xvhkol52j1ugjqdb4lklo5x" // You'll need to sign up for a free API key at https://www.tiny.cloud/
+              value={formData.content}
+              onEditorChange={(content) => setFormData({ ...formData, content })}
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
+                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                  'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount', 'paste'
+                ],
+                toolbar: 'undo redo | blocks | ' +
+                  'bold italic forecolor | alignleft aligncenter ' +
+                  'alignright alignjustify | bullist numlist outdent indent | ' +
+                  'removeformat | help',
+                skin: 'oxide-dark',
+                content_css: 'dark',
+                paste_retain_style_properties: 'all',
+                paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,p,br',
+                paste_data_images: true,
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; background-color: #1a1a1a; color: #ffffff; } .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: #666; }',
+              }}
+            />
           </div>
 
           <div className="flex items-center">
             <input
               type="checkbox"
               checked={formData.published}
-              onChange={(e) =>
-                setFormData({ ...formData, published: e.target.checked })
-              }
+              onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
               className="h-4 w-4 text-blue-600 rounded border-gray-300"
             />
             <label className="ml-2 text-sm text-gray-700">
@@ -308,6 +259,13 @@ const BlogEditor = () => {
           </div>
 
           <div className="flex gap-4 justify-end">
+            <button
+              type="button"
+              onClick={handleDiscard}
+              className="px-4 py-2 text-gray-600 hover:text-gray-800"
+            >
+              Discard
+            </button>
             <button
               type="button"
               onClick={() => navigate("/admin/blog")}

@@ -44,7 +44,7 @@ import BlogList from "./components/blog/BlogList";
 import BlogPost from "./components/blog/BlogPost";
 import BlogAdmin from "./components/blog/BlogAdmin";
 import BlogEditor from "./components/blog/BlogEditor";
-
+import TeamPage from "./components/team/TeamPage";
 import "./App.css";
 
 export default function App() {
@@ -67,6 +67,7 @@ export default function App() {
             <Route path="/admin/admin-signup" element={<Signup />} />
             <Route path="/community" element={<Community />} />
             <Route path="/founders" element={<FounderSection />} />
+            <Route path="/teams" element={<TeamPage />} />
 
             {/* Public News Routes */}
             <Route path="/news" element={<PublicNewsList />} />
@@ -151,7 +152,7 @@ export default function App() {
               path="/admin/events"
               element={
                 <PrivateRoute>
-                  <AdminEventList />
+                  <AdminEventForm />
                 </PrivateRoute>
               }
             />

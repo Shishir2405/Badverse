@@ -1,101 +1,117 @@
-// src/components/blog/BlogList.jsx
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { db } from '../../config/firebase';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+// src/components/blog/BlogAdmin.jsx
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { db } from "../../config/firebase";
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
-const BlogList = () => {
+const BlogAdmin = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const postsQuery = query(
-          collection(db, 'blog_posts'),
-          where('published', '==', true),
-          orderBy('createdAt', 'desc')
-        );
-        const snapshot = await getDocs(postsQuery);
-        const postsData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setPosts(postsData);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPosts();
   }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const postsQuery = query(
+        collection(db, "blog_posts"),
+        orderBy("createdAt", "desc")
+      );
+      const snapshot = await getDocs(postsQuery);
+      const postsData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setPosts(postsData);
+    } catch (error) {
+      setError("Error fetching posts");
+      console.error("Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await deleteDoc(doc(db, "blog_posts", id));
+        fetchPosts();
+      } catch (error) {
+        setError("Error deleting post");
+        console.error("Error:", error);
+      }
+    }
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="text-white min-h-screen py-12 pt-24">
-      <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-12">Blog Posts</h1>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {posts.map((post) => (
-            <Link 
-              to={`/blog/${post.id}`}
-              key={post.id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:-translate-y-1 transition-transform duration-300"
-            >
-              {post.coverImageUrl && (
-                <div className="aspect-video w-full overflow-hidden">
-                  <img
-                    src={post.coverImageUrl}
-                    alt={post.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              )}
-              
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">
-                  {post.title}
-                </h2>
-                
-                <p className="text-gray-600 line-clamp-2 mb-4">
-                  {post.description}
-                </p>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">
-                    {new Date(post.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </span>
-                  <span className="text-blue-500 hover:text-blue-600">
-                    Read More →
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
+    <div className="container mx-auto px-4 py-8 pt-24">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold">All Blog Posts</h1>
+      </div>
+
+      {error && (
+        <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
+          {error}
         </div>
-        
-        {posts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-600">No blog posts available.</p>
+      )}
+
+      <div className="grid gap-6">
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden"
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
+                  <p className="text-gray-600 mb-4 line-clamp-2">
+                    {post.description}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Published: {new Date(post.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                {post.coverImage && (
+                  <img
+                    src={post.coverImage}
+                    alt={post.title}
+                    className="w-32 h-32 object-cover rounded-lg ml-4"
+                  />
+                )}
+              </div>
+
+              <div className="flex gap-4 mt-4">
+                <Link
+                  to={`/blog/${post.id}`}
+                  className="text-gray-500 hover:text-gray-600 ml-auto"
+                >
+                  View Post
+                </Link>
+              </div>
+            </div>
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
 };
 
-export default BlogList;
+export default BlogAdmin;

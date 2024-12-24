@@ -35,7 +35,7 @@ const BlogPost = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
       </div>
     );
   }
@@ -45,7 +45,7 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="min-h-screen pt-24">
       {/* Hero Section with Cover Image */}
       {post.coverImageUrl && (
         <div className="w-full h-[60vh] relative">
@@ -77,10 +77,10 @@ const BlogPost = () => {
         <div className="max-w-3xl mx-auto">
           {!post.coverImageUrl && (
             <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-4xl font-bold text-white mb-4">
                 {post.title}
               </h1>
-              <p className="text-gray-600">
+              <p className="text-white">
                 {new Date(post.createdAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -92,14 +92,14 @@ const BlogPost = () => {
 
           {/* Description */}
           <div className="prose prose-lg mx-auto mb-12">
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-xl text-white leading-relaxed">
               {post.description}
             </p>
           </div>
 
           {/* Main Content */}
           <div 
-            className="prose prose-lg max-w-none"
+            className="prose prose-lg max-w-none text-white"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
@@ -110,7 +110,7 @@ const BlogPost = () => {
                 {post.tags.map((tag, index) => (
                   <span
                     key={index}
-                    className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                    className="bg-gray-100 text-white px-3 py-1 rounded-full text-sm"
                   >
                     {tag}
                   </span>
@@ -123,7 +123,7 @@ const BlogPost = () => {
           <div className="mt-12 pt-6 border-t">
             <button
               onClick={() => navigate('/blog')}
-              className="text-blue-500 hover:text-blue-600 flex items-center gap-2"
+              className="text-red-500 hover:text-red-600 flex items-center gap-2"
             >
               ← Back to Blog
             </button>

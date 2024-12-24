@@ -1,7 +1,7 @@
-// src/components/workshops/AdminWorkshopList.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../config/firebase";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   collection,
   getDocs,
@@ -10,6 +10,98 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
+
+const WorkshopCard = ({ workshop }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15.5deg", "-17.5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width - 0.35);
+    y.set(mouseY / height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      initial={{ scale: 1 }}
+      whileHover={{ scale: 1.02 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="bg-black/40 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-red-500/20 transition-all duration-300 border border-gray-800 hover:border-red-500/30">
+        <div className="p-6">
+          <div className="flex justify-between items-start">
+            <div>
+              <h2 className="text-xl font-semibold mb-2 text-white">
+                {workshop.title}
+              </h2>
+              <p className="text-sm text-white/80">
+                Instructor: {workshop.instructor}
+              </p>
+            </div>
+            <div
+              className={`px-3 py-1 rounded-full text-sm ${
+                workshop.isFree
+                  ? "bg-green-500/20 text-green-400"
+                  : "bg-blue-500/20 text-blue-400"
+              }`}
+            >
+              {workshop.isFree ? "Free" : `₹${workshop.price}`}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
+            <div>
+              <p className="text-sm text-white/60">Date</p>
+              <p className="text-white">{new Date(workshop.date).toLocaleDateString()}</p>
+            </div>
+            <div>
+              <p className="text-sm text-white/60">Time</p>
+              <p className="text-white">{new Date(workshop.date).toLocaleTimeString()}</p>
+            </div>
+            <div>
+              <p className="text-sm text-white/60">Duration</p>
+              <p className="text-white">{workshop.duration}</p>
+            </div>
+            <div>
+              <p className="text-sm text-white/60">Available Spots</p>
+              <p className="text-white">
+                {workshop.availableSpots} / {workshop.totalSpots}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-4 mt-4">
+            <Link
+              to={`/workshops/${workshop.id}`}
+              className="text-red-400 hover:text-red-300 transition-colors ml-auto"
+            >
+              View Public Page
+            </Link>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const WorkshopList = () => {
   const [workshops, setWorkshops] = useState([]);
@@ -40,18 +132,6 @@ const WorkshopList = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this workshop?")) {
-      try {
-        await deleteDoc(doc(db, "workshops", id));
-        fetchWorkshops(); // Refresh the list
-      } catch (error) {
-        setError("Error deleting workshop");
-        console.error("Error:", error);
-      }
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -63,93 +143,26 @@ const WorkshopList = () => {
   return (
     <div className="container mx-auto py-8 px-4 pt-24">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">Upcoming Workshops</h1>
+        <h1 className="text-2xl font-bold text-white">Upcoming Workshops</h1>
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-md mb-6">
+        <div className="bg-red-500/20 text-red-400 p-4 rounded-md mb-6 backdrop-blur-sm border border-red-500/30">
           {error}
         </div>
       )}
 
       <div className="grid gap-6">
         {workshops.map((workshop) => (
-          <div
-            key={workshop.id}
-            className="rounded-lg shadow-md overflow-hidden text-white border border-white"
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">
-                    {workshop.title}
-                  </h2>
-                  <p className="text-sm">
-                    Instructor: {workshop.instructor}
-                  </p>
-                </div>
-                <div
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    workshop.isFree
-                      ? "bg-green-100 text-green-800"
-                      : "bg-blue-100 text-blue-800"
-                  }`}
-                >
-                  {workshop.isFree ? "Free" : `₹${workshop.price}`}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 my-4">
-                <div>
-                  <p className="text-sm ">Date</p>
-                  <p>{new Date(workshop.date).toLocaleDateString()}</p>
-                </div>
-                <div>
-                  <p className="text-sm ">Time</p>
-                  <p>{new Date(workshop.date).toLocaleTimeString()}</p>
-                </div>
-                <div>
-                  <p className="text-sm ">Duration</p>
-                  <p>{workshop.duration}</p>
-                </div>
-                <div>
-                  <p className="text-sm ">Available Spots</p>
-                  <p>
-                    {workshop.availableSpots} / {workshop.totalSpots}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-4">
-                <Link
-                  to={`/admin/workshops/${workshop.id}/edit`}
-                  className="text-blue-500 hover:text-blue-600"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(workshop.id)}
-                  className="text-red-500 hover:text-red-600"
-                >
-                  Delete
-                </button>
-                <Link
-                  to={`/workshops/${workshop.id}`}
-                  className="text-gray-200 hover: ml-auto"
-                >
-                  View Public Page
-                </Link>
-              </div>
-            </div>
-          </div>
+          <WorkshopCard key={workshop.id} workshop={workshop} />
         ))}
 
         {workshops.length === 0 && (
-          <div className="text-center py-12 bg-gray-50 rounded-lg">
-            <p className="">No workshops found.</p>
+          <div className="text-center py-12 bg-black/40 backdrop-blur-sm rounded-lg border border-gray-800">
+            <p className="text-white/80">No workshops found.</p>
             <Link
               to="/admin/workshops/new"
-              className="text-blue-500 hover:text-blue-600 mt-2 inline-block"
+              className="text-red-400 hover:text-red-300 mt-2 inline-block transition-colors"
             >
               Create your first workshop
             </Link>

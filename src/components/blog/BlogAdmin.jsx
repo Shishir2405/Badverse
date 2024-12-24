@@ -1,8 +1,15 @@
 // src/components/blog/BlogAdmin.jsx
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { db } from '../../config/firebase';
-import { collection, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { db } from "../../config/firebase";
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 const BlogAdmin = () => {
   const [posts, setPosts] = useState([]);
@@ -16,31 +23,31 @@ const BlogAdmin = () => {
   const fetchPosts = async () => {
     try {
       const postsQuery = query(
-        collection(db, 'blog_posts'),
-        orderBy('createdAt', 'desc')
+        collection(db, "blog_posts"),
+        orderBy("createdAt", "desc")
       );
       const snapshot = await getDocs(postsQuery);
-      const postsData = snapshot.docs.map(doc => ({
+      const postsData = snapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setPosts(postsData);
     } catch (error) {
-      setError('Error fetching posts');
-      console.error('Error:', error);
+      setError("Error fetching posts");
+      console.error("Error:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this post?')) {
+    if (window.confirm("Are you sure you want to delete this post?")) {
       try {
-        await deleteDoc(doc(db, 'blog_posts', id));
+        await deleteDoc(doc(db, "blog_posts", id));
         fetchPosts();
       } catch (error) {
-        setError('Error deleting post');
-        console.error('Error:', error);
+        setError("Error deleting post");
+        console.error("Error:", error);
       }
     }
   };

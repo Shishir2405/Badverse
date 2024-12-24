@@ -7,8 +7,12 @@ import More from "../homescreen/More";
 import MapScreen from "../core/Map";
 import ContactSection from "../homescreen/ContactSection";
 import PastEvents from "../homescreen/PastEvents";
+import Gallery from "../homescreen/Gallery";
 import TrendingMaterials from "../homescreen/Trending";
 import Hero from "../homescreen/Hero";
+import FeaturedProducts from "../homescreen/ProductList";
+import FashionCategories from "../homescreen/Categories";
+import Features from "../homescreen/Features";
 
 export default function HomescreenLayout() {
   return (
@@ -16,11 +20,14 @@ export default function HomescreenLayout() {
       <HeroPage />
       <VideoSection />
       <PastEvents />
-      <Timeline />
+      <Timeline /> 
+      <Gallery />
       <More />
+      <FeaturedProducts/>
+      <FashionCategories/>
+      <Features/>
       <ContactSection />
       <MapScreen />
-      <TrendingMaterials />
       <Footer />
     </main>
   );

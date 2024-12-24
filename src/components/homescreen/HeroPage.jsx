@@ -1,6 +1,6 @@
 import React from "react";
 import { frame } from "../../assets";
-import { Link2 } from "lucide-react";
+import { Link2, MoreVertical } from "lucide-react";
 import Counter from "../common/Counter";
 
 export default function HeroPage() {
@@ -126,25 +126,47 @@ export default function HeroPage() {
 
       {/* bottom section & absolutes */}
 
-      <section className="absolute flex h-44 z-[101] bg-[#121212] bottom-0 rounded-bl-xl pt-2 pr-2  w-[70vw]">
+      <section className="absolute flex h-44 z-[101] bg-[#121212] bottom-0 rounded-bl-xl pt-2 pr-1.5  w-[70vw]">
         <section className="flex relative flex-1 p-2 bg-[#121212] md:bg-[#212121] overflow-hidden rounded-xl z-[102]">
           {/* mobile */}
-          <div className="h-full md:h-32 p-4 mb-40 md:mb-0 w-full md:w-96 bg-white rounded-3xl  md:hidden relative md:right-4 lg:right-24 md:bottom-44">
-            <h3 className="text-black font-semibold text-xl">Welcome...</h3>
-
+          <div className="h-full md:h-32 py-3 pl-3 mb-40 md:mb-0 w-full space-y-2 md:w-96 bg-white rounded-xl  md:hidden relative md:right-4 lg:right-24 md:bottom-44">
+            <div className="p-0.5 w-full flex rounded-lg gap-2  items-center ">
+              <h3 className="text-red-500 font-semibold text-lg">
+                <Counter from={150} to={450} />+
+              </h3>
+              <p className="text-center text-black text-[13px] font-semibold min-[380px]:text-base">
+                Intership Opportunities
+              </p>
+            </div>
+            <div className=" p-0.5 w-[90%] flex rounded-lg gap-2  items-center z-[9999999999]">
+              <h3 className="text-red-500 font-semibold text-lg">
+                <Counter from={300} to={500} />+
+              </h3>
+              <p className="text-center text-black text-[13px] font-semibold min-[380px]:text-base">
+                Associated Companies
+              </p>
+            </div>
+            <div className=" p-0.5 w-[80%] flex rounded-lg gap-2  items-center z-[9999999999]">
+              <h3 className="text-red-500 font-semibold text-lg">
+                <Counter from={500} to={800} />+
+              </h3>
+              <p className="text-center text-black text-sm min-[380px]:text-base font-semibold">
+                start ups
+              </p>
+            </div>
             <div className="absolute h-16 w-16 bottom-0 rounded-tl-[30px] -right-4 flex items-center justify-center bg-[#121212]">
               <a href="/speakers">
-                <Link2
+                <MoreVertical
                   size={44}
                   color="black"
                   className="bg-white p-3 rounded-full mt-1"
                 />
               </a>
               <div className="h-4 w-4 bg-[#121212] bottom-0 absolute -left-4">
-                <div className="h-4 w-4 bg-[white] rounded-br-3xl absolute -left-0 bottom-0"></div>
+                <div className="h-4 w-4 bg-[white] rounded-br-xl absolute -left-0 bottom-0"></div>
               </div>
               <div className="h-4 w-4 bg-[#121212] -top-4 absolute right-4">
-                <div className="h-4 w-4 bg-white rounded-br-3xl absolute -left-0 bottom-0"></div>
+                <div className="h-4 w-4 bg-white rounded-br-xl absolute -left-0 bottom-0"></div>
               </div>
             </div>
           </div>
@@ -170,7 +192,7 @@ export default function HeroPage() {
                 Associated Companies
               </p>
             </div>
-            <div className="bg-neutral-800 w-full flex-1 rounded-lg flex flex-col justify-center items-center ">
+            <div className="bg-neutral-800 w-full flex-1 rounded-lg flex flex-col justify-center items-center text-xl">
               <p>
                 <span className="text-red-500">Ex</span>plore
               </p>

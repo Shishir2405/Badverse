@@ -7,7 +7,7 @@ const FounderSection = () => {
     {
       id: 1,
       name: "Sarthak Mittal",
-      title: "Co-Founder & CEO",
+      title: "CEO",
       image: "/sarthak2.jpeg",
       description:
         "Lorem ipsum dolor sit amet consectetur. Ut sed commodo tempor amet sit. Ut consectetur neque a nulla mattis at.",
@@ -15,7 +15,7 @@ const FounderSection = () => {
     {
       id: 2,
       name: "Banjamin Miller",
-      title: "Co-Founder & CTO",
+      title: "CEO",
       image: "/ban2.jpeg",
       description:
         "Lorem ipsum dolor sit amet consectetur. Ut sed commodo tempor amet sit. Ut consectetur neque a nulla mattis at.",
@@ -23,7 +23,7 @@ const FounderSection = () => {
     {
       id: 3,
       name: "Vinay Nangia",
-      title: "Co-Founder & CTO",
+      title: "Executive Advisor",
       image: "/u2.jpeg",
       description:
         "Lorem ipsum dolor sit amet consectetur. Ut sed commodo tempor amet sit. Ut consectetur neque a nulla mattis at.",
