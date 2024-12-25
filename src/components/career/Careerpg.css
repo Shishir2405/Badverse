@@ -1,0 +1,84 @@
+/* General container styling */
+.career-container {
+    background-color: #121212; /* Dark theme background */
+    color: white; /* White text */
+    padding: 20px;
+    min-height: 100vh; /* Full page height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 7rem;
+  }
+  
+  /* Heading styling */
+  .career-heading {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Row styling */
+  .career-row {
+    display: flex;
+    flex-wrap: wrap; /* Wrap columns to new rows on smaller screens */
+    justify-content: center;
+    gap: 20px; /* Space between columns */
+    width: 100%;
+    max-width: 1200px; /* Max container width */
+  }
+  
+  /* Career box styling */
+  .career-box {
+    background-color: #1e1e1e; /* Slightly lighter dark for contrast */
+    flex: 1 1 calc(30% - 20px); /* Flexible columns with a calculated width */
+    min-width: 250px; /* Minimum width for smaller screens */
+    max-width: 300px; /* Limit the maximum width */
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth animation */
+  }
+  
+  /* Hover effect for career boxes */
+  .career-box:hover {
+    transform: translateY(-10px) scale(1.05); /* Slightly lift the box */
+    background-color: #292929; /* Darker background on hover */ 
+    box-shadow: 0 20px 30px rgba(245, 9, 9, 1); /* Brightened and enlarged shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  }
+  
+  /* Title and description */
+  .career-box h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #ff5555; /* Highlight the type */
+  }
+  
+  .career-box h3 {
+    font-size: 1.1rem;
+    margin: 10px 0;
+  }
+  
+  .career-box p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Button styling */
+  .career-btn {
+    background-color: #ff0000; /* Red buttons */
+    color: white; /* White text */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .career-btn:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
+  

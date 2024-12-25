@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { frame } from "../../assets";
 import { Link2, MoreVertical } from "lucide-react";
 import Counter from "../common/Counter";
@@ -100,9 +101,12 @@ export default function HeroPage() {
             type="submit"
             className="flex justify-center gap-2 items-center  shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto  before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
           >
-            <p className="group-hover:text-white ease-linear duration-300  text-black ">
-              Job & Internship..
-            </p>
+            <Link to="/jobs">
+              {" "}
+              <p className="group-hover:text-white ease-linear duration-300  text-black ">
+                Job & Internship..
+              </p>
+            </Link>
             <svg
               className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border  group-hover:border-none p-2 rotate-45"
               viewBox="0 0 16 19"
@@ -155,13 +159,13 @@ export default function HeroPage() {
               </p>
             </div>
             <div className="absolute h-16 w-16 bottom-0 rounded-tl-[30px] -right-4 flex items-center justify-center bg-[#121212]">
-              <a href="/speakers">
+              <Link to="/founders">
                 <MoreVertical
                   size={44}
                   color="black"
                   className="bg-white p-3 rounded-full mt-1"
                 />
-              </a>
+              </Link>
               <div className="h-4 w-4 bg-[#121212] bottom-0 absolute -left-4">
                 <div className="h-4 w-4 bg-[white] rounded-br-xl absolute -left-0 bottom-0"></div>
               </div>

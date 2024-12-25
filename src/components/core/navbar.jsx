@@ -18,6 +18,8 @@ import {
   Hammer,
   Trophy,
   Crown,
+  Shirt,
+  Route,
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { logo } from "../../assets";
@@ -82,6 +84,18 @@ const MoreLinks = [
     href: "/events",
     icon: <Calendar className="h-4 w-4" />,
   },
+  {
+    id: 5,
+    title: "Merchandise",
+    href: "/merchandise",
+    icon: <Shirt className="h-4 w-4" />,
+  },
+  {
+    id: 5,
+    title: "Career",
+    href: "/career",
+    icon: <Route className="h-4 w-4" />,
+  },
 ];
 
 const AdminLinks = [
@@ -115,6 +129,7 @@ const AdminLinks = [
     href: "/certificate/generate",
     icon: <Trophy className="h-4 w-4" />,
   },
+  
 ];
 
 const Navbar = () => {

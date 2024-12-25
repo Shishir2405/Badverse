@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { BsSpotify, BsTwitterX, BsYoutube } from 'react-icons/bs';
 
@@ -48,18 +49,18 @@ export default function Footer() {
         <div className='flex flex-col items-start justify-center w-fit min-w-fit'>
           <h1 className='text-white text-2xl font-bold'>Quick links</h1>
           {NavItems.map(item => (
-            <a key={item.id} href={item.href} className='text-neutral-400 text-sm font-bold max-w-sm'>
+            <Link key={item.id} to={item.href} className='text-neutral-400 text-sm font-bold max-w-sm'>
               {item.title}
-            </a>
+            </Link>
           ))}
         </div>
 
         <div className='flex flex-col items-start justify-center w-fit min-w-fit'>
           <h1 className='text-white text-2xl font-bold'>More links</h1>
           {MoreLinks.map(item => (
-            <a key={item.id} href={item.href} className='text-neutral-400 text-sm font-bold max-w-sm'>
+            <Link key={item.id} to={item.href} className='text-neutral-400 text-sm font-bold max-w-sm'>
               {item.title}
-            </a>
+            </Link>
           ))}
         </div>
 

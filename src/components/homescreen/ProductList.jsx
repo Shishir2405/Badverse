@@ -7,7 +7,7 @@ const FeaturedProducts = () => {
       category: "female",
       originalPrice: 150.0,
       currentPrice: 120.0,
-      imageUrl: "/assets/wshirt1.jpeg",
+      imageUrl: "/Merch/wshirt1.jpeg",
       link: "#",
     },
     {
@@ -15,7 +15,7 @@ const FeaturedProducts = () => {
       category: "Unisex",
       originalPrice: 80.0,
       currentPrice: 60.0,
-      imageUrl: "/assets/book1.jpeg",
+      imageUrl: "/Merch/book1.jpeg",
       link: "#", 
     },
     {
@@ -23,7 +23,7 @@ const FeaturedProducts = () => {
       category: "Unisex",
       originalPrice: 50.0,
       currentPrice: 40.0,
-      imageUrl: "/assets/bag1.jpeg",
+      imageUrl: "/Merch/bag1.jpeg",
       link: "#", 
     },
     {
@@ -31,7 +31,7 @@ const FeaturedProducts = () => {
       category: "Male",
       originalPrice: 50.0,
       currentPrice: 40.0,
-      imageUrl: "/assets/bshirt3.jpeg",
+      imageUrl: "/Merch/bshirt3.jpeg",
       link: "#", 
     },
     {
@@ -39,7 +39,7 @@ const FeaturedProducts = () => {
       category: "female",
       originalPrice: 150.0,
       currentPrice: 120.0,
-      imageUrl: "/assets/wshirt2.jpeg",
+      imageUrl: "/Merch/wshirt2.jpeg",
       link: "#", 
     },
     {
@@ -47,7 +47,7 @@ const FeaturedProducts = () => {
       category: "Male",
       originalPrice: 80.0,
       currentPrice: 60.0,
-      imageUrl: "/assets/bshirt1.jpeg",
+      imageUrl: "/Merch/bshirt1.jpeg",
       link: "#", 
     },
     {
@@ -55,7 +55,7 @@ const FeaturedProducts = () => {
       category: "Male",
       originalPrice: 50.0,
       currentPrice: 40.0,
-      imageUrl: "/assets/wshirt4.jpeg",
+      imageUrl: "/Merch/wshirt4.jpeg",
       link: "#", 
     },
     {
@@ -63,7 +63,7 @@ const FeaturedProducts = () => {
       category: "Male",
       originalPrice: 50.0,
       currentPrice: 40.0,
-      imageUrl: "/assets/bshirt2.jpeg",
+      imageUrl: "/Merch/bshirt2.jpeg",
       link: "#", 
     },
     {
@@ -71,7 +71,7 @@ const FeaturedProducts = () => {
       category: "Male",
       originalPrice: 150.0,
       currentPrice: 120.0,
-      imageUrl: "/assets/wshirt3.jpeg",
+      imageUrl: "/Merch/wshirt3.jpeg",
       link: "#", 
     },
     {
@@ -79,7 +79,7 @@ const FeaturedProducts = () => {
       category: "Male",
       originalPrice: 80.0,
       currentPrice: 60.0,
-      imageUrl: "/assets/bshirt4.jpeg",
+      imageUrl: "/Merch/bshirt4.jpeg",
       link: "#", 
     },
     {
@@ -87,7 +87,7 @@ const FeaturedProducts = () => {
       category: "Unisex",
       originalPrice: 50.0,
       currentPrice: 40.0,
-      imageUrl: "/assets/cup1.jpeg",
+      imageUrl: "/Merch/cup1.jpeg",
       link: "#", 
     },
     {
@@ -95,7 +95,7 @@ const FeaturedProducts = () => {
       category: "Unisex",
       originalPrice: 50.0,
       currentPrice: 40.0,
-      imageUrl: "/assets/sticker1.jpeg",
+      imageUrl: "/Merch/sticker1.jpeg",
       link: "#", 
     },
   ];

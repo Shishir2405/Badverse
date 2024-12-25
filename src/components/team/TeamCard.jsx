@@ -21,7 +21,7 @@ const TeamCard = ({ member }) => {
       <div className="text-center w-[140px] mt-6">
         <h3 className="mt-2 text-lg font-bold text-white">{member.name}</h3>
         <p className="text-md font-bold text-red-500">{member.title}</p>
-        <p className="text-sm text-white/75">{member.description}</p>
+        {/* <p className="text-sm text-white/75">{member.description}</p> */}
       </div>
     </motion.div>
   );

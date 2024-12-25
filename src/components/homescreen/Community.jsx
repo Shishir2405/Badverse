@@ -25,7 +25,7 @@ const Community = () => {
         {groups.map((group, index) => (
           <div className="card" key={index}>
             <img
-              src="https://pps.whatsapp.net/v/t61.24694-24/468061092_596290166188393_1190124937255198748_n.jpg?stp=dst-jpg_tt6&ccb=11-4&oh=01_Q5AaIOhuREwglaLsizwx36uEsS2E_5nVS1mTxn8f3HHYgQIR&oe=676A6291&_nc_sid=5e03e0&_nc_cat=105"
+              src="/community_logo.jpeg"
               alt="Logo"
               className="card-logo"
             />

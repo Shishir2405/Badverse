@@ -9,24 +9,24 @@ const FounderSection = () => {
       name: "Sarthak Mittal",
       title: "CEO",
       image: "/sarthak2.jpeg",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Ut sed commodo tempor amet sit. Ut consectetur neque a nulla mattis at.",
     },
     {
       id: 2,
       name: "Banjamin Miller",
       title: "CEO",
       image: "/ban2.jpeg",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Ut sed commodo tempor amet sit. Ut consectetur neque a nulla mattis at.",
     },
     {
       id: 3,
       name: "Vinay Nangia",
       title: "Executive Advisor",
       image: "/u2.jpeg",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Ut sed commodo tempor amet sit. Ut consectetur neque a nulla mattis at.",
+    },
+    {
+      id: 4,
+      name: "Saiyam Kumar",
+      title: "Co-Founder",
+      image: "/saiyam2.png",
     },
   ];
 
@@ -48,7 +48,7 @@ const FounderSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 content-center gap-8 max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 content-center gap-8 max-w-7xl mx-auto px-4">
           {founders.map((founder, index) => (
             <motion.div
               key={founder.id}
@@ -78,18 +78,15 @@ const FounderSection = () => {
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="p-4"
                 >
-                  <h3 className="text-white text-2xl font-bold mb-2">
+                  <h3 className="text-white text-2xl font-bold mb-2 text-center">
                     {founder.name}
                   </h3>
-                  <p className="text-red-500 font-medium mb-4">
+                  <p className="text-red-500 font-medium mb-2 text-center">
                     {founder.title}
-                  </p>
-                  <p className="text-gray-400">
-                    {founder.description}
                   </p>
                 </motion.div>
 
-                <div className="mt-6 flex justify-center space-x-4">
+                {/* <div className="mt-6 flex justify-center space-x-4">
                   <a
                     href="#"
                     className="text-white hover:text-red-500 transition-colors"
@@ -116,7 +113,7 @@ const FounderSection = () => {
                       <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                     </svg>
                   </a>
-                </div>
+                </div> */}
               </div>
             </motion.div>
           ))}

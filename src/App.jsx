@@ -45,6 +45,8 @@ import BlogPost from "./components/blog/BlogPost";
 import BlogAdmin from "./components/blog/BlogAdmin";
 import BlogEditor from "./components/blog/BlogEditor";
 import TeamPage from "./components/team/TeamPage";
+import Products from "./components/products/products";
+import Careerpg from "./components/career/Careerpg";
 import "./App.css";
 
 export default function App() {
@@ -68,6 +70,8 @@ export default function App() {
             <Route path="/community" element={<Community />} />
             <Route path="/founders" element={<FounderSection />} />
             <Route path="/teams" element={<TeamPage />} />
+            <Route path="/merchandise" element={<Products />} />
+            <Route path="/career" element={<Careerpg/>} />
 
             {/* Public News Routes */}
             <Route path="/news" element={<PublicNewsList />} />

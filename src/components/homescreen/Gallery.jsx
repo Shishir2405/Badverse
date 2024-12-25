@@ -4,7 +4,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaTimes,
-} from "react-icons/fa"; 
+} from "react-icons/fa";
 
 const images = [
   { id: 1, src: "/1.jpg" },
@@ -16,20 +16,9 @@ const images = [
   { id: 7, src: "/7.JPG" },
   { id: 8, src: "/8.JPG" },
   { id: 9, src: "/9.jpg" },
-  // { id: 10, src: "/5.jpg" },
-  // { id: 11, src: "/11.jpg" },
-  // { id: 12, src: "/12.jpg" },
-  // { id: 13, src: "/13.jpg" },
-  // { id: 14, src: "/14.jpg" },
-  // { id: 15, src: "/15.jpg" },
-  // { id: 16, src: "/16.jpg" },
-  // { id: 17, src: "/17.jpg" },
-  // { id: 18, src: "/18.jpg" },
 ];
 
 const Gallery = () => {
-  const [visibleRows, setVisibleRows] = useState(2);
-  const [showMore, setShowMore] = useState(true);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
@@ -68,15 +57,10 @@ const Gallery = () => {
     }
   });
 
-  const loadMore = () => {
-    setVisibleRows((prevRows) => prevRows + 2);
-  };
-
-  const showLess = () => {
-    setVisibleRows(2);
-  };
-
-  const hasMoreRows = visibleRows < rows.length;
+  // Add remaining images if any
+  if (row.length > 0) {
+    rows.push(row);
+  }
 
   const openFullScreen = (image, event) => {
     const imageElement = event.target;
@@ -111,9 +95,15 @@ const Gallery = () => {
 
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <h1 className="text-white text-4xl text-center mb-20">GALLERY</h1>
-      <div className="flex flex-col items-center">
-        {rows.slice(0, visibleRows).map((row, rowIndex) => (
+      <div className="relative w-fit mx-auto">
+        <span className="h-[1px] w-36 bg-white absolute -bottom-2 -right-9" />
+        <span className="h-[1px] w-36 bg-white absolute -top-2 -left-9" />
+        <h1 className="text-center font-bold text-5xl">
+          Ga<span className="text-red-700">lle</span>ry
+        </h1>
+      </div>
+      <div className="flex flex-col items-center mt-24">
+        {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
             className="flex justify-center gap-[6px] mb-[6px] flex-wrap"
@@ -128,7 +118,7 @@ const Gallery = () => {
             {row.map((image) => (
               <div
                 key={image.id}
-                className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 transition-all duration-500 ease-out transform hover:scale-105 hover:opacity-90 hover:shadow-xl"
+                className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-52 lg:h-52 xl:w-64 xl:h-64 transition-all duration-500 ease-out transform hover:scale-105 hover:opacity-90 hover:shadow-xl"
               >
                 <div
                   className="absolute inset-0 bg-red-500 rounded-lg overflow-hidden"
@@ -162,39 +152,6 @@ const Gallery = () => {
             ))}
           </div>
         ))}
-
-        <div className="mt-6 flex gap-4 justify-center">
-          {hasMoreRows && !showMore && (
-            <button
-              onClick={loadMore}
-              className="text-white bg-red-600 py-2 px-4 rounded-lg hover:bg-red-800 transition duration-300 ease-out"
-            >
-              Load More
-            </button>
-          )}
-
-          {showMore ? (
-            <button
-              onClick={() => {
-                loadMore();
-                setShowMore(false);
-              }}
-              className="text-white bg-red-600 py-2 px-4 rounded-lg hover:bg-red-800 transition duration-300 ease-out"
-            >
-              Load More
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                showLess();
-                setShowMore(true);
-              }}
-              className="text-white bg-red-600 py-2 px-4 rounded-lg hover:bg-red-800 transition duration-300 ease-out"
-            >
-              Show Less
-            </button>
-          )}
-        </div>
       </div>
 
       {currentImage && (
