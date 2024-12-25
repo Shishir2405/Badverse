@@ -31,40 +31,44 @@ const TeamPage = () => {
 
   const teamMembers = [
     {
-      id: 1,
-      name: "Smit Rami",
-      image: "/team/smit.jpeg",
-      title: "CTO",
-    },
-    {
-      id: 1,
-      name: "Vaishnavi",
-      image: "/team/Vaishnavi.jpeg",
-      title: "MD",
-    },
-    {
-      id: 1,
-      name: "Shivanshi Gupta",
-      image: "/team/shivanshi.jpeg",
-      title: "Project Lead",
-    },
-    {
-      id: 1,
+      id: 4,
       name: "Shishir Shrivastava",
       image: "/team/shishir.jpg",
       title: "Developer",
     },
-
     {
-      id: 1,
-      name: "Sonali Singh",
-      image: "/team/sonali.jpeg",
+      id: 2,
+      name: "Vaishnavi Ahuja",
+      image: "/team/Vaishnavi.jpeg",
+      title: "MD",
     },
 
     {
-      id: 1,
-      name: "Muskan",
+      id: 5,
+      name: "Sonali Singh",
+      image: "/team/sonali.jpeg",
+      title: "Indore Operation",
+    },
+
+    {
+      id: 6,
+      name: "Muskan Wagh",
       image: "/team/Muskan.jpeg",
+      title: "Indore Operation",
+    },
+
+    {
+      id: 7,
+      name: "Sonal Singh",
+      image: "/team/sonal.jpeg",
+      title: "Bangalore Core Team",
+    },
+
+    {
+      id: 8,
+      name: "Ronak Jain",
+      image: "/team/Ronak.jpeg",
+      title: "Bangalore Core Team",
     },
   ];
 
@@ -109,12 +113,12 @@ const TeamPage = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setShowAllMembers(!showAllMembers)}
-          className={`${windowWidth <= 730 || showAllMembers ? "" : "hidden"} 
-            mx-auto flex justify-center text-center items-center mt-4 gap-3 p-2 
-            border-2 border-red-500 rounded-xl
-            hover:shadow-lg hover:shadow-red-500/20 
-            transition-all duration-300
-            text-white`}
+          className={`${showAllMembers ? "" : ""}
+    mx-auto flex justify-center text-center items-center mt-4 gap-3 p-2
+    border-2 border-red-500 rounded-xl
+    hover:shadow-lg hover:shadow-red-500/20
+    transition-all duration-300
+    text-white`}
         >
           {showAllMembers ? (
             <FaCompressAlt className="text-red-500" />

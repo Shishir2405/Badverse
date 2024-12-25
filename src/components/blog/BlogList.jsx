@@ -1,117 +1,128 @@
-// src/components/blog/BlogAdmin.jsx
+// BlogList.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../config/firebase";
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-} from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
 
-const BlogAdmin = () => {
-  const [posts, setPosts] = useState([]);
+const BlogList = () => {
+  const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isParticlesReady, setIsParticlesReady] = useState(false);
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
-    try {
-      const postsQuery = query(
-        collection(db, "blog_posts"),
-        orderBy("createdAt", "desc")
-      );
-      const snapshot = await getDocs(postsQuery);
-      const postsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setPosts(postsData);
-    } catch (error) {
-      setError("Error fetching posts");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
+    const fetchBlogs = async () => {
       try {
-        await deleteDoc(doc(db, "blog_posts", id));
-        fetchPosts();
+        const blogQuery = query(
+          collection(db, "blog_posts"),
+          orderBy("createdAt", "desc")
+        );
+        const snapshot = await getDocs(blogQuery);
+        const blogData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setBlogs(blogData);
       } catch (error) {
-        setError("Error deleting post");
-        console.error("Error:", error);
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
       }
-    }
-  };
+    };
+
+    fetchBlogs();
+
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => setIsParticlesReady(true));
+  }, []);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen bg-black">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 pt-24">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">All Blog Posts</h1>
+    <div className="min-h-screen bg-black text-white">
+      {/* Header with Particles */}
+      <div className="relative h-[30em] mb-12">
+        {isParticlesReady && (
+          <div className="absolute inset-0 [mask-image:radial-gradient(50%_50%,white,transparent_95%)]">
+            <Particles
+              options={{
+                particles: {
+                  color: { value: "#ffffff" },
+                  number: { value: 800 },
+                  opacity: { value: { min: 0.1, max: 1 } },
+                  size: { value: { min: 0.8, max: 1.2 } },
+                },
+                interactivity: {
+                  events: {
+                    onClick: { enable: true, mode: "push" },
+                    onHover: { enable: true, mode: "grab" },
+                  },
+                },
+              }}
+            />
+          </div>
+        )}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(239, 68, 68, 0.2) 0%, rgba(0, 0, 0, 0) 70%)",
+          }}
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="text-8xl font-bold text-red-500 animate-pulse">BLOGS</h1>
+        </div>
       </div>
 
-      {error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
-          {error}
-        </div>
-      )}
-
-      <div className="grid gap-6">
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {post.description}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Published: {new Date(post.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-                {post.coverImage && (
+      {/* Blog List */}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogs.map((blog) => (
+            <div key={blog.id} className="group">
+              <div className="bg-gray-900 rounded-lg overflow-hidden border border-red-600/30 transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg group-hover:shadow-red-500/20">
+                {blog.coverImageUrl && (
                   <img
-                    src={post.coverImage}
-                    alt={post.title}
-                    className="w-32 h-32 object-cover rounded-lg ml-4"
+                    src={blog.coverImageUrl}
+                    alt={blog.title}
+                    className="w-full h-48 object-cover"
                   />
                 )}
-              </div>
-
-              <div className="flex gap-4 mt-4">
-                <Link
-                  to={`/blog/${post.id}`}
-                  className="text-gray-500 hover:text-gray-600 ml-auto"
-                >
-                  View Post
-                </Link>
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold text-red-500 mb-2">{blog.title}</h2>
+                  <p className="text-gray-400 mb-4 line-clamp-2">{blog.description}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-500">
+                      {new Date(blog.createdAt).toLocaleDateString()}
+                    </span>
+                    <Link
+                      to={`/blog/${blog.id}`}
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors"
+                    >
+                      Read more
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+
+          {blogs.length === 0 && (
+            <div className="col-span-full text-center py-12">
+              <p className="text-gray-400 text-lg">No blog posts found.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default BlogAdmin;
+export default BlogList;

@@ -20,6 +20,8 @@ import {
   Crown,
   Shirt,
   Route,
+  BookMarked,
+  BookType,
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { logo } from "../../assets";
@@ -85,13 +87,19 @@ const MoreLinks = [
     icon: <Calendar className="h-4 w-4" />,
   },
   {
-    id: 5,
+    id: 6,
+    title: "Blogs",
+    href: "/blog",
+    icon: <BookMarked className="h-4 w-4" />,
+  },
+  {
+    id: 7,
     title: "Merchandise",
     href: "/merchandise",
     icon: <Shirt className="h-4 w-4" />,
   },
   {
-    id: 5,
+    id: 8,
     title: "Career",
     href: "/career",
     icon: <Route className="h-4 w-4" />,
@@ -128,6 +136,12 @@ const AdminLinks = [
     title: "Certificate Management",
     href: "/certificate/generate",
     icon: <Trophy className="h-4 w-4" />,
+  },
+  {
+    id: 5,
+    title: "Blog Management",
+    href: "/admin/blog",
+    icon: <BookType className="h-4 w-4" />,
   },
   
 ];

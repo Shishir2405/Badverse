@@ -1,4 +1,4 @@
-// src/components/blog/BlogAdmin.jsx
+// BlogAdmin.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../config/firebase";
@@ -47,98 +47,80 @@ const BlogAdmin = () => {
         fetchPosts();
       } catch (error) {
         setError("Error deleting post");
-        console.error("Error:", error);
       }
     }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center min-h-screen bg-black">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 pt-24">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">Manage Blog Posts</h1>
-        <Link
-          to="/admin/blog/new"
-          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-        >
-          Create New Post
-        </Link>
-      </div>
-
-      {error && (
-        <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
-          {error}
-        </div>
-      )}
-
-      <div className="grid gap-6">
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
+    <div className="min-h-screen bg-black text-white p-8 pt-24">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-red-500">Manage Blogs</h1>
+          <Link
+            to="/admin/blog/new"
+            className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
           >
-            <div className="p-6">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
-                  <p className="text-gray-600 mb-4 line-clamp-2">
-                    {post.description}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Published: {new Date(post.createdAt).toLocaleDateString()}
-                  </p>
-                </div>
-                {post.coverImage && (
-                  <img
-                    src={post.coverImage}
-                    alt={post.title}
-                    className="w-32 h-32 object-cover rounded-lg ml-4"
-                  />
-                )}
-              </div>
+            Create New Blog
+          </Link>
+        </div>
 
-              <div className="flex gap-4 mt-4">
-                <Link
-                  to={`/admin/blog/${post.id}/edit`}
-                  className="text-blue-500 hover:text-blue-600"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(post.id)}
-                  className="text-red-500 hover:text-red-600"
-                >
-                  Delete
-                </button>
-                <Link
-                  to={`/blog/${post.id}`}
-                  className="text-gray-500 hover:text-gray-600 ml-auto"
-                >
-                  View Post
-                </Link>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {posts.length === 0 && (
-          <div className="text-center py-12 bg-gray-50 rounded-lg">
-            <p className="text-gray-600">No blog posts found.</p>
-            <Link
-              to="/admin/blog/new"
-              className="text-blue-500 hover:text-blue-600 mt-2 inline-block"
-            >
-              Create your first post
-            </Link>
+        {error && (
+          <div className="bg-red-500/20 text-red-400 p-4 rounded-lg mb-6">
+            {error}
           </div>
         )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className="border border-red-600/30 rounded-lg bg-gray-900 overflow-hidden transition-transform hover:scale-[1.02] duration-200"
+            >
+              {post.coverImageUrl && (
+                <img
+                  src={post.coverImageUrl}
+                  alt={post.title}
+                  className="w-full h-48 object-cover border-b border-red-600/30"
+                />
+              )}
+              <div className="p-6">
+                <h2 className="text-2xl font-bold text-red-500 mb-2">
+                  {post.title}
+                </h2>
+                <p className="text-gray-400 mb-4 line-clamp-2">
+                  {post.description}
+                </p>
+                <div className="flex justify-between items-center mt-4">
+                  <span className="text-sm text-gray-500">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </span>
+                  <div className="flex gap-4">
+                    <Link
+                      to={`/admin/blog/${post.id}/edit`}
+                      className="text-blue-400 hover:text-blue-300 transition-colors"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(post.id)}
+                      className="text-red-400 hover:text-red-300 transition-colors"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

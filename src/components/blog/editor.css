@@ -1,0 +1,156 @@
+/* editor.css */
+.editor-container {
+  @apply min-h-screen bg-black text-white p-8 pt-24;
+}
+
+.editor-content {
+  @apply max-w-4xl mx-auto;
+}
+
+.editor-title {
+  @apply text-4xl font-bold text-red-500 mb-8;
+}
+
+.editor-form {
+  @apply space-y-6;
+}
+
+.form-group {
+  @apply mb-6;
+}
+
+.form-label {
+  @apply block text-xl text-red-500 mb-2;
+}
+
+.form-input {
+  @apply w-full text-white rounded-lg p-3 border border-red-600/30 
+         focus:outline-none focus:ring-2 focus:ring-red-500;
+}
+
+.form-textarea {
+  @apply form-input h-32 resize-none;
+}
+
+.image-upload-container {
+  @apply mt-2 flex justify-center rounded-lg border-2 border-dashed border-red-600/30 px-6 py-10;
+}
+
+.image-upload-content {
+  @apply text-center;
+}
+
+.image-preview {
+  @apply mx-auto h-48 rounded-lg object-cover;
+}
+
+.upload-icon {
+  @apply mx-auto h-12 w-12 text-red-500;
+}
+
+.upload-actions {
+  @apply mt-4;
+}
+
+.upload-button {
+  @apply cursor-pointer inline-block;
+}
+
+.upload-button span {
+  @apply bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition-colors;
+}
+
+.form-actions {
+  @apply flex gap-4 justify-end;
+}
+
+.btn-primary {
+  @apply px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 
+         transition-colors disabled:opacity-50;
+}
+
+.btn-secondary {
+  @apply px-6 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 
+         transition-colors;
+}
+
+.error-message {
+  @apply bg-red-500/20 text-red-400 p-4 rounded-lg mb-6;
+}
+
+/* Quill Editor Styles */
+.quill-editor {
+  @apply bg-gray-900 rounded-lg overflow-hidden border border-red-600/30;
+}
+
+.quill-editor .ql-toolbar.ql-snow {
+  @apply border-red-600/30 bg-gray-800 rounded-t-lg;
+}
+
+.quill-editor .ql-container.ql-snow {
+  @apply border-red-600/30 rounded-b-lg;
+}
+
+.quill-editor .ql-editor {
+  @apply bg-gray-900 text-white h-96 p-4;
+}
+
+.quill-editor .ql-stroke {
+  @apply stroke-white;
+}
+
+.quill-editor .ql-fill {
+  @apply fill-white;
+}
+
+.quill-editor .ql-picker {
+  @apply text-white;
+}
+
+.quill-editor .ql-picker-options {
+  @apply bg-gray-800 border-red-600/30;
+}
+
+.quill-editor .ql-picker.ql-expanded .ql-picker-label,
+.quill-editor .ql-picker.ql-expanded .ql-picker-options {
+  @apply border-red-600/30;
+}
+
+.quill-editor .ql-tooltip {
+  @apply bg-gray-800 border-red-600/30 text-white;
+}
+
+.quill-editor .ql-tooltip input[type=text] {
+  @apply bg-gray-900 border-red-600/30 text-white;
+}
+
+/* Editor Content Styles */
+.quill-editor .ql-editor {
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-red-500 font-bold;
+  }
+
+  a {
+    @apply text-blue-400 hover:text-blue-300;
+  }
+
+  blockquote {
+    @apply border-l-4 border-red-500 pl-4 italic;
+  }
+
+  code {
+    @apply bg-gray-800 text-red-400 px-2 py-1 rounded;
+  }
+
+  pre {
+    @apply bg-gray-800 rounded-lg p-4;
+  }
+
+  ul, ol {
+    @apply pl-8;
+  }
+
+  img {
+    @apply max-w-full rounded-lg;
+  }
+}

@@ -71,7 +71,7 @@ export default function App() {
             <Route path="/founders" element={<FounderSection />} />
             <Route path="/teams" element={<TeamPage />} />
             <Route path="/merchandise" element={<Products />} />
-            <Route path="/career" element={<Careerpg/>} />
+            <Route path="/career" element={<Careerpg />} />
 
             {/* Public News Routes */}
             <Route path="/news" element={<PublicNewsList />} />

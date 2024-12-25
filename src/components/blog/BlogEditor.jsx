@@ -1,62 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { db, storage } from "../../config/firebase";
-import { doc, getDoc, addDoc, updateDoc, collection } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { Editor } from '@tinymce/tinymce-react';
-
-const STORAGE_KEY = "badtalks_blog_draft";
+import ReactQuill from "react-quill";
+import { db } from "../../config/firebase";
+import { doc, getDoc, setDoc, updateDoc, collection } from "firebase/firestore";
+import "react-quill/dist/quill.snow.css";
+import "./editor.css";
 
 const BlogEditor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  
-  const [formData, setFormData] = useState(() => {
-    const savedDraft = localStorage.getItem(STORAGE_KEY);
-    if (savedDraft) {
-      return JSON.parse(savedDraft);
-    }
-    return {
-      title: "",
-      description: "",
-      content: "",
-      coverImage: null,
-      coverImageUrl: "",
-      tags: [],
-      category: "",
-      published: false,
-    };
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    content: "",
+    coverImageUrl: "",
+    author: "", // Added author field
+    tags: [] // Added tags field
   });
 
-  const handleImageUpload = async (blobInfo) => {
-    try {
-      const file = blobInfo.blob();
-      const imageRef = ref(storage, `blog/${Date.now()}-${blobInfo.filename()}`);
-      await uploadBytes(imageRef, file);
-      const url = await getDownloadURL(imageRef);
-      return url;
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      throw new Error("Failed to upload image");
-    }
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      [{ align: [] }],
+      ["link", "image"],
+      ["clean"]
+    ]
   };
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [formData]);
-
-  useEffect(() => {
-    return () => {
-      if (!loading) {
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    };
-  }, [loading]);
 
   useEffect(() => {
     if (id) {
@@ -70,16 +44,13 @@ const BlogEditor = () => {
       if (postDoc.exists()) {
         const postData = postDoc.data();
         setFormData({
-          ...postData,
-          coverImage: null,
+          title: postData.title || "",
+          description: postData.description || "",
+          content: postData.content || "",
+          coverImageUrl: postData.coverImageUrl || "",
+          author: postData.author || "",
+          tags: postData.tags || []
         });
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({
-            ...postData,
-            coverImage: null,
-          })
-        );
       }
     } catch (error) {
       setError("Error fetching post");
@@ -87,52 +58,58 @@ const BlogEditor = () => {
     }
   };
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      if (formData.title || formData.content || formData.description) {
-        e.preventDefault();
-        e.returnValue = "";
-      }
-    };
+  const handleImageLinkChange = (e) => {
+    setFormData({ ...formData, coverImageUrl: e.target.value });
+  };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [formData]);
+  const handleTagChange = (e) => {
+    const tagValue = e.target.value;
+    setFormData({ 
+      ...formData, 
+      tags: tagValue.split(',').map(tag => tag.trim()).filter(tag => tag) 
+    });
+  };
+
+  const validateForm = () => {
+    if (!formData.title.trim()) return "Title is required";
+    if (!formData.description.trim()) return "Description is required";
+    if (!formData.content.trim()) return "Content is required";
+    if (!formData.author.trim()) return "Author name is required";
+    return null;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
-      let coverImageUrl = formData.coverImageUrl;
-      if (formData.coverImage) {
-        const imageRef = ref(storage, `blog/${Date.now()}-${formData.coverImage.name}`);
-        await uploadBytes(imageRef, formData.coverImage);
-        coverImageUrl = await getDownloadURL(imageRef);
-      }
-
       const postData = {
-        title: formData.title,
-        description: formData.description,
+        title: formData.title.trim(),
+        description: formData.description.trim(),
         content: formData.content,
-        coverImageUrl,
+        coverImageUrl: formData.coverImageUrl,
+        author: formData.author.trim(),
         tags: formData.tags,
-        category: formData.category,
-        published: formData.published,
-        updatedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       };
 
       if (id) {
         await updateDoc(doc(db, "blog_posts", id), postData);
       } else {
-        await addDoc(collection(db, "blog_posts"), {
+        const newPostRef = doc(collection(db, "blog_posts"));
+        await setDoc(newPostRef, {
           ...postData,
-          createdAt: new Date().toISOString(),
+          createdAt: new Date().toISOString()
         });
       }
 
-      localStorage.removeItem(STORAGE_KEY);
       navigate("/admin/blog");
     } catch (error) {
       setError("Error saving post");
@@ -142,141 +119,109 @@ const BlogEditor = () => {
     }
   };
 
-  const handleDiscard = () => {
-    if (window.confirm("Are you sure you want to discard this draft?")) {
-      localStorage.removeItem(STORAGE_KEY);
-      setFormData({
-        title: "",
-        description: "",
-        content: "",
-        coverImage: null,
-        coverImageUrl: "",
-        tags: [],
-        category: "",
-        published: false,
-      });
-    }
-  };
-
   return (
-    <div className="container mx-auto px-4 py-8 pt-24">
+    <div className="min-h-screen bg-black text-white p-8 pt-24">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-8">
+        <h1 className="text-4xl font-bold text-red-500 mb-8">
           {id ? "Edit Blog Post" : "Create New Blog Post"}
         </h1>
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6">
+          <div className="bg-red-500/20 text-red-400 p-4 rounded-lg mb-6">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Title
-            </label>
+          <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">Title</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg"
+              className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Description
-            </label>
+          <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">Author</label>
+            <input
+              type="text"
+              value={formData.author}
+              onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+              className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3 py-2 border rounded-lg h-24"
+              className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500 h-32"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Cover Image
-            </label>
+          <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">Cover Image URL</label>
             <input
-              type="file"
-              onChange={(e) => setFormData({ ...formData, coverImage: e.target.files[0] })}
-              accept="image/*"
-              className="w-full"
+              type="url"
+              value={formData.coverImageUrl}
+              onChange={handleImageLinkChange}
+              placeholder="Enter image URL"
+              className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
             />
             {formData.coverImageUrl && (
-              <img
-                src={formData.coverImageUrl}
-                alt="Cover preview"
-                className="mt-2 h-48 object-cover rounded-lg"
-              />
+              <div className="mt-4">
+                <img
+                  src={formData.coverImageUrl}
+                  alt="Cover preview"
+                  className="max-w-full h-48 object-cover rounded-lg"
+                  onError={() => setError("Invalid image URL")}
+                />
+              </div>
             )}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Content
-            </label>
-            <Editor
-              apiKey="he46ikcftmnlxtfq097fzcff4xvhkol52j1ugjqdb4lklo5x" // You'll need to sign up for a free API key at https://www.tiny.cloud/
-              value={formData.content}
-              onEditorChange={(content) => setFormData({ ...formData, content })}
-              init={{
-                height: 500,
-                menubar: false,
-                plugins: [
-                  'advlist', 'autolink', 'lists', 'link', 'image', 'charmap',
-                  'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                  'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount', 'paste'
-                ],
-                toolbar: 'undo redo | blocks | ' +
-                  'bold italic forecolor | alignleft aligncenter ' +
-                  'alignright alignjustify | bullist numlist outdent indent | ' +
-                  'removeformat | help',
-                skin: 'oxide-dark',
-                content_css: 'dark',
-                paste_retain_style_properties: 'all',
-                paste_word_valid_elements: 'b,strong,i,em,h1,h2,h3,p,br',
-                paste_data_images: true,
-                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px; background-color: #1a1a1a; color: #ffffff; } .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: #666; }',
-              }}
+          <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">Tags</label>
+            <input
+              type="text"
+              value={formData.tags.join(', ')}
+              onChange={handleTagChange}
+              placeholder="Enter tags separated by commas"
+              className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
             />
           </div>
 
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              checked={formData.published}
-              onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-              className="h-4 w-4 text-blue-600 rounded border-gray-300"
-            />
-            <label className="ml-2 text-sm text-gray-700">
-              Publish this post
-            </label>
+          <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">Content</label>
+            <div className="bg-gray-900 rounded-lg overflow-hidden border border-red-600/30">
+              <ReactQuill
+                theme="snow"
+                value={formData.content}
+                onChange={(content) => setFormData({ ...formData, content })}
+                modules={modules}
+                className="h-96 text-white"
+              />
+            </div>
           </div>
 
           <div className="flex gap-4 justify-end">
             <button
               type="button"
-              onClick={handleDiscard}
-              className="px-4 py-2 text-gray-600 hover:text-gray-800"
-            >
-              Discard
-            </button>
-            <button
-              type="button"
               onClick={() => navigate("/admin/blog")}
-              className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              className="px-6 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 disabled:opacity-50"
+              className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors disabled:opacity-50"
             >
               {loading ? "Saving..." : id ? "Update Post" : "Create Post"}
             </button>

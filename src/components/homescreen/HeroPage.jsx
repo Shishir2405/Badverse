@@ -197,9 +197,12 @@ export default function HeroPage() {
               </p>
             </div>
             <div className="bg-neutral-800 w-full flex-1 rounded-lg flex flex-col justify-center items-center text-xl">
-              <p>
-                <span className="text-red-500">Ex</span>plore
-              </p>
+              <Link to="merchandise">
+                {" "}
+                <p>
+                  <span className="text-red-500">Explore </span>Merchandise
+                </p>
+              </Link>
             </div>
           </div>
         </section>
