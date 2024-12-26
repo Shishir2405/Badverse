@@ -31,6 +31,11 @@ export default function MobileNavbar() {
     },
     {
       id: 5,
+      title: "Founders",
+      href: "/founders",
+    },
+    {
+      id: 5,
       title: "Jobs",
       href: "/jobs",
     },
@@ -53,6 +58,21 @@ export default function MobileNavbar() {
       id: 9,
       title: "Events",
       href: "/events",
+    },
+    {
+      id: 10,
+      title: "Blogs",
+      href: "/blog",
+    },
+    {
+      id: 11,
+      title: "Merchandise",
+      href: "/merchandise",
+    },
+    {
+      id: 12,
+      title: "Career",
+      href: "/career",
     },
   ];
 
@@ -81,6 +101,11 @@ export default function MobileNavbar() {
       id: 5,
       title: "Certificate Management",
       href: "/certificate/generate",
+    },
+    {
+      id: 6,
+      title: "Blog Management",
+      href: "/admin/blog",
     },
   ];
 
@@ -118,8 +143,8 @@ export default function MobileNavbar() {
         </div>
 
         {/* Sidebar content */}
-        <div className="px-4">
-          <ul className="space-y-1">
+        <div className="px-4 overflow-y-scroll">
+          <ul className="">
             {NavItems.map((item) => (
               <li key={item.id}>
                 <Link

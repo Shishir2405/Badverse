@@ -138,7 +138,7 @@ const AdminLinks = [
     icon: <Trophy className="h-4 w-4" />,
   },
   {
-    id: 5,
+    id: 6,
     title: "Blog Management",
     href: "/admin/blog",
     icon: <BookType className="h-4 w-4" />,

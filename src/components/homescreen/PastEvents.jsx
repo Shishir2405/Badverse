@@ -35,9 +35,10 @@ export default function PastEvents() {
               ents
             </h2>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
-              voluptatibus voluptatem assumenda tempora accusantium doloremque
-              omnis perspiciatis quidem{" "}
+              From inspiring keynote speakers to interactive workshops, our past
+              college events brought together bright minds, bold ideas, and
+              boundless energy—sparking innovation, collaboration, and
+              unforgettable experiences for students and leaders alike!{" "}
             </p>
           </div>
           <div
@@ -49,9 +50,10 @@ export default function PastEvents() {
             <div className=" h-fit">
               <h4 className="font-semibold text-xl">IPS ACADEMY</h4>
               <p className="text-neutral-200 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit
-                minus molestiae dolores temporibus ratione. molestiae dolores
-                temporibus ratione.
+                At IPS Academy, B.A.D. Talks brought the buzz! From CEO stories
+                to hands-on workshops, students connected, learned, and left
+                fired up to chase their entrepreneurial dreams with fresh
+                ideas!.
               </p>
             </div>
           </div>
@@ -79,11 +81,12 @@ export default function PastEvents() {
             className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl flex items-end p-4"
           >
             <div className="h-fit">
-              <h4 className="font-semibold text-xl">IPS ACADEMY</h4>
+              <h4 className="font-semibold text-xl">MEDICAPS UNIVERSITY</h4>
               <p className="text-neutral-200 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit
-                minus molestiae dolores temporibus ratione. molestiae dolores
-                temporibus ratione.
+                At MediCaps University, B.A.D. Talks turned ideas into action!
+                From CEO secrets to success to lively sessions sparking
+                innovation, it was a day where dreams met determination and
+                magic happened.
               </p>
             </div>
           </motion.div>
