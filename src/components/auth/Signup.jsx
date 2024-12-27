@@ -1,4 +1,4 @@
-// Signup.jsx
+// components/auth/Signup.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
@@ -26,7 +26,6 @@ const Signup = () => {
 
     try {
       await signup(formData.email, formData.password);
-      // Optionally store additional user data (username) in Firebase database here
       navigate('/');
     } catch (err) {
       setError(
@@ -91,10 +90,16 @@ const Signup = () => {
             {loading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
-        <p className="mt-4 text-center text-white">
+        <p className="mt-4 text-center text-gray-400">
           Already have an account?{' '}
           <Link to="/login" className="text-red-500 hover:text-red-400">
             Login
+          </Link>
+        </p>
+        <p className="mt-2 text-center text-gray-400">
+          Want to become an admin?{' '}
+          <Link to="/admin/signup" className="text-red-500 hover:text-red-400">
+            Admin Signup
           </Link>
         </p>
       </div>

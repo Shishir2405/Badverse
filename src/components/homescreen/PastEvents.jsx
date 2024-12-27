@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import React from "react";
+import eventvideo from "/videopast.mp4";
+import medicapsImage from "/logo.png";
 
 export default function PastEvents() {
   return (
@@ -25,8 +27,19 @@ export default function PastEvents() {
               delay: 0.2,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="border rounded-2xl h-full w-full"
-          ></motion.div>
+            className="border rounded-2xl h-full w-full overflow-hidden"
+          >
+            <video
+              className="h-full w-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src={eventvideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </motion.div>
         </div>
         <div className="flex flex-1  flex-col items-end">
           <div className="flex flex-col w-full min-[800px]:max-w-96 pt-3 pb-6">
@@ -41,13 +54,15 @@ export default function PastEvents() {
               unforgettable experiences for students and leaders alike!{" "}
             </p>
           </div>
-          <div
-            className="aspect-[16/11]  w-full lg:w-96 bg-slate-700 rounded-2xl
-                flex items-end
-                p-4
-                "
-          >
-            <div className=" h-fit">
+          <div className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl p-4 relative flex flex-col justify-between">
+            <div className="absolute top-4 left-4">
+              <img
+                src={medicapsImage}
+                alt="IPS Academy"
+                className="w-20 h-20 rounded-full object-cover border-2 border-red-500"
+              />
+            </div>
+            <div className="h-fit mt-auto">
               <h4 className="font-semibold text-xl">IPS ACADEMY</h4>
               <p className="text-neutral-200 text-sm">
                 At IPS Academy, B.A.D. Talks brought the buzz! From CEO stories
@@ -78,9 +93,16 @@ export default function PastEvents() {
               delay: 0.3,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl flex items-end p-4"
+            className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl p-4 relative flex flex-col justify-between"
           >
-            <div className="h-fit">
+            <div className="absolute top-4 left-4">
+              <img
+                src={medicapsImage}
+                alt="Medicaps University"
+                className="w-20 h-20 rounded-full object-cover border-2 border-red-500"
+              />
+            </div>
+            <div className="h-fit mt-auto">
               <h4 className="font-semibold text-xl">MEDICAPS UNIVERSITY</h4>
               <p className="text-neutral-200 text-sm">
                 At MediCaps University, B.A.D. Talks turned ideas into action!
@@ -100,9 +122,16 @@ export default function PastEvents() {
               delay: 0.4,
               ease: [0.25, 0.1, 0.25, 1],
             }}
-            className="aspect-[16/11]  w-full lg:w-96 bg-slate-700 rounded-xl flex items-end p-4"
+            className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-xl p-4 relative flex flex-col justify-between"
           >
-            <div className="h-fit">
+            <div className="absolute top-4 left-4">
+              <img
+                src={medicapsImage}
+                alt="IPS Academy"
+                className="w-20 h-20 rounded-full object-cover border-2 border-red-500"
+              />
+            </div>
+            <div className="h-fit mt-auto">
               <h4 className="font-semibold text-xl">IPS ACADEMY</h4>
               <p className="text-neutral-200 text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit

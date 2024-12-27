@@ -6,10 +6,13 @@ import {
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/auth/PrivateRoute";
+import AdminRoute from "./components/auth/AdminRoute";
 import HomescreenLayout from "./components/layouts/HomescreenLayout";
 import Community from "./components/homescreen/Community";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
+import AdminLogin from "./components/auth/AdminLogin";
+import AdminSignup from "./components/auth/AdminSignup";
 import JobList from "./components/jobs/JobList";
 import JobForm from "./components/jobs/JobForm";
 import JobDetail from "./components/jobs/JobDetail";
@@ -39,7 +42,6 @@ import WorkshopRegistration from "./components/workshops/WorkshopRegistration";
 import AdminWorkshopList from "./components/workshops/AdminWorkshopList";
 import AdminWorkshopForm from "./components/workshops/AdminWorkshopForm";
 import FounderSection from "./components/founders/FounderSection";
-// Blog Components
 import BlogList from "./components/blog/BlogList";
 import BlogPost from "./components/blog/BlogPost";
 import BlogAdmin from "./components/blog/BlogAdmin";
@@ -47,6 +49,11 @@ import BlogEditor from "./components/blog/BlogEditor";
 import TeamPage from "./components/team/TeamPage";
 import Products from "./components/products/products";
 import Careerpg from "./components/career/Careerpg";
+import InternshipList from "./components/internship/InternshipList";
+import InternshipDetail from "./components/internship/InternshipDetail";
+import InternshipForm from "./components/internship/InternshipForm";
+import EditInternship from "./components/internship/EditInternship";
+import AdminInternship from "./components/internship/AdminInternship";
 import "./App.css";
 
 export default function App() {
@@ -54,7 +61,6 @@ export default function App() {
     <AuthProvider>
       <Router>
         <div className="min-h-screen">
-          {/* Navbar */}
           <div className="md:flex hidden">
             <Navbar />
           </div>
@@ -62,63 +68,52 @@ export default function App() {
             <MobileNavbar />
           </div>
 
-          {/* Main Content */}
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<HomescreenLayout />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/admin/admin-signup" element={<Signup />} />
+            <Route path="/sign-up" element={<Signup />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/signup" element={<AdminSignup />} />
             <Route path="/community" element={<Community />} />
             <Route path="/founders" element={<FounderSection />} />
             <Route path="/teams" element={<TeamPage />} />
             <Route path="/merchandise" element={<Products />} />
             <Route path="/career" element={<Careerpg />} />
-
-            {/* Public News Routes */}
             <Route path="/news" element={<PublicNewsList />} />
             <Route path="/news/:id" element={<NewsDetail />} />
-
-            {/* Job Routes */}
             <Route path="/jobs" element={<JobList />} />
             <Route path="/jobs/:id" element={<JobDetail />} />
-            <Route
-              path="/admin/jobs"
-              element={
-                <PrivateRoute>
-                  <AdminJob />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/jobs/new"
-              element={
-                <PrivateRoute>
-                  <JobForm />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/jobs/:id/edit"
-              element={
-                <PrivateRoute>
-                  <EditJob />
-                </PrivateRoute>
-              }
-            />
+            <Route path="/events" element={<EventList />} />
+            <Route path="/events/:id" element={<EventDetails />} />
+            <Route path="/internships" element={<InternshipList />} />
+            <Route path="/internships/:id" element={<InternshipDetail />} />
 
-            {/* Certificate Routes */}
             <Route
-              path="/certificate/generate"
-              element={
-                <PrivateRoute>
-                  <CertificateForm />
-                </PrivateRoute>
-              }
+              path="/events/:id/register"
+              element={<EventRegistration />}
             />
             <Route
-              path="/certificate/preview"
+              path="/events/ticket/:ticketId"
+              element={<EventTicketDisplay />}
+            />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/workshops" element={<WorkshopList />} />
+            <Route path="/workshops/:id" element={<WorkshopDetails />} />
+            <Route
+              path="/workshops/:id/register"
+              element={<WorkshopRegistration />}
+            />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/failure" element={<PaymentFailure />} />
+
+            {/* Protected User Routes */}
+            <Route
+              path="/my-tickets"
               element={
                 <PrivateRoute>
-                  <CertificatePreview />
+                  <UserTickets />
                 </PrivateRoute>
               }
             />
@@ -131,139 +126,170 @@ export default function App() {
               }
             />
 
-            {/* Public Event Routes */}
-            <Route path="/events" element={<EventList />} />
-            <Route path="/events/:id" element={<EventDetails />} />
+            {/* Protected Admin Routes */}
             <Route
-              path="/events/:id/register"
-              element={<EventRegistration />}
-            />
-            <Route
-              path="/events/ticket/:ticketId"
-              element={<EventTicketDisplay />}
-            />
-
-            {/* Protected Event Routes */}
-            <Route
-              path="/my-tickets"
+              path="/admin/jobs"
               element={
-                <PrivateRoute>
-                  <UserTickets />
-                </PrivateRoute>
+                <AdminRoute>
+                  <AdminJob />
+                </AdminRoute>
               }
             />
             <Route
-              path="/admin/events"
+              path="/jobs/new"
               element={
-                <PrivateRoute>
-                  <AdminEventForm />
-                </PrivateRoute>
+                <AdminRoute>
+                  <JobForm />
+                </AdminRoute>
               }
             />
             <Route
-              path="/admin/events/new"
+              path="/jobs/:id/edit"
               element={
-                <PrivateRoute>
-                  <AdminEventForm />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/events/:id/edit"
-              element={
-                <PrivateRoute>
-                  <AdminEventForm />
-                </PrivateRoute>
-              }
-            />
-            {/* Blog Routes - Public */}
-            <Route path="/blog" element={<BlogList />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-
-            {/* Blog Routes - Admin */}
-            <Route
-              path="/admin/blog"
-              element={
-                <PrivateRoute>
-                  <BlogAdmin />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/blog/new"
-              element={
-                <PrivateRoute>
-                  <BlogEditor />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/admin/blog/:id/edit"
-              element={
-                <PrivateRoute>
-                  <BlogEditor />
-                </PrivateRoute>
+                <AdminRoute>
+                  <EditJob />
+                </AdminRoute>
               }
             />
 
-            {/* Payment Routes */}
-            <Route path="/payment/success" element={<PaymentSuccess />} />
-            <Route path="/payment/failure" element={<PaymentFailure />} />
-
-            {/* Protected News Routes */}
             <Route
               path="/admin/news"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <AdminNewsList />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
             <Route
               path="/admin/news/new"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <NewsForm />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
             <Route
               path="/admin/news/:id/edit"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <NewsForm />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
-            <Route path="/workshops" element={<WorkshopList />} />
-            <Route path="/workshops/:id" element={<WorkshopDetails />} />
+
             <Route
-              path="/workshops/:id/register"
-              element={<WorkshopRegistration />}
+              path="/admin/events"
+              element={
+                <AdminRoute>
+                  <AdminEventList />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/events/new"
+              element={
+                <AdminRoute>
+                  <AdminEventForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/events/:id/edit"
+              element={
+                <AdminRoute>
+                  <AdminEventForm />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="/admin/blog"
+              element={
+                <AdminRoute>
+                  <BlogAdmin />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/blog/new"
+              element={
+                <AdminRoute>
+                  <BlogEditor />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/blog/:id/edit"
+              element={
+                <AdminRoute>
+                  <BlogEditor />
+                </AdminRoute>
+              }
             />
 
             <Route
               path="/admin/workshops"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <AdminWorkshopList />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
             <Route
               path="/admin/workshops/new"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <AdminWorkshopForm />
-                </PrivateRoute>
+                </AdminRoute>
               }
             />
             <Route
               path="/admin/workshops/:id/edit"
               element={
-                <PrivateRoute>
+                <AdminRoute>
                   <AdminWorkshopForm />
-                </PrivateRoute>
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="/certificate/generate"
+              element={
+                <AdminRoute>
+                  <CertificateForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/certificate/preview"
+              element={
+                <AdminRoute>
+                  <CertificatePreview />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/internships"
+              element={
+                <AdminRoute>
+                  <AdminInternship />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/internships/new"
+              element={
+                <AdminRoute>
+                  <InternshipForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/internships/:id/edit"
+              element={
+                <AdminRoute>
+                  <EditInternship />
+                </AdminRoute>
               }
             />
           </Routes>

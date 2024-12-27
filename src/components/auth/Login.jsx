@@ -1,4 +1,4 @@
-// Login.jsx
+// components/auth/Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#121212]">
+    <div className="min-h-screen flex items-center justify-center bg-black">
       <div className="w-full max-w-md p-8 bg-[#212121] rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-[#db0606] to-red-600 text-transparent bg-clip-text">
           BAD TALKS
@@ -77,10 +77,21 @@ const Login = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+        <p className="mt-4 text-center text-gray-400">
+          Don't have an account?{' '}
+          <Link to="/sign-up" className="text-red-500 hover:text-red-400">
+            Sign Up
+          </Link>
+        </p>
+        <p className="mt-2 text-center text-gray-400">
+          Are you an admin?{' '}
+          <Link to="/admin/login" className="text-red-500 hover:text-red-400">
+            Admin Login
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
 
 export default Login;
-

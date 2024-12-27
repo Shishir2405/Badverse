@@ -90,7 +90,7 @@ const WorkshopRegistration = () => {
 
       // Navigate based on payment requirement
       if (workshop.isFree) {
-        navigate(`/workshops/registration-success/${registrationRef.id}`);
+        navigate(`/workshop`);
       } else {
         navigate(`/payment/workshop/${registrationRef.id}`);
       }

@@ -76,7 +76,7 @@ const TicketForm = ({ event, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg max-w-md w-full p-6">
+      <div className="bg-opacity-80 backdrop-blur-sm bg-black/55 rounded-lg max-w-md w-full p-6">
         <h2 className="text-2xl font-bold mb-4">
           {event.isFree ? "Register for Event" : "Book Tickets"}
         </h2>
@@ -134,7 +134,7 @@ const TicketForm = ({ event, onClose }) => {
             <button
               type="submit"
               disabled={loading}
-              className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 disabled:opacity-50"
+              className="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 disabled:opacity-50"
             >
               {loading
                 ? "Processing..."
