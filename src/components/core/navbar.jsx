@@ -63,6 +63,12 @@ const MoreLinks = [
     icon: <Globe className="h-4 w-4" />,
   },
   {
+    id: 2,
+    title: "Internship",
+    href: "/internships",
+    icon: <BriefcaseBusiness className="h-4 w-4" />,
+  },
+  {
     id: 3,
     title: "Workshops",
     href: "/workshops",
