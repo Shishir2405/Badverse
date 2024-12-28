@@ -54,6 +54,9 @@ import InternshipDetail from "./components/internship/InternshipDetail";
 import InternshipForm from "./components/internship/InternshipForm";
 import EditInternship from "./components/internship/EditInternship";
 import AdminInternship from "./components/internship/AdminInternship";
+import AdminApplications from "./components/jobs/AdminApplications";
+import WorkshopTickets from "./components/workshops/WorkshopTickets";
+import WorkshopTicketDetail from "./components/workshops/WorkshopTicketDetail";
 import "./App.css";
 
 export default function App() {
@@ -88,6 +91,11 @@ export default function App() {
             <Route path="/events/:id" element={<EventDetails />} />
             <Route path="/internships" element={<InternshipList />} />
             <Route path="/internships/:id" element={<InternshipDetail />} />
+            <Route path="/tickets" element={<WorkshopTickets />} />
+            <Route
+              path="/workshops/ticket/:id"
+              element={<WorkshopTicketDetail />}
+            />
 
             <Route
               path="/events/:id/register"
@@ -140,6 +148,14 @@ export default function App() {
               element={
                 <AdminRoute>
                   <JobForm />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/jobs/application"
+              element={
+                <AdminRoute>
+                  <AdminApplications />
                 </AdminRoute>
               }
             />

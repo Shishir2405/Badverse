@@ -1,7 +1,7 @@
 // src/components/jobs/JobDetail.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
 import {
@@ -16,6 +16,7 @@ import {
   FaShare,
 } from "react-icons/fa";
 import { jobService } from "../../services/jobService";
+import JobApplicationForm from './JobApplicationForm';
 
 const JobDetail = () => {
   const { id } = useParams();
@@ -24,10 +25,33 @@ const JobDetail = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [hasApplied, setHasApplied] = useState(false);
 
   useEffect(() => {
     fetchJobDetails();
   }, [id]);
+
+  useEffect(() => {
+    if (currentUser && id) {
+      checkIfApplied();
+    }
+  }, [currentUser, id]);
+
+  const checkIfApplied = async () => {
+    try {
+      const applicationsRef = collection(db, 'applications');
+      const q = query(
+        applicationsRef, 
+        where('userId', '==', currentUser.uid),
+        where('jobId', '==', id)
+      );
+      const snapshot = await getDocs(q);
+      setHasApplied(!snapshot.empty);
+    } catch (error) {
+      console.error('Error checking application status:', error);
+    }
+  };
 
   const fetchJobDetails = async () => {
     try {
@@ -57,9 +81,13 @@ const JobDetail = () => {
   };
 
   const handleReaction = async () => {
+    if (!currentUser) {
+      navigate('/login');
+      return;
+    }
     try {
       await jobService.toggleReaction(id, currentUser.uid, "like");
-      fetchJobDetails(); // Refresh job details to get updated reactions
+      fetchJobDetails();
     } catch (err) {
       console.error("Error handling reaction:", err);
     }
@@ -172,13 +200,45 @@ const JobDetail = () => {
           </button>
         </div>
 
-        <Link
-          to="/jobs"
-          className="px-6 py-2 text-white rounded-lg transition-colors"
-        >
-          Back to Jobs
-        </Link>
+        <div className="flex space-x-4">
+          {!isOwner && currentUser && !hasApplied && (
+            <button
+              onClick={() => setShowApplicationForm(true)}
+              className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            >
+              Apply Now
+            </button>
+          )}
+          {hasApplied && (
+            <span className="px-6 py-3 bg-green-500/20 text-green-500 rounded-lg">
+              Application Submitted
+            </span>
+          )}
+          {!currentUser && (
+            <Link
+              to="/login"
+              className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+            >
+              Login to Apply
+            </Link>
+          )}
+          <Link
+            to="/jobs"
+            className="px-6 py-3 text-white rounded-lg border border-white hover:bg-gray-800 transition-colors"
+          >
+            Back to Jobs
+          </Link>
+        </div>
       </div>
+
+      {/* Application Form Modal */}
+      {showApplicationForm && (
+        <JobApplicationForm
+          jobId={id}
+          jobTitle={job.title}
+          onClose={() => setShowApplicationForm(false)}
+        />
+      )}
     </div>
   );
 };

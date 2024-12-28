@@ -21,6 +21,8 @@ import {
   Route,
   BookMarked,
   BookType,
+  TicketCheck,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { logo } from "../../assets";
@@ -96,6 +98,12 @@ const MoreLinks = [
     href: "/career",
     icon: <Route className="h-4 w-4" />,
   },
+  {
+    id: 9,
+    title: "My Tickets",
+    href: "/tickets",
+    icon: <TicketCheck className="h-4 w-4" />,
+  },
 ];
 
 const AdminLinks = [
@@ -134,6 +142,12 @@ const AdminLinks = [
     title: "Blog Management",
     href: "/admin/blog",
     icon: <BookType className="h-4 w-4" />,
+  },
+  {
+    id: 7,
+    title: "Internship Management",
+    href: "/admin/internships",
+    icon: <BriefcaseBusiness className="h-4 w-4" />,
   },
 ];
 

@@ -6,6 +6,8 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
+const IMAGES_PER_PAGE = 7;
+
 const images = [
   { id: 1, src: "/1.jpg" },
   { id: 2, src: "/2.jpg" },
@@ -28,6 +30,9 @@ const Gallery = () => {
     width: 0,
     height: 0,
   });
+  const [displayedImages, setDisplayedImages] = useState(images.slice(0, IMAGES_PER_PAGE));
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(images.length > IMAGES_PER_PAGE);
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,6 +43,17 @@ const Gallery = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const startIndex = 0;
+    const endIndex = currentPage * IMAGES_PER_PAGE;
+    setDisplayedImages(images.slice(startIndex, endIndex));
+    setHasMore(endIndex < images.length);
+  }, [currentPage]);
+
+  const loadMore = () => {
+    setCurrentPage(prev => prev + 1);
+  };
+
   const rows = [];
   let row = [];
   let isOddRow = true;
@@ -45,9 +61,8 @@ const Gallery = () => {
   const getImagesPerRow = () =>
     isDesktop ? (isOddRow ? 5 : 4) : isOddRow ? 3 : 2;
 
-  images.forEach((image) => {
+  displayedImages.forEach((image) => {
     row.push(image);
-
     const imagesPerRow = getImagesPerRow();
 
     if (row.length === imagesPerRow) {
@@ -57,7 +72,6 @@ const Gallery = () => {
     }
   });
 
-  // Add remaining images if any
   if (row.length > 0) {
     rows.push(row);
   }
@@ -82,15 +96,15 @@ const Gallery = () => {
   };
 
   const goToNextImage = () => {
-    const currentIndex = images.findIndex((img) => img.id === currentImage.id);
-    const nextIndex = (currentIndex + 1) % images.length;
-    setCurrentImage(images[nextIndex]);
+    const currentIndex = displayedImages.findIndex((img) => img.id === currentImage.id);
+    const nextIndex = (currentIndex + 1) % displayedImages.length;
+    setCurrentImage(displayedImages[nextIndex]);
   };
 
   const goToPreviousImage = () => {
-    const currentIndex = images.findIndex((img) => img.id === currentImage.id);
-    const prevIndex = (currentIndex - 1 + images.length) % images.length;
-    setCurrentImage(images[prevIndex]);
+    const currentIndex = displayedImages.findIndex((img) => img.id === currentImage.id);
+    const prevIndex = (currentIndex - 1 + displayedImages.length) % displayedImages.length;
+    setCurrentImage(displayedImages[prevIndex]);
   };
 
   return (
@@ -102,6 +116,7 @@ const Gallery = () => {
           Ga<span className="text-red-700">lle</span>ry
         </h1>
       </div>
+      
       <div className="flex flex-col items-center mt-24">
         {rows.map((row, rowIndex) => (
           <div
@@ -152,6 +167,15 @@ const Gallery = () => {
             ))}
           </div>
         ))}
+        
+        {hasMore && (
+          <button
+            onClick={loadMore}
+            className="mt-8 px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+          >
+            Load More
+          </button>
+        )}
       </div>
 
       {currentImage && (
@@ -185,30 +209,22 @@ const Gallery = () => {
             <button
               onClick={goToPreviousImage}
               className="absolute left-10 top-1/2 transform -translate-y-1/2 p-4 bg-black text-white rounded-full hover:bg-gray-700 focus:outline-none transition duration-300 ease-in-out shadow-lg hover:scale-110"
-              style={{
-                fontSize: "3rem",
-              }}
             >
-              <FaChevronLeft />
+              <FaChevronLeft size={24} />
             </button>
+            
             <button
               onClick={goToNextImage}
               className="absolute right-10 top-1/2 transform -translate-y-1/2 p-4 bg-black text-white rounded-full hover:bg-gray-700 focus:outline-none transition duration-300 ease-in-out shadow-lg hover:scale-110"
-              style={{
-                fontSize: "3rem",
-              }}
             >
-              <FaChevronRight />
+              <FaChevronRight size={24} />
             </button>
 
             <button
               onClick={closeFullScreen}
               className="absolute top-4 right-4 text-white bg-black bg-opacity-50 p-3 rounded-full hover:bg-opacity-75 hover:scale-110 transition-all duration-200 ease-in-out shadow-lg"
-              style={{
-                fontSize: "2rem",
-              }}
             >
-              <FaTimes />
+              <FaTimes size={24} />
             </button>
           </div>
         </div>

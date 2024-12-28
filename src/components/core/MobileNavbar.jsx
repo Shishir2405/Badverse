@@ -10,9 +10,7 @@ export default function MobileNavbar() {
 
   const NavItems = [
     { id: 1, title: "Home", href: "/" },
-    { id: 2, title: "About", href: "/#about" },
     { id: 3, title: "Teams", href: "/teams" },
-    { id: 4, title: "Contact", href: "/contact" },
     { id: 5, title: "Founders", href: "/founders" },
     { id: 6, title: "Jobs", href: "/jobs" },
     { id: 7, title: "Community", href: "/community" },
@@ -22,6 +20,11 @@ export default function MobileNavbar() {
     { id: 11, title: "Blogs", href: "/blog" },
     { id: 12, title: "Merchandise", href: "/merchandise" },
     { id: 13, title: "Career", href: "/career" },
+    {
+      id: 14,
+      title: "My Tickets",
+      href: "/tickets",
+    },
   ];
 
   const AdminLinks = [
@@ -31,6 +34,11 @@ export default function MobileNavbar() {
     { id: 4, title: "Job Management", href: "/admin/jobs" },
     { id: 5, title: "Certificate Management", href: "/certificate/generate" },
     { id: 6, title: "Blog Management", href: "/admin/blog" },
+    {
+      id: 7,
+      title: "Internship Management",
+      href: "/admin/internships",
+    },
   ];
 
   const handleLogout = async () => {
