@@ -32,7 +32,7 @@ const FeaturedProducts = () => {
       originalPrice: 799,
       currentPrice: 499,
       imageUrl: "/Merch/bshirt1.jpeg",
-      link: "#",
+      link: "https://www.flipkart.com/product/p/itme?pid=TSHH7YFVVMWVKTMH",
     },
     {
       name: "T-shirts",
@@ -48,7 +48,7 @@ const FeaturedProducts = () => {
       originalPrice: 799,
       currentPrice: 499,
       imageUrl: "/Merch/bshirt2.jpeg",
-      link: "#",
+      link: "https://www.flipkart.com/product/p/itme?pid=TSHH7YFD4P3CDCFD",
     },
     {
       name: "T-Shirts",
@@ -56,7 +56,7 @@ const FeaturedProducts = () => {
       originalPrice: 799,
       currentPrice: 499,
       imageUrl: "/Merch/bshirt4.jpeg",
-      link: "#",
+      link: "https://www.flipkart.com/product/p/itme?pid=TSHH7XEBHVFM7VS9",
     },
     {
       name: "Cups",

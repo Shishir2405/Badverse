@@ -46,7 +46,7 @@ const opportunities = [
 function Careerpg() {
   return (
     <div className="pt-24 career-container">
-      <h1 className="career-heading">Career Opportunities</h1>
+      <h1 className="career-heading">INDUSTRIAL PROGRAMS</h1>
 
       <div className="career-row">
         {opportunities.map((opportunity, index) => (

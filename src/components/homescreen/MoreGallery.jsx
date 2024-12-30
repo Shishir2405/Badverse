@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FaExpand,
-  FaChevronLeft,
-  FaChevronRight,
-  FaTimes,
-} from "react-icons/fa";
-import { Link } from "react-router-dom";
-
-const IMAGES_PER_PAGE = 5;
+import { FaExpand, FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
 
 const images = [
   { id: 1, src: "/1.jpg" },
@@ -21,7 +13,7 @@ const images = [
   { id: 9, src: "/9.jpg" },
 ];
 
-const Gallery = () => {
+const MoreGallery = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
@@ -31,11 +23,6 @@ const Gallery = () => {
     width: 0,
     height: 0,
   });
-  const [displayedImages, setDisplayedImages] = useState(
-    images.slice(0, IMAGES_PER_PAGE)
-  );
-  const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(images.length > IMAGES_PER_PAGE);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,17 +33,6 @@ const Gallery = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    const startIndex = 0;
-    const endIndex = currentPage * IMAGES_PER_PAGE;
-    setDisplayedImages(images.slice(startIndex, endIndex));
-    setHasMore(endIndex < images.length);
-  }, [currentPage]);
-
-  const loadMore = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-
   const rows = [];
   let row = [];
   let isOddRow = true;
@@ -64,7 +40,7 @@ const Gallery = () => {
   const getImagesPerRow = () =>
     isDesktop ? (isOddRow ? 5 : 4) : isOddRow ? 3 : 2;
 
-  displayedImages.forEach((image) => {
+  images.forEach((image) => {
     row.push(image);
     const imagesPerRow = getImagesPerRow();
 
@@ -99,20 +75,15 @@ const Gallery = () => {
   };
 
   const goToNextImage = () => {
-    const currentIndex = displayedImages.findIndex(
-      (img) => img.id === currentImage.id
-    );
-    const nextIndex = (currentIndex + 1) % displayedImages.length;
-    setCurrentImage(displayedImages[nextIndex]);
+    const currentIndex = images.findIndex((img) => img.id === currentImage.id);
+    const nextIndex = (currentIndex + 1) % images.length;
+    setCurrentImage(images[nextIndex]);
   };
 
   const goToPreviousImage = () => {
-    const currentIndex = displayedImages.findIndex(
-      (img) => img.id === currentImage.id
-    );
-    const prevIndex =
-      (currentIndex - 1 + displayedImages.length) % displayedImages.length;
-    setCurrentImage(displayedImages[prevIndex]);
+    const currentIndex = images.findIndex((img) => img.id === currentImage.id);
+    const prevIndex = (currentIndex - 1 + images.length) % images.length;
+    setCurrentImage(images[prevIndex]);
   };
 
   return (
@@ -129,13 +100,9 @@ const Gallery = () => {
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="flex justify-center gap-[6px] mb-[6px] flex-wrap"
+            className="flex justify-center gap-2 mb-2 flex-wrap"
             style={{
-              marginTop: isDesktop
-                ? rowIndex % 2 === 0
-                  ? "-45px"
-                  : "-45px"
-                : "-20px",
+              marginTop: isDesktop ? "-45px" : "-20px",
             }}
           >
             {row.map((image) => (
@@ -175,15 +142,6 @@ const Gallery = () => {
             ))}
           </div>
         ))}
-
-        {hasMore && (
-          <Link to="gallery">
-            {" "}
-            <button className="mt-8 px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-              Load More
-            </button>
-          </Link>
-        )}
       </div>
 
       {currentImage && (
@@ -241,4 +199,4 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default MoreGallery;

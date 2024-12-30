@@ -134,9 +134,10 @@ export default function PastEvents() {
             <div className="h-fit mt-auto">
               <h4 className="font-semibold text-xl">IPS ACADEMY</h4>
               <p className="text-neutral-200 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit
-                minus molestiae dolores temporibus ratione. molestiae dolores
-                temporibus ratione.
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod
+                consequatur, corporis quidem rem culpa veniam perspiciatis
+                pariatur ad optio hic magnam tempore voluptatibus voluptate quo!
+                Voluptas perspiciatis provident quas nobis?
               </p>
             </div>
           </motion.div>

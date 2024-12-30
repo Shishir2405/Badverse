@@ -57,6 +57,7 @@ import AdminInternship from "./components/internship/AdminInternship";
 import AdminApplications from "./components/jobs/AdminApplications";
 import WorkshopTickets from "./components/workshops/WorkshopTickets";
 import WorkshopTicketDetail from "./components/workshops/WorkshopTicketDetail";
+import MoreGallery from "./components/homescreen/MoreGallery";
 import "./App.css";
 
 export default function App() {
@@ -92,6 +93,7 @@ export default function App() {
             <Route path="/internships" element={<InternshipList />} />
             <Route path="/internships/:id" element={<InternshipDetail />} />
             <Route path="/tickets" element={<WorkshopTickets />} />
+            <Route path="/gallery" element={<MoreGallery/>} />
             <Route
               path="/workshops/ticket/:id"
               element={<WorkshopTicketDetail />}
