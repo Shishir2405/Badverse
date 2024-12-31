@@ -66,9 +66,7 @@ const AdminJob = () => {
               className="rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 border border-gray-100"
             >
               <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">
-                  {job.title}
-                </h2>
+                <h2 className="text-xl font-semibold mb-2">{job.title}</h2>
                 <p className=" font-medium">{job.company}</p>
               </div>
 
@@ -81,7 +79,7 @@ const AdminJob = () => {
                   <FaClock className="mr-2" />
                   {job.type}
                 </div>
-                <div className="">${job.salary}</div>
+                <div className="">₹{job.salary}</div>
               </div>
 
               <div className="flex justify-between items-center">

@@ -48,7 +48,6 @@ const BlogList = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header with Particles */}
       <div className="relative h-[30em] mb-12">
         {isParticlesReady && (
           <div className="absolute inset-0 [mask-image:radial-gradient(50%_50%,white,transparent_95%)]">
@@ -70,25 +69,27 @@ const BlogList = () => {
             />
           </div>
         )}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(239, 68, 68, 0.2) 0%, rgba(0, 0, 0, 0) 70%)",
-          }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-red-500/20 to-transparent" />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/50">
           <h1 className="text-8xl font-bold text-red-500 animate-pulse">BLOGS</h1>
         </div>
       </div>
 
-      {/* Blog List */}
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map((blog) => (
             <div key={blog.id} className="group">
               <div className="bg-gray-900 rounded-lg overflow-hidden border border-red-600/30 transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg group-hover:shadow-red-500/20">
-                {blog.coverImageUrl && (
+                {blog.youtubeUrl ? (
+                  <div className="w-full aspect-video">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${blog.youtubeUrl}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ) : blog.coverImageUrl && (
                   <img
                     src={blog.coverImageUrl}
                     alt={blog.title}

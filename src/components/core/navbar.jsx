@@ -74,12 +74,13 @@ const MoreLinks = [
     href: "/workshops",
     icon: <Rocket className="h-4 w-4" />,
   },
-  {
-    id: 4,
-    title: "News",
-    href: "/news",
-    icon: <Newspaper className="h-4 w-4" />,
-  },
+  // {
+  //   id: 4,
+  //   title: "News",
+  //   href: "/news",
+  //   icon: <Newspaper className="h-4 w-4" />,
+  // },
+  
   {
     id: 5,
     title: "Events",
@@ -100,7 +101,7 @@ const MoreLinks = [
   },
   {
     id: 8,
-    title: "Career",
+    title: "Industry Opportunity",
     href: "/career",
     icon: <Route className="h-4 w-4" />,
   },

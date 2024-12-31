@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import eventvideo from "/videopast.mp4";
 import medicapsImage from "/logo.png";
+import rgpvImage from "/logo.png"; // Assuming you have an image for RGPV Bhopal
 
 export default function PastEvents() {
   return (
@@ -51,7 +52,7 @@ export default function PastEvents() {
               From inspiring keynote speakers to interactive workshops, our past
               college events brought together bright minds, bold ideas, and
               boundless energy—sparking innovation, collaboration, and
-              unforgettable experiences for students and leaders alike!{" "}
+              unforgettable experiences for students and leaders alike!
             </p>
           </div>
           <div className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl p-4 relative flex flex-col justify-between">
@@ -68,7 +69,7 @@ export default function PastEvents() {
                 At IPS Academy, B.A.D. Talks brought the buzz! From CEO stories
                 to hands-on workshops, students connected, learned, and left
                 fired up to chase their entrepreneurial dreams with fresh
-                ideas!.
+                ideas!
               </p>
             </div>
           </div>
@@ -113,6 +114,7 @@ export default function PastEvents() {
             </div>
           </motion.div>
 
+          {/* RGPV Bhopal Event */}
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -126,18 +128,19 @@ export default function PastEvents() {
           >
             <div className="absolute top-4 left-4">
               <img
-                src={medicapsImage}
-                alt="IPS Academy"
+                src={rgpvImage}
+                alt="RGPV Bhopal"
                 className="w-20 h-20 rounded-full object-cover border-2 border-red-500"
               />
             </div>
             <div className="h-fit mt-auto">
-              <h4 className="font-semibold text-xl">IPS ACADEMY</h4>
+              <h4 className="font-semibold text-xl">RGPV BHOPAL</h4>
               <p className="text-neutral-200 text-sm">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod
-                consequatur, corporis quidem rem culpa veniam perspiciatis
-                pariatur ad optio hic magnam tempore voluptatibus voluptate quo!
-                Voluptas perspiciatis provident quas nobis?
+                At RGPV Bhopal, B.A.D. Talks created an electrifying atmosphere!
+                From hands-on workshops to inspirational talks, students
+                connected, collaborated, and left with fresh ideas and
+                determination to make a difference in their entrepreneurial
+                journeys.
               </p>
             </div>
           </motion.div>

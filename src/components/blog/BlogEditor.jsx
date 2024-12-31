@@ -16,8 +16,9 @@ const BlogEditor = () => {
     description: "",
     content: "",
     coverImageUrl: "",
-    author: "", // Added author field
-    tags: [] // Added tags field
+    author: "",
+    tags: [],
+    youtubeUrl: "" // Added YouTube URL field
   });
 
   const modules = {
@@ -30,6 +31,20 @@ const BlogEditor = () => {
       ["link", "image"],
       ["clean"]
     ]
+  };
+
+  const validateForm = () => {
+    if (!formData.title.trim()) return "Title is required";
+    if (!formData.description.trim()) return "Description is required";
+    if (!formData.content.trim()) return "Content is required";
+    if (!formData.author.trim()) return "Author name is required";
+    return null;
+  };
+
+  const processYoutubeUrl = (url) => {
+    if (!url) return "";
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/);
+    return match ? match[1] : "";
   };
 
   useEffect(() => {
@@ -49,33 +64,14 @@ const BlogEditor = () => {
           content: postData.content || "",
           coverImageUrl: postData.coverImageUrl || "",
           author: postData.author || "",
-          tags: postData.tags || []
+          tags: postData.tags || [],
+          youtubeUrl: postData.youtubeUrl || ""
         });
       }
     } catch (error) {
       setError("Error fetching post");
       console.error("Error:", error);
     }
-  };
-
-  const handleImageLinkChange = (e) => {
-    setFormData({ ...formData, coverImageUrl: e.target.value });
-  };
-
-  const handleTagChange = (e) => {
-    const tagValue = e.target.value;
-    setFormData({ 
-      ...formData, 
-      tags: tagValue.split(',').map(tag => tag.trim()).filter(tag => tag) 
-    });
-  };
-
-  const validateForm = () => {
-    if (!formData.title.trim()) return "Title is required";
-    if (!formData.description.trim()) return "Description is required";
-    if (!formData.content.trim()) return "Content is required";
-    if (!formData.author.trim()) return "Author name is required";
-    return null;
   };
 
   const handleSubmit = async (e) => {
@@ -90,6 +86,7 @@ const BlogEditor = () => {
     setError(null);
 
     try {
+      const youtubeVideoId = processYoutubeUrl(formData.youtubeUrl);
       const postData = {
         title: formData.title.trim(),
         description: formData.description.trim(),
@@ -97,6 +94,7 @@ const BlogEditor = () => {
         coverImageUrl: formData.coverImageUrl,
         author: formData.author.trim(),
         tags: formData.tags,
+        youtubeUrl: youtubeVideoId,
         updatedAt: new Date().toISOString()
       };
 
@@ -145,6 +143,31 @@ const BlogEditor = () => {
           </div>
 
           <div className="form-group">
+            <label className="block text-xl text-red-500 mb-2">YouTube URL</label>
+            <input
+              type="url"
+              value={formData.youtubeUrl}
+              onChange={(e) => setFormData({ ...formData, youtubeUrl: e.target.value })}
+              placeholder="Enter YouTube video URL"
+              className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+            {formData.youtubeUrl && processYoutubeUrl(formData.youtubeUrl) && (
+              <div className="mt-4">
+                <iframe
+                  width="100%"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${processYoutubeUrl(formData.youtubeUrl)}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="rounded-lg"
+                ></iframe>
+              </div>
+            )}
+          </div>
+
+          {/* Rest of your existing form fields */}
+          <div className="form-group">
             <label className="block text-xl text-red-500 mb-2">Author</label>
             <input
               type="text"
@@ -170,7 +193,7 @@ const BlogEditor = () => {
             <input
               type="url"
               value={formData.coverImageUrl}
-              onChange={handleImageLinkChange}
+              onChange={(e) => setFormData({ ...formData, coverImageUrl: e.target.value })}
               placeholder="Enter image URL"
               className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
             />
@@ -191,7 +214,13 @@ const BlogEditor = () => {
             <input
               type="text"
               value={formData.tags.join(', ')}
-              onChange={handleTagChange}
+              onChange={(e) => {
+                const tagValue = e.target.value;
+                setFormData({ 
+                  ...formData, 
+                  tags: tagValue.split(',').map(tag => tag.trim()).filter(tag => tag) 
+                });
+              }}
               placeholder="Enter tags separated by commas"
               className="w-full bg-gray-900 text-white rounded-lg p-3 border border-red-600/30 focus:outline-none focus:ring-2 focus:ring-red-500"
             />

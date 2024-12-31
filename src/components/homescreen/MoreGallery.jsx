@@ -87,7 +87,7 @@ const MoreGallery = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="min-h-screen p-4 md:p-8 pt-24">
       <div className="relative w-fit mx-auto">
         <span className="h-[1px] w-36 bg-white absolute -bottom-2 -right-9" />
         <span className="h-[1px] w-36 bg-white absolute -top-2 -left-9" />

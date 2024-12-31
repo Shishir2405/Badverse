@@ -1,6 +1,3 @@
-
-
-// BlogPost.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../../config/firebase";
@@ -85,6 +82,18 @@ const BlogPost = () => {
           <div className="text-xl text-gray-300 leading-relaxed mb-8">
             {post.description}
           </div>
+
+          {post.youtubeUrl && (
+            <div className="aspect-w-16 aspect-h-9 mb-8">
+              <iframe
+                src={`https://www.youtube.com/embed/${post.youtubeUrl}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full rounded-lg"
+                style={{ minHeight: "400px" }}
+              ></iframe>
+            </div>
+          )}
           
           <div className="prose prose-red prose-invert max-w-none">
             <ReactQuill

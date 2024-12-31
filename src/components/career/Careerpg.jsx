@@ -1,45 +1,43 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Careerpg.css";
 
-// Example opportunities data
 const opportunities = [
   {
+    id: "software-engineer",
     type: "Job",
     title: "Software Engineer at TechCorp",
-    description:
-      "Work on cutting-edge technologies in a collaborative environment.",
-    buttonLabel: "Apply Now",
+    description: "Work on cutting-edge technologies in a collaborative environment.",
   },
   {
+    id: "data-scientist",
     type: "Job",
     title: "Data Scientist at InnovateAI",
     description: "Analyze large datasets to build predictive models.",
-    buttonLabel: "Apply Now",
   },
   {
+    id: "frontend-intern",
     type: "Internship",
     title: "Frontend Developer Intern at DevStart",
     description: "Gain experience building modern web interfaces.",
-    buttonLabel: "Apply Now",
   },
   {
+    id: "marketing-intern",
     type: "Internship",
     title: "Marketing Intern at BrandBoost",
     description: "Assist in digital marketing campaigns and content creation.",
-    buttonLabel: "Apply Now",
   },
   {
+    id: "tech-cofounder",
     type: "Co-Founder",
     title: "Tech Co-Founder for EdTech Startup",
     description: "Join a growing startup focused on revolutionizing education.",
-    buttonLabel: "Apply Now",
   },
   {
+    id: "business-cofounder",
     type: "Co-Founder",
     title: "Business Strategist for FinTech Company",
-    description:
-      "Shape the business strategy of an innovative financial platform.",
-    buttonLabel: "Apply Now",
+    description: "Shape the business strategy of an innovative financial platform.",
   },
 ];
 
@@ -49,12 +47,14 @@ function Careerpg() {
       <h1 className="career-heading">INDUSTRIAL PROGRAMS</h1>
 
       <div className="career-row">
-        {opportunities.map((opportunity, index) => (
-          <div className="career-box" key={index}>
+        {opportunities.map((opportunity) => (
+          <div className="career-box" key={opportunity.id}>
             <h2>{opportunity.type}</h2>
             <h3>{opportunity.title}</h3>
             <p>{opportunity.description}</p>
-            <button className="career-btn">{opportunity.buttonLabel}</button>
+            <Link to={`/career/${opportunity.id}`} className="career-btn">
+              Apply Now
+            </Link>
           </div>
         ))}
       </div>
