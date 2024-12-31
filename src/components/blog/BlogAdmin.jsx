@@ -63,12 +63,12 @@ const BlogAdmin = () => {
     <div className="min-h-screen bg-black text-white p-8 pt-24">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-red-500">Manage Blogs</h1>
+          <h1 className="text-4xl font-bold text-red-500">Manage BlogCast</h1>
           <Link
             to="/admin/blog/new"
             className="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-md transition-colors duration-200"
           >
-            Create New Blog
+            Create New BlogCast
           </Link>
         </div>
 

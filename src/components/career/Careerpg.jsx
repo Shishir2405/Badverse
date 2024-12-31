@@ -4,43 +4,20 @@ import "./Careerpg.css";
 
 const opportunities = [
   {
-    id: "software-engineer",
-    type: "Job",
-    title: "Software Engineer at TechCorp",
-    description: "Work on cutting-edge technologies in a collaborative environment.",
+    id: "drift",
+    type: "Industrial Training",
+    title: "DRIFT Program - Drone Technology",
+    description:
+      "Join our comprehensive drone training program covering operations, safety, and maintenance. Get certified and placed with leading drone companies.",
   },
   {
-    id: "data-scientist",
-    type: "Job",
-    title: "Data Scientist at InnovateAI",
-    description: "Analyze large datasets to build predictive models.",
-  },
-  {
-    id: "frontend-intern",
-    type: "Internship",
-    title: "Frontend Developer Intern at DevStart",
-    description: "Gain experience building modern web interfaces.",
-  },
-  {
-    id: "marketing-intern",
-    type: "Internship",
-    title: "Marketing Intern at BrandBoost",
-    description: "Assist in digital marketing campaigns and content creation.",
-  },
-  {
-    id: "tech-cofounder",
-    type: "Co-Founder",
-    title: "Tech Co-Founder for EdTech Startup",
-    description: "Join a growing startup focused on revolutionizing education.",
-  },
-  {
-    id: "business-cofounder",
-    type: "Co-Founder",
-    title: "Business Strategist for FinTech Company",
-    description: "Shape the business strategy of an innovative financial platform.",
+    id: "bizeeHR",
+    type: "Industrial Training",
+    title: "BizeeHR Industrial Program",
+    description:
+      "Start your HR career with hands-on training, internship experience, and job placement support in top companies.",
   },
 ];
-
 function Careerpg() {
   return (
     <div className="pt-24 career-container">

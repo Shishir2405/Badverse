@@ -164,7 +164,7 @@ export default function HeroPage() {
                 <Counter from={150} to={450} />+
               </h3>
               <p className="text-center text-black text-[13px] font-semibold min-[380px]:text-base">
-                Intership Opportunities
+                Internship Opportunities
               </p>
             </div>
             <div className=" p-0.5 w-[90%] flex rounded-lg gap-2  items-center z-[9999999999]">

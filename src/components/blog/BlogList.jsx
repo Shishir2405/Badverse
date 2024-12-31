@@ -71,7 +71,7 @@ const BlogList = () => {
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-red-500/20 to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <h1 className="text-8xl font-bold text-red-500 animate-pulse">BLOGS</h1>
+          <h1 className="text-8xl font-bold text-red-500 animate-pulse">BLOGCAST</h1>
         </div>
       </div>
 
@@ -117,7 +117,7 @@ const BlogList = () => {
 
           {blogs.length === 0 && (
             <div className="col-span-full text-center py-12">
-              <p className="text-gray-400 text-lg">No blog posts found.</p>
+              <p className="text-gray-400 text-lg">No blogcast posts found.</p>
             </div>
           )}
         </div>

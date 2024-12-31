@@ -89,7 +89,7 @@ const MoreLinks = [
   },
   {
     id: 6,
-    title: "Blogs",
+    title: "BlogCast",
     href: "/blog",
     icon: <BookMarked className="h-4 w-4" />,
   },

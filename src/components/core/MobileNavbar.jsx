@@ -22,7 +22,7 @@ export default function MobileNavbar() {
     { id: 8, title: "Workshops", href: "/workshops" },
     // { id: 9, title: "News", href: "/news" },
     { id: 10, title: "Events", href: "/events" },
-    { id: 11, title: "Blogs", href: "/blog" },
+    { id: 11, title: "BlogCast", href: "/blog" },
     { id: 12, title: "Merchandise", href: "/merchandise" },
     { id: 13, title: "Industry Opportunity", href: "/career" },
     {

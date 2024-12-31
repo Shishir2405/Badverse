@@ -121,7 +121,7 @@ const BlogEditor = () => {
     <div className="min-h-screen bg-black text-white p-8 pt-24">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-red-500 mb-8">
-          {id ? "Edit Blog Post" : "Create New Blog Post"}
+          {id ? "Edit BlogCast Post" : "Create New BlogCast Post"}
         </h1>
 
         {error && (
