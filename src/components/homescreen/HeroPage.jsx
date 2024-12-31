@@ -205,7 +205,7 @@ export default function HeroPage() {
               <h3 className="text-red-500 font-semibold text-xl">
                 <Counter from={150} to={450} />+
               </h3>
-              <p className="text-center">Intership Opportunities</p>
+              <p className="text-center">Internship Opportunities</p>
             </div>
             <div className="bg-neutral-800 w-full flex-1 rounded-lg flex flex-col justify-center items-center ">
               <h3>
