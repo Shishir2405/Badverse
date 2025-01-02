@@ -1,4 +1,3 @@
-// BlogList.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../config/firebase";
@@ -48,7 +47,7 @@ const BlogList = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="relative h-[30em] mb-12">
+      <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[30em] mb-8 sm:mb-12">
         {isParticlesReady && (
           <div className="absolute inset-0 [mask-image:radial-gradient(50%_50%,white,transparent_95%)]">
             <Particles
@@ -71,7 +70,9 @@ const BlogList = () => {
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-red-500/20 to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-          <h1 className="text-8xl font-bold text-red-500 animate-pulse">BLOGCAST</h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-red-500 animate-pulse px-4 text-center">
+            BLOGCAST
+          </h1>
         </div>
       </div>
 
