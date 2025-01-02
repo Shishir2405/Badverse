@@ -23,6 +23,7 @@ import {
   BookType,
   TicketCheck,
   BriefcaseBusiness,
+  GlobeLock
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { logo } from "../../assets";
@@ -156,6 +157,13 @@ const AdminLinks = [
     href: "/admin/internships",
     icon: <BriefcaseBusiness className="h-4 w-4" />,
   },
+  {
+    id: 8,
+    title: "Privacy & Policy",
+    href: "/admin/privacy-policy",
+    icon:<GlobeLock className="h-4 w-4" />,
+  },
+
 ];
 
 const Navbar = () => {

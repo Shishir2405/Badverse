@@ -8,7 +8,7 @@ export default function Timeline() {
         <span className="h-[1px] w-36 bg-white absolute -bottom-2 -right-9" />
         <span className="h-[1px] w-36 bg-white absolute -top-2 -left-9" />
         <h1 className="text-center font-bold text-5xl">
-          History Of <span className="text-red-700">Badtalks</span>
+          History Of <span className="text-red-700">BADVERSE</span>
         </h1>
       </div>
       <div className="relative hidden md:block">
@@ -122,10 +122,10 @@ export default function Timeline() {
             </motion.div>
             <div className="order-1 w-5/12 px-5 py-3 rounded-xl bg-neutral-900/90 border border-neutral-700 shadow-xl hover:-translate-y-1 transition-all duration-300">
               <h3 className="mb-2 font-bold text-white text-sm md:text-lg">
-                BAD TALKS
+                BADVERSE
               </h3>
               <p className="text-xs sm:text-sm leading-snug tracking-wide text-neutral-300">
-              (Late 2024)
+                (Late 2024)
               </p>
             </div>
           </motion.div>

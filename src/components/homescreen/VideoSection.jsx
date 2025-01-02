@@ -28,7 +28,7 @@ export default function VideoSection() {
         <div className="flex justify-between items-center text-xs md:text-lg">
           <article className="flex-1 py-6 px-2 space-y-4">
             <p>
-              Bad Talks provides a brilliant opportunity for you to forge
+              BADVERSE provides a brilliant opportunity for you to forge
               professional contacts and make new friends. Grab your chance of
               connecting with people to discuss ideas and opportunities.
             </p>

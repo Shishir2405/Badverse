@@ -177,7 +177,7 @@ const CertificatePreview = () => {
           <p className="font-mono text-lg">{id}</p>
           <p className="text-sm text-gray-500 mt-2">
             Use this ID to verify the certificate at{" "}
-            <span className="font-semibold">verify.badtalks.com</span>
+            <span className="font-semibold">verify.BADVERSE.com</span>
           </p>
         </div>
       </div>

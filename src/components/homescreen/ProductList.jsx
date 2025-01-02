@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedProducts = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
+
+  const handleShopNow = (link) => {
+    if (link === "#") {
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        navigate("/events");
+      }, 3000);
+    } else {
+      window.location.href = link;
+    }
+  };
+
   const products = [
     {
       name: "T-Shirts",
@@ -75,27 +91,34 @@ const FeaturedProducts = () => {
       link: "#",
     },
   ];
-
   return (
-    <section className="py-10">
+    <section className="py-10 relative">
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/70">
+          <div className="bg-gray-900 p-6 py-12 rounded-lg border-2 border-red-500">
+            <p className="text-white text-xl">
+              Enroll in Badverse events for this merchandise
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8 text-white">
           Featured Products
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {products.map((product, index) => (
-            <div key={index} className="flex flex-col items-center ">
+            <div key={index} className="flex flex-col items-center">
               <div
-                className="w-full h-[200px] sm:h-[250px] lg:h-[300px] bg-cover bg-center "
+                className="w-full h-[200px] sm:h-[250px] lg:h-[300px] bg-cover bg-center"
                 style={{ backgroundImage: `url(${product.imageUrl})` }}
               ></div>
-
               <div className="text-center mt-4">
                 <h3 className="text-lg sm:text-xl font-semibold text-white mb-1">
                   {product.name}
                 </h3>
                 <p className="text-sm text-gray-400 mb-3">{product.category}</p>
-
                 <div className="mb-3">
                   <p className="text-lg font-semibold text-red-500">
                     ₹{product.currentPrice.toFixed(2)}
@@ -104,12 +127,12 @@ const FeaturedProducts = () => {
                     Original: ₹{product.originalPrice.toFixed(2)}
                   </p>
                 </div>
-
-                <a href={product.link}>
-                  <button className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-6 transition duration-300">
-                    Shop Now
-                  </button>
-                </a>
+                <button
+                  onClick={() => handleShopNow(product.link)}
+                  className="bg-red-600 hover:bg-red-700 text-white text-sm py-2 px-6 transition duration-300"
+                >
+                  Shop Now
+                </button>
               </div>
             </div>
           ))}

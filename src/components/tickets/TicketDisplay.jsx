@@ -1,8 +1,8 @@
 // src/components/tickets/TicketDisplay.jsx
-import React, { useRef } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
-import moment from 'moment';
-import html2canvas from 'html2canvas';
+import React, { useRef } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import moment from "moment";
+import html2canvas from "html2canvas";
 
 const TicketDisplay = ({ ticket, event }) => {
   const ticketRef = useRef();
@@ -11,7 +11,7 @@ const TicketDisplay = ({ ticket, event }) => {
     const ticketElement = ticketRef.current;
     if (ticketElement) {
       const canvas = await html2canvas(ticketElement);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.download = `ticket-${ticket.id}.png`;
       link.href = canvas.toDataURL();
       link.click();
@@ -39,7 +39,7 @@ const TicketDisplay = ({ ticket, event }) => {
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6">
           <h2 className="text-2xl font-bold">{event.title}</h2>
           <p className="opacity-90">
-            {moment(event.date).format('MMMM DD, YYYY • hh:mm A')}
+            {moment(event.date).format("MMMM DD, YYYY • hh:mm A")}
           </p>
         </div>
 
@@ -60,16 +60,21 @@ const TicketDisplay = ({ ticket, event }) => {
               <div>
                 <h3 className="text-sm text-gray-600">Ticket Type</h3>
                 <p className="font-semibold">
-                  {event.isFree ? 'Free Registration' : 'Paid Ticket'}
+                  {event.isFree ? "Free Registration" : "Paid Ticket"}
                 </p>
               </div>
 
               <div>
                 <h3 className="text-sm text-gray-600">Status</h3>
-                <p className={`font-semibold ${
-                  ticket.status === 'confirmed' ? 'text-green-600' : 'text-yellow-600'
-                }`}>
-                  {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
+                <p
+                  className={`font-semibold ${
+                    ticket.status === "confirmed"
+                      ? "text-green-600"
+                      : "text-yellow-600"
+                  }`}
+                >
+                  {ticket.status.charAt(0).toUpperCase() +
+                    ticket.status.slice(1)}
                 </p>
               </div>
             </div>
@@ -90,7 +95,7 @@ const TicketDisplay = ({ ticket, event }) => {
         <div className="bg-gray-50 px-6 py-4">
           <div className="text-center text-sm text-gray-600">
             <p>Present this ticket at the venue entrance</p>
-            <p className="mt-1">For support, contact: support@badtalks.com</p>
+            <p className="mt-1">For support, contact: support@BADVERSE.com</p>
           </div>
         </div>
       </div>

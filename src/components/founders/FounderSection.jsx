@@ -16,7 +16,7 @@ const FounderSection = () => {
       name: "Banjamin Miller",
       title: "CEO",
       image: "/ban2.jpeg",
-      desc: "Benjamin Miller, CEO of BADVERSE, specializes in Marcom and Business Development. A social entrepreneur and Colorado State University graduate, he drives ethical, scalable, and technical solutions, inspiring impactful growth through BAD TALKS.",
+      desc: "Benjamin Miller, CEO of BADVERSE, specializes in Marcom and Business Development. A social entrepreneur and Colorado State University graduate, he drives ethical, scalable, and technical solutions, inspiring impactful growth through BADVERSE.",
       linkedin: "https://www.linkedin.com/in/benjaminemiller/",
     },
     {
@@ -25,7 +25,8 @@ const FounderSection = () => {
       title: "Executive Advisor",
       image: "/u2.jpeg",
       desc: "Vinay Nangia, Executive Advisor at BADVERSE, brings strategic expertise to guide impactful decisions. With a wealth of experience, he empowers innovation, fosters growth, and inspires success across diverse ventures.",
-      linkedin: "https://www.linkedin.com/in/prof-vinay-nangia-760a6360/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+      linkedin:
+        "https://www.linkedin.com/in/prof-vinay-nangia-760a6360/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     },
     {
       id: 4,
@@ -48,7 +49,7 @@ const FounderSection = () => {
       name: "Shivanshi Gupta",
       title: "Project Lead",
       image: "/shivanshi2.png",
-      desc: "Lead Developer of Bad Talks and cofounder of Mittal Branding, known for delivering innovative strategies and impactful solutions for diverse projects with creative vision and technical precision as a web developer.",
+      desc: "Lead Developer of BADVERSE and cofounder of Mittal Branding, known for delivering innovative strategies and impactful solutions for diverse projects with creative vision and technical precision as a web developer.",
       linkedin:
         "https://www.linkedin.com/in/shivanshi-gupta-frontend-developer/",
     },
@@ -67,7 +68,7 @@ const FounderSection = () => {
             Meet Our Founders
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto px-4">
-            The visionaries behind BAD TALKS, bringing innovation and excellence
+            The visionaries behind BADVERSE, bringing innovation and excellence
             to every event.
           </p>
         </motion.div>

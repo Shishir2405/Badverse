@@ -1,16 +1,16 @@
 // components/auth/Signup.jsx
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: ''
+    username: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { signup } = useAuth();
@@ -21,17 +21,19 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
       await signup(formData.email, formData.password);
-      navigate('/');
+      navigate("/");
     } catch (err) {
       setError(
-        err.code === 'auth/email-already-in-use' ? 'Email already in use' :
-        err.code === 'auth/weak-password' ? 'Password should be at least 6 characters' :
-        'Failed to create account. Please try again.'
+        err.code === "auth/email-already-in-use"
+          ? "Email already in use"
+          : err.code === "auth/weak-password"
+          ? "Password should be at least 6 characters"
+          : "Failed to create account. Please try again."
       );
     } finally {
       setLoading(false);
@@ -42,7 +44,7 @@ const Signup = () => {
     <div className="min-h-screen flex items-center justify-center bg-[#121212]">
       <div className="w-full max-w-md p-8 bg-[#212121] rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-[#db0606] to-red-600 text-transparent bg-clip-text">
-          BAD TALKS
+          BADVERSE
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="relative">
@@ -87,17 +89,17 @@ const Signup = () => {
             disabled={loading}
             className="w-full py-2 bg-gray-50 hover:bg-red-500 text-black hover:text-white transition-colors duration-300 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Creating Account...' : 'Sign Up'}
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
         <p className="mt-4 text-center text-gray-400">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link to="/login" className="text-red-500 hover:text-red-400">
             Login
           </Link>
         </p>
         <p className="mt-2 text-center text-gray-400">
-          Want to become an admin?{' '}
+          Want to become an admin?{" "}
           <Link to="/admin/signup" className="text-red-500 hover:text-red-400">
             Admin Signup
           </Link>

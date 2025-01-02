@@ -144,7 +144,7 @@ const EventTicketDisplay = () => {
           <div className="bg-gray-50 px-6 py-4">
             <div className="text-center text-sm text-gray-600">
               <p>Present this ticket at the venue entrance</p>
-              <p className="mt-1">For support, contact: support@badtalks.com</p>
+              <p className="mt-1">For support, contact: support@BADVERSE.com</p>
             </div>
           </div>
         </div>

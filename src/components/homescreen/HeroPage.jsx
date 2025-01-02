@@ -11,7 +11,7 @@ export default function HeroPage() {
       <section className="flex flex-col  bg-[#212121] flex-1 h-[75vh] px-4 py-8 items-start justify-end  z-[100]">
         <div className="relative h-fit w-fit">
           <h2 className="bg-gradient-to-tr  text-7xl xl:text-9xl from-red-600 to-[#db0606] text-transparent bg-clip-text  font-extrabold leading-none relative  ">
-            BAD TALKS
+            BADVERSE
           </h2>
           <div className="absolute -top-[160px] min-[380px]:-top-[245px] min-[440px]:-top-[240px] min-[940px]:-top-[200px] xl:-top-[390px] left-12 min-[360px]:left-4  min-[440px]:-left-4 w-full h-full">
             <svg

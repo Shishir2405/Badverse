@@ -44,6 +44,11 @@ export default function MobileNavbar() {
       title: "Internship Management",
       href: "/admin/internships",
     },
+    {
+      id: 8,
+      title: "Privacy & Policy",
+      href: "/admin/privacy-policy",
+    },
   ];
 
   const handleLogout = async () => {

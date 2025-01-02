@@ -59,6 +59,8 @@ import WorkshopTickets from "./components/workshops/WorkshopTickets";
 import WorkshopTicketDetail from "./components/workshops/WorkshopTicketDetail";
 import MoreGallery from "./components/homescreen/MoreGallery";
 import OpportunityPage from "./components/career/Oppotunity";
+import PrivacyPolicy from "./components/privacy/PrivacyPolicy";
+import PrivacyPolicyAdmin from "./components/privacy/PrivacyPolicyAdmin";
 import "./App.css";
 
 export default function App() {
@@ -156,6 +158,15 @@ export default function App() {
                 </AdminRoute>
               }
             />
+            <Route
+              path="/admin/privacy-policy"
+              element={
+                <AdminRoute>
+                  <PrivacyPolicyAdmin />
+                </AdminRoute>
+              }
+            />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route
               path="/jobs/application"
               element={
