@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import {
   Home,
-  Info,
-  Phone,
+  BriefcaseBusiness,
   Users2,
   MoreVertical,
   X,
@@ -22,8 +21,11 @@ import {
   BookMarked,
   BookType,
   TicketCheck,
-  BriefcaseBusiness,
-  GlobeLock
+  GlobeLock,
+  HeartHandshake,
+  Store,
+  Trophy as TrophyIcon,
+  ChevronDown
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { logo } from "../../assets";
@@ -31,86 +33,102 @@ import { logo } from "../../assets";
 const NavItems = [
   { id: 1, title: "Home", href: "/", icon: <Home className="h-4 w-4" /> },
   {
-    id: 3,
-    title: "Teams",
-    href: "/teams",
-    icon: <Users2 className="h-4 w-4" />,
-  },
-  {
-    id: 5,
-    title: "Founders",
-    href: "/founders",
-    icon: <Crown className="h-4 w-4" />,
-  },
-  {
-    id: 6,
-    title: "More",
-    href: "#",
-    icon: <MoreVertical className="h-4 w-4" />,
-  },
-];
-
-const MoreLinks = [
-  {
-    id: 1,
-    title: "Jobs",
-    href: "/jobs",
+    id: 2,
+    title: "Career",
+    href: "/",
     icon: <Briefcase className="h-4 w-4" />,
-  },
-  {
-    id: 2,
-    title: "Community",
-    href: "/community",
-    icon: <Globe className="h-4 w-4" />,
-  },
-  {
-    id: 2,
-    title: "Internship",
-    href: "/internships",
-    icon: <BriefcaseBusiness className="h-4 w-4" />,
+    subItems: [
+      {
+        id: 'jobs',
+        title: "Jobs",
+        href: "/jobs",
+        icon: <Briefcase className="h-4 w-4" />,
+      },
+      {
+        id: 'internship',
+        title: "Internship",
+        href: "/internships",
+        icon: <BriefcaseBusiness className="h-4 w-4" />,
+      },
+      {
+        id: 'industry',
+        title: "Industry Opportunity",
+        href: "/career",
+        icon: <Route className="h-4 w-4" />,
+      },
+      {
+        id: 'tickets',
+        title: "My Tickets",
+        href: "/tickets",
+        icon: <TicketCheck className="h-4 w-4" />,
+      },
+    ]
   },
   {
     id: 3,
-    title: "Workshops",
-    href: "/workshops",
-    icon: <Rocket className="h-4 w-4" />,
+    title: "Engagement",
+    href: "/",
+    icon: <HeartHandshake className="h-4 w-4" />,
+    subItems: [
+      {
+        id: 'community',
+        title: "Community",
+        href: "/community",
+        icon: <Globe className="h-4 w-4" />,
+      },
+      {
+        id: 'workshops',
+        title: "Workshops",
+        href: "/workshops",
+        icon: <Rocket className="h-4 w-4" />,
+      },
+      {
+        id: 'events',
+        title: "Events",
+        href: "/events",
+        icon: <Calendar className="h-4 w-4" />,
+      },
+      {
+        id: 'blogcast',
+        title: "BlogCast",
+        href: "/blog",
+        icon: <BookMarked className="h-4 w-4" />,
+      },
+    ]
   },
-  // {
-  //   id: 4,
-  //   title: "News",
-  //   href: "/news",
-  //   icon: <Newspaper className="h-4 w-4" />,
-  // },
-  
+  {
+    id: 4,
+    title: "Store",
+    href: "/merchandise",
+    icon: <Store className="h-4 w-4" />,
+    subItems: [
+      {
+        id: 'merchandise',
+        title: "Merchandise",
+        href: "/merchandise",
+        icon: <Shirt className="h-4 w-4" />,
+      },
+    ]
+  },
   {
     id: 5,
-    title: "Events",
-    href: "/events",
-    icon: <Calendar className="h-4 w-4" />,
-  },
-  {
-    id: 6,
-    title: "BlogCast",
-    href: "/blog",
-    icon: <BookMarked className="h-4 w-4" />,
-  },
-  {
-    id: 7,
-    title: "Merchandise",
-    href: "/merchandise",
-    icon: <Shirt className="h-4 w-4" />,
-  },
-  {
-    id: 8,
-    title: "Industry Opportunity",
-    href: "/career",
-    icon: <Route className="h-4 w-4" />,
-  },
-  {
-    id: 9,
-    title: "My Tickets",
-    href: "/tickets",
-    icon: <TicketCheck className="h-4 w-4" />,
+    title: "BAD",
+    href: "/",
+    icon: <TrophyIcon className="h-4 w-4" />,
+    subItems: [
+      {
+        id: 'hall-of-fame',
+        title: "Hall of Fame",
+        href: "/teams",
+        icon: <Users2 className="h-4 w-4" />,
+      },
+      {
+        id: 'founders',
+        title: "Founders",
+        href: "/founders",
+        icon: <Crown className="h-4 w-4" />,
+      },
+    ]
   },
 ];
 
@@ -161,9 +179,8 @@ const AdminLinks = [
     id: 8,
     title: "Privacy & Policy",
     href: "/admin/privacy-policy",
-    icon:<GlobeLock className="h-4 w-4" />,
+    icon: <GlobeLock className="h-4 w-4" />,
   },
-
 ];
 
 const Navbar = () => {
@@ -171,9 +188,20 @@ const Navbar = () => {
   const { scrollY } = useScroll();
   const [visible, setVisible] = useState(true);
   const [prevScrollY, setPrevScrollY] = useState(0);
-  const [showMoreModal, setShowMoreModal] = useState(false);
-  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [clickedDropdown, setClickedDropdown] = useState(null);
   const scrollThreshold = 200;
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.dropdown-container')) {
+        setClickedDropdown(null);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -187,34 +215,18 @@ const Navbar = () => {
     return () => unsubscribe();
   }, [scrollY, prevScrollY]);
 
-  const handleNavClick = (e, href) => {
-    if (href.startsWith("#")) {
-      e.preventDefault();
-      const element = document.getElementById(href.substring(1));
-      element?.scrollIntoView({ behavior: "smooth" });
+  const handleNavClick = (e, item) => {
+    e.preventDefault();
+    if (clickedDropdown === item.id) {
+      setClickedDropdown(null);
+    } else {
+      setClickedDropdown(item.id);
     }
   };
 
-  const Modal = ({ show, onClose, children }) =>
-    show && (
-      <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
-        <motion.div
-          initial={{ scale: 0, opacity: 0, y: -100 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0, opacity: 0, y: -100 }}
-          transition={{ type: "spring", stiffness: 100, damping: 10 }}
-          className="rounded-lg p-6 w-1/3 border border-white flex flex-col justify-center items-center backdrop-blur-md relative"
-        >
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 text-white hover:text-red-500"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          {children}
-        </motion.div>
-      </div>
-    );
+  const isDropdownActive = (itemId) => {
+    return activeDropdown === itemId || clickedDropdown === itemId;
+  };
 
   return (
     <AnimatePresence>
@@ -228,42 +240,120 @@ const Navbar = () => {
             transition: { type: "spring", stiffness: 100, damping: 10 },
           }}
           transition={{ duration: 0.8 }}
-          className="flex items-center justify-between w-[97%] mx-auto z-50 rounded-xl py-1 pl-2 pr-12 h-fit fixed top-4 space-x-4 shadow-lg bg-opacity-80 backdrop-blur-sm"
+          className="flex items-center justify-between w-[97%] mx-auto z-50 rounded-xl py-1 pl-2 pr-12 h-fit fixed top-4 space-x-4 shadow-lg  bg-opacity-80 backdrop-blur-sm"
         >
           <div className="flex items-center">
-            <img src={logo} alt="logo" className="w-16 h-16 rounded-full" />
+            <img src="/logo.png" alt="logo" className="w-16 h-16 rounded-full" />
           </div>
 
           <div className="flex items-center space-x-4">
             {NavItems.map((item) => (
-              <Link
+              <div 
                 key={item.id}
-                to={item.href}
-                onClick={(e) => {
-                  if (item.title === "More") {
-                    e.preventDefault();
-                    setShowMoreModal(true);
-                  } else {
-                    handleNavClick(e, item.href);
-                  }
-                }}
-                className="flex gap-2 items-center text-white hover:text-red-500 transition-transform duration-300"
+                className="relative dropdown-container"
+                onMouseEnter={() => !clickedDropdown && setActiveDropdown(item.id)}
+                onMouseLeave={() => !clickedDropdown && setActiveDropdown(null)}
               >
-                {item.icon}
-                <p className="text-sm">{item.title}</p>
-              </Link>
+                {item.subItems ? (
+                  <button
+                    onClick={(e) => handleNavClick(e, item)}
+                    className="flex gap-2 items-center text-white hover:text-red-500 transition-all duration-300"
+                  >
+                    {item.icon}
+                    <p className="text-sm">{item.title}</p>
+                    <ChevronDown 
+                      className={`h-4 w-4 transition-transform duration-300 ${
+                        isDropdownActive(item.id) ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className="flex gap-2 items-center text-white hover:text-red-500 transition-all duration-300"
+                  >
+                    {item.icon}
+                    <p className="text-sm">{item.title}</p>
+                  </Link>
+                )}
+                
+                {item.subItems && isDropdownActive(item.id) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-black bg-opacity-90 backdrop-blur-md ring-1 ring-red-500/20 border border-red-500/5"
+                  >
+                    <div className="py-2">
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.id}
+                          to={subItem.href}
+                          className="flex items-center gap-2 px-4 py-3 text-sm text-white hover:bg-red-500/10 hover:text-red-500 transition-all duration-300"
+                          onClick={() => {
+                            setClickedDropdown(null);
+                            setActiveDropdown(null);
+                          }}
+                        >
+                          {subItem.icon}
+                          {subItem.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             ))}
 
             {currentUser ? (
               <>
                 {currentUser.role === "admin" && (
-                  <button
-                    onClick={() => setShowAdminModal(true)}
-                    className="flex gap-2 items-center text-white hover:text-red-500"
+                  <div 
+                    className="relative dropdown-container"
+                    onMouseEnter={() => !clickedDropdown && setActiveDropdown('admin')}
+                    onMouseLeave={() => !clickedDropdown && setActiveDropdown(null)}
                   >
-                    <ShieldCheck className="h-4 w-4" />
-                    Admin
-                  </button>
+                    <button
+                      onClick={(e) => handleNavClick(e, { id: 'admin' })}
+                      className="flex gap-2 items-center text-white hover:text-red-500 transition-all duration-300"
+                    >
+                      <ShieldCheck className="h-4 w-4" />
+                      Admin
+                      <ChevronDown 
+                        className={`h-4 w-4 transition-transform duration-300 ${
+                          isDropdownActive('admin') ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                    
+                    {isDropdownActive('admin') && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-black bg-opacity-90 backdrop-blur-md ring-1 ring-red-500/20 border border-red-500/5"
+                      >
+                        <div className="py-2">
+                          {AdminLinks.map((link) => (
+                            <Link
+                              key={link.id}
+                              to={link.href}
+                              className="flex items-center gap-2 px-4 py-3 text-sm text-white hover:bg-red-500/10 hover:text-red-500 transition-all duration-300"
+                              onClick={() => {
+                                setClickedDropdown(null);
+                                setActiveDropdown(null);
+                              }}
+                            >
+                              {link.icon}
+                              {link.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
                 )}
                 <button
                   onClick={logout}
@@ -274,12 +364,6 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link
-                  to="/admin/login"
-                  className="text-white hover:text-red-500 transition-transform"
-                >
-                  Admin Login
-                </Link>
                 <Link
                   to="/login"
                   className="text-white hover:text-red-500 transition-transform"
@@ -296,42 +380,6 @@ const Navbar = () => {
             )}
           </div>
         </motion.div>
-      )}
-
-      <Modal show={showMoreModal} onClose={() => setShowMoreModal(false)}>
-        <ul className="space-y-4">
-          {MoreLinks.map((link) => (
-            <li key={link.id} className="flex items-center gap-3">
-              {link.icon}
-              <Link
-                to={link.href}
-                className="text-white hover:underline"
-                onClick={() => setShowMoreModal(false)}
-              >
-                {link.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Modal>
-
-      {currentUser?.role === "admin" && (
-        <Modal show={showAdminModal} onClose={() => setShowAdminModal(false)}>
-          <ul className="space-y-4">
-            {AdminLinks.map((link) => (
-              <li key={link.id} className="flex items-center gap-3">
-                {link.icon}
-                <Link
-                  to={link.href}
-                  className="text-white hover:underline"
-                  onClick={() => setShowAdminModal(false)}
-                >
-                  {link.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Modal>
       )}
     </AnimatePresence>
   );

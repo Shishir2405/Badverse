@@ -19,6 +19,7 @@ const EditInternship = () => {
     stipend: "",
     description: "",
     requirements: "",
+    applyLink: "",
   });
 
   useEffect(() => {
@@ -101,7 +102,9 @@ const EditInternship = () => {
             <input
               type="text"
               value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               required
             />
@@ -114,7 +117,9 @@ const EditInternship = () => {
             <input
               type="text"
               value={formData.company}
-              onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, company: e.target.value })
+              }
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               required
             />
@@ -127,7 +132,9 @@ const EditInternship = () => {
             <input
               type="text"
               value={formData.location}
-              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, location: e.target.value })
+              }
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               required
             />
@@ -140,7 +147,9 @@ const EditInternship = () => {
             <input
               type="text"
               value={formData.duration}
-              onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, duration: e.target.value })
+              }
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               required
               placeholder="e.g., 3 months"
@@ -154,7 +163,9 @@ const EditInternship = () => {
             <input
               type="text"
               value={formData.stipend}
-              onChange={(e) => setFormData({ ...formData, stipend: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, stipend: e.target.value })
+              }
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               required
             />
@@ -166,7 +177,9 @@ const EditInternship = () => {
             </label>
             <textarea
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               rows="6"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               required
@@ -179,14 +192,32 @@ const EditInternship = () => {
             </label>
             <textarea
               value={formData.requirements}
-              onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, requirements: e.target.value })
+              }
               rows="6"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
               placeholder="Enter each requirement on a new line"
               required
             />
           </div>
-
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Apply Link (Optional)
+            </label>
+            <input
+              type="url"
+              placeholder="Leave empty to use default application form"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              value={formData.applyLink}
+              onChange={(e) =>
+                setFormData({ ...formData, applyLink: e.target.value })
+              }
+            />
+            <p className="mt-1 text-sm text-gray-400">
+              If left empty, a default application form will be used.
+            </p>
+          </div>
           <div className="flex justify-end space-x-4 pt-4">
             <button
               type="button"

@@ -14,18 +14,20 @@ export default function More() {
             </h3>
             {/* <p className='text-white/60 max-w-3xl'>Dive into the electrifying world of B.A.D. Talks, where innovation meets inspiration.</p> */}
             <p className="text-white/60 max-w-xl mx-auto md:mx-0">
-              Join us at B.A.D. Talks, an event dedicated to nurturing
-              innovation and entrepreneurial growth. Connect with top CEOs as
-              they share their success stories, challenges, and visions for the
-              future. Engage with a vibrant community committed to excellence,
-              progress, and the continuous pursuit of knowledge. This is your
-              chance to learn from industry leaders and gain valuable insights.
+              oin us in a dynamic space dedicated to fostering innovation and
+              entrepreneurial growth. Connect with top CEOs as they share their
+              success stories, challenges, and visions for the future. Engage
+              with a vibrant community committed to excellence, progress, and
+              the continuous pursuit of knowledge. This is your opportunity to
+              learn from industry leaders and gain valuable insights to help you
+              navigate the professional world.
             </p>
             <p className="text-white/60 max-w-xl mx-auto md:mx-0">
-              Don’t miss this opportunity to network and be inspired to achieve
-              your own entrepreneurial dreams. Experience the power of shared
-              knowledge and innovation at B.A.D. Talks, where ideas flourish and
-              growth is nurtured. Be part of a movement that drives success and
+              Don’t miss the chance to network, be inspired, and unlock the
+              doors to your entrepreneurial dreams. Experience the power of
+              shared knowledge and limitless opportunities at Badverse, where
+              ideas flourish, and youth are empowered to take action. Be part of
+              a movement that bridges academia and industry, driving success and
               transformation.
             </p>
           </div>

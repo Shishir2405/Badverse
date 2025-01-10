@@ -17,6 +17,7 @@ const InternshipForm = () => {
     stipend: "",
     description: "",
     requirements: "",
+    applyLink: "", 
   });
 
   const handleSubmit = async (e) => {
@@ -43,7 +44,9 @@ const InternshipForm = () => {
       <div className="rounded-lg shadow-lg p-8">
         <div className="flex items-center mb-6">
           <FaBriefcase className="text-2xl text-red-500 mr-3" />
-          <h1 className="text-3xl font-bold text-white">Post a New Internship</h1>
+          <h1 className="text-3xl font-bold text-white">
+            Post a New Internship
+          </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -156,6 +159,24 @@ const InternshipForm = () => {
                 setFormData({ ...formData, requirements: e.target.value })
               }
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-white mb-2">
+              Apply Link (Optional)
+            </label>
+            <input
+              type="url"
+              placeholder="Leave empty to use default application form"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              value={formData.applyLink}
+              onChange={(e) =>
+                setFormData({ ...formData, applyLink: e.target.value })
+              }
+            />
+            <p className="mt-1 text-sm text-gray-400">
+              If left empty, a default application form will be used.
+            </p>
           </div>
 
           <div className="flex justify-end space-x-4">

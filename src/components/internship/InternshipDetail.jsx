@@ -1,4 +1,3 @@
-// src/components/internships/InternshipDetail.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -11,8 +10,11 @@ import {
   FaBriefcase,
   FaClock,
   FaShare,
+  FaExternalLinkAlt
 } from "react-icons/fa";
 import { internshipService } from "../../services/internshipService";
+
+const DEFAULT_APPLY_FORM = "https://forms.gle/FQtXzp3jA3PgxMAN9";
 
 const InternshipDetail = () => {
   const { id } = useParams();
@@ -62,6 +64,11 @@ const InternshipDetail = () => {
     }
   };
 
+  const handleApply = () => {
+    const applyLink = internship.applyLink || DEFAULT_APPLY_FORM;
+    window.open(applyLink, '_blank', 'noopener,noreferrer');
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
@@ -108,22 +115,33 @@ const InternshipDetail = () => {
           </div>
         </div>
 
-        {isOwner && (
-          <div className="flex space-x-3">
-            <button
-              onClick={() => navigate(`/internships/${id}/edit`)}
-              className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              <FaEdit className="mr-2" /> Edit
-            </button>
-            <button
-              onClick={handleDelete}
-              className="flex items-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-            >
-              <FaTrash className="mr-2" /> Delete
-            </button>
-          </div>
-        )}
+        <div className="flex space-x-3">
+          <button
+            onClick={handleApply}
+            className="flex items-center px-6 py-3 bg-red-500 text-white rounded-lg 
+                     hover:bg-red-600 transition-all duration-300 font-semibold
+                     shadow-lg hover:shadow-red-500/20"
+          >
+            Apply Now <FaExternalLinkAlt className="ml-2 h-4 w-4" />
+          </button>
+          
+          {isOwner && (
+            <>
+              <button
+                onClick={() => navigate(`/internships/${id}/edit`)}
+                className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                <FaEdit className="mr-2" /> Edit
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex items-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+              >
+                <FaTrash className="mr-2" /> Delete
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Internship Details */}

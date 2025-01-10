@@ -1,10 +1,11 @@
-// src/components/workshops/WorkshopRegistration.jsx
+// WorkshopRegistration.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../../config/firebase";
 import { doc, getDoc, collection, addDoc, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
 import { sendTicketEmail } from "../../services/email";
+import PaymentModal from "../tickets/PaymentModal";
 
 const WorkshopRegistration = () => {
   const { id } = useParams();
@@ -13,6 +14,8 @@ const WorkshopRegistration = () => {
   const [workshop, setWorkshop] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPayment, setShowPayment] = useState(false);
+  const [registrationId, setRegistrationId] = useState(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -72,6 +75,47 @@ const WorkshopRegistration = () => {
         availableSpots: workshop.availableSpots - 1,
       });
 
+      setRegistrationId(registrationRef.id);
+
+      if (workshop.isFree) {
+        // Send confirmation email for free workshops
+        try {
+          await sendTicketEmail(formData.email, {
+            template_params: {
+              name: formData.name,
+              eventTitle: workshop.title,
+              eventDate: new Date(workshop.date).toLocaleDateString(),
+              eventTime: new Date(workshop.date).toLocaleTimeString(),
+              eventLocation: workshop.location,
+              ticketId: registrationRef.id,
+            },
+          });
+        } catch (emailError) {
+          console.error("Error sending email:", emailError);
+        }
+        navigate("/workshops");
+      } else {
+        // Show payment modal for paid workshops
+        setShowPayment(true);
+      }
+    } catch (error) {
+      setError("Registration failed. Please try again.");
+      console.error("Registration error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePaymentSuccess = async (response) => {
+    try {
+      // Update registration status
+      await updateDoc(doc(db, "workshop_registrations", registrationId), {
+        status: "confirmed",
+        paymentId: response.razorpay_payment_id,
+        paymentDetails: response,
+        updatedAt: new Date().toISOString(),
+      });
+
       // Send confirmation email
       try {
         await sendTicketEmail(formData.email, {
@@ -81,23 +125,28 @@ const WorkshopRegistration = () => {
             eventDate: new Date(workshop.date).toLocaleDateString(),
             eventTime: new Date(workshop.date).toLocaleTimeString(),
             eventLocation: workshop.location,
-            ticketId: registrationRef.id,
+            ticketId: registrationId,
           },
         });
       } catch (emailError) {
         console.error("Error sending email:", emailError);
       }
 
-      // Navigate based on payment requirement
-      if (workshop.isFree) {
-        navigate(`/tickets`);
-      } else {
-        navigate(`/payment/workshop/${registrationRef.id}`);
-      }
+      // Navigate to success page with registration details
+      navigate(`/payment/success`, {
+        state: {
+          workshopTitle: workshop.title,
+          registrationId: registrationId,
+          email: formData.email,
+        },
+      });
     } catch (error) {
-      setError("Registration failed. Please try again.");
-    } finally {
-      setLoading(false);
+      console.error("Error updating registration:", error);
+      navigate(`/payment/failure`, {
+        state: {
+          error: "Failed to update registration status",
+        },
+      });
     }
   };
 
@@ -255,9 +304,30 @@ const WorkshopRegistration = () => {
             </button>
           </div>
         </form>
+
+        {/* Payment Modal */}
+        {showPayment && (
+          <PaymentModal
+            ticket={{
+              id: registrationId,
+              email: formData.email,
+              phone: formData.phone,
+            }}
+            event={{
+              id: workshop.id,
+              title: workshop.title,
+              price: workshop.price,
+            }}
+            onSuccess={handlePaymentSuccess}
+            onClose={() => setShowPayment(false)}
+          />
+        )}
       </div>
     </div>
   );
 };
 
 export default WorkshopRegistration;
+
+
+

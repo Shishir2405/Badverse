@@ -10,6 +10,7 @@ import PastEvents from "../homescreen/PastEvents";
 import Gallery from "../homescreen/Gallery";
 import TrendingMaterials from "../homescreen/Trending";
 import Hero from "../homescreen/Hero";
+import PartnersSection from "../homescreen/PartnersSection";
 import HoverCards from "../homescreen/CardLayout";
 
 export default function HomescreenLayout() {
@@ -21,6 +22,7 @@ export default function HomescreenLayout() {
       <Timeline /> 
       <Gallery />
       <HoverCards/>
+      <PartnersSection/>
       <More />
       <ContactSection />
       <MapScreen />

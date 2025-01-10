@@ -94,9 +94,11 @@ export default function HeroPage() {
 
         <div className="flex pl-2  gap-4  flex-col items-start justify-start">
           <p className="text-white text-base max-w-xl z-40">
-            Unleash your inner visionary at B.A.D. Talks—where bold ideas,
-            daring dreams, and top CEOs collide! Join us for stories,
-            strategies, and sparks of inspiration to fuel your success.
+            A dynamic platform where BAD (Breakdown, Analysis, Decision) meets
+            Verse (a Universe of Opportunities), bridging the gap between
+            Industry and Academia. Empowering youth with the skills, knowledge,
+            and insights to thrive in the professional world and seize
+            real-world opportunities.
           </p>
           <div className=" flex space-x-4">
             <button

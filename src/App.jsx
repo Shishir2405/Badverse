@@ -55,12 +55,13 @@ import InternshipForm from "./components/internship/InternshipForm";
 import EditInternship from "./components/internship/EditInternship";
 import AdminInternship from "./components/internship/AdminInternship";
 import AdminApplications from "./components/jobs/AdminApplications";
-import WorkshopTickets from "./components/workshops/WorkshopTickets";
+import WorkshopTicket from "./components/workshops/WorkshopTicket";
 import WorkshopTicketDetail from "./components/workshops/WorkshopTicketDetail";
 import MoreGallery from "./components/homescreen/MoreGallery";
 import OpportunityPage from "./components/career/Oppotunity";
 import PrivacyPolicy from "./components/privacy/PrivacyPolicy";
 import PrivacyPolicyAdmin from "./components/privacy/PrivacyPolicyAdmin";
+import { PartnersPage } from "./components/homescreen/PartnersPage";
 import "./App.css";
 
 export default function App() {
@@ -95,8 +96,11 @@ export default function App() {
             <Route path="/events/:id" element={<EventDetails />} />
             <Route path="/internships" element={<InternshipList />} />
             <Route path="/internships/:id" element={<InternshipDetail />} />
-            <Route path="/tickets" element={<WorkshopTickets />} />
+            <Route path="/tickets" element={<WorkshopTicket />} />
             <Route path="/gallery" element={<MoreGallery />} />
+            <Route path="/partners" element={<PartnersPage />} />
+
+            
             <Route
               path="/workshops/ticket/:id"
               element={<WorkshopTicketDetail />}
@@ -140,7 +144,8 @@ export default function App() {
                 </PrivateRoute>
               }
             />
-
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/failure" element={<PaymentFailure />} />
             {/* Protected Admin Routes */}
             <Route
               path="/admin/jobs"

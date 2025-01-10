@@ -64,7 +64,7 @@ export default function MobileNavbar() {
     <>
       <nav className="w-full fixed top-0 left-0 right-0 h-16 bg-black/10 rounded-b-xl overflow-hidden backdrop-blur-sm z-50 py-2 px-4">
         <div className="w-full h-full flex items-center justify-between">
-          <img src={logo} alt="logo" className="w-12 h-12 rounded-full" />
+          <img src="/logo.png" alt="logo" className="w-12 h-12 rounded-full" />
           <MenuIcon
             className="w-6 h-6 text-white cursor-pointer"
             onClick={() => setIsOpen(true)}

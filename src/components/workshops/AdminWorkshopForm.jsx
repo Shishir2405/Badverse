@@ -13,6 +13,7 @@ const AdminWorkshopForm = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    imageUrl: "",
     instructor: "",
     date: "",
     time: "",
@@ -66,6 +67,7 @@ const AdminWorkshopForm = () => {
         title: formData.title,
         description: formData.description,
         instructor: formData.instructor,
+        imageUrl: formData.imageUrl,
         date: workshopDateTime.toISOString(),
         duration: formData.duration,
         location: formData.location,
@@ -144,6 +146,23 @@ const AdminWorkshopForm = () => {
               className="w-full px-3 py-2 border rounded-md h-32 focus:outline-none focus:ring-2 focus:ring-red-500"
               required
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-white mb-1">
+              Workshop Image URL
+            </label>
+            <input
+              type="url"
+              value={formData.imageUrl}
+              onChange={(e) =>
+                setFormData({ ...formData, imageUrl: e.target.value })
+              }
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="https://example.com/workshop-image.jpg"
+            />
+            <p className="text-sm text-gray-400 mt-1">
+              Provide a URL to an image that represents your workshop
+            </p>
           </div>
 
           {/* Instructor */}

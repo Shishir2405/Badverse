@@ -5,6 +5,7 @@ import EventCard from "./EventCard";
 
 const EventList = () => {
   const [events, setEvents] = useState([]);
+  const [showPastEvents, setShowPastEvents] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,6 +30,12 @@ const EventList = () => {
     fetchEvents();
   }, []);
 
+  const filteredEvents = events.filter((event) => {
+    const eventDate = new Date(event.date);
+    const now = new Date();
+    return showPastEvents ? true : eventDate >= now;
+  });
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -49,14 +56,34 @@ const EventList = () => {
 
   return (
     <div className="container mx-auto py-8 px-4 pt-24">
-      <h1 className="text-3xl font-bold mb-8 text-white">Events</h1>
-      {events.length === 0 ? (
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-white">Events</h1>
+        <div className="flex items-center gap-3">
+          <span className="text-white/75">Show past events</span>
+          <button
+            onClick={() => setShowPastEvents(!showPastEvents)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
+              showPastEvents ? 'bg-red-500' : 'bg-gray-700'
+            }`}
+            role="switch"
+            aria-checked={showPastEvents}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                showPastEvents ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        </div>
+      </div>
+
+      {filteredEvents.length === 0 ? (
         <div className="text-center text-white/75 bg-black/40 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
-          No events found.
+          {showPastEvents ? "No events found." : "No upcoming events found."}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {filteredEvents.map((event) => (
             <div 
               key={event.id} 
               className="group bg-gray-900/20 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-red-500/20 transition-all duration-300 border border-gray-800 hover:border-red-500/30 transform perspective-1000"

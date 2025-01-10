@@ -63,7 +63,7 @@ const InternshipCard = ({ internship }) => {
             {internship.duration}
           </div>
           <div className="text-red-400 font-semibold">
-            ₹ {internship.stipend.toLocaleString()}/month
+            ₹ {internship.stipend.toLocaleString()}
           </div>
         </div>
 
