@@ -49,6 +49,16 @@ export default function MobileNavbar() {
       title: "Privacy & Policy",
       href: "/admin/privacy-policy",
     },
+    {
+      id: 9,
+      title: "Gallery Management",
+      href: "/admin/gallery",
+    },
+    {
+      id: 10,
+      title: "Partners Management",
+      href: "/admin/partner",
+    },
   ];
 
   const handleLogout = async () => {

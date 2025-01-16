@@ -1,37 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { db } from "../../config/firebase";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
-const partners = [
-  { id: 1, name: "Partner 1", image: "/Parterns/1.png" },
-  { id: 2, name: "Partner 2", image: "/Parterns/2.png" },
-  { id: 3, name: "Partner 3", image: "/Parterns/3.png" },
-  { id: 4, name: "Partner 4", image: "/Parterns/4.png" },
-  { id: 5, name: "Partner 5", image: "/Parterns/5.png" },
-  { id: 6, name: "Partner 6", image: "/Parterns/6.png" },
-  { id: 7, name: "Partner 7", image: "/Parterns/7.png" },
-  { id: 8, name: "Partner 8", image: "/Parterns/8.png" },
-  { id: 9, name: "Partner 9", image: "/Parterns/9.png" },
-  { id: 10, name: "Partner 10", image: "/Parterns/10.png" },
-  { id: 11, name: "Partner 11", image: "/Parterns/11.png" },
-  { id: 12, name: "Partner 12", image: "/Parterns/12.png" },
-  { id: 13, name: "Partner 13", image: "/Parterns/13.png" },
-  { id: 14, name: "Partner 14", image: "/Parterns/14.png" },
-  { id: 15, name: "Partner 15", image: "/Parterns/15.png" },
-  { id: 16, name: "Partner 16", image: "/Parterns/16.png" },
-  { id: 17, name: "Partner 17", image: "/Parterns/17.png" },
-  { id: 18, name: "Partner 18", image: "/Parterns/18.png" },
-  { id: 19, name: "Partner 19", image: "/Parterns/19.png" },
-  { id: 20, name: "Partner 20", image: "/Parterns/20.png" },
-  { id: 21, name: "Partner 21", image: "/Parterns/21.png" },
-  { id: 22, name: "Partner 22", image: "/Parterns/22.png" },
-  { id: 23, name: "Partner 23", image: "/Parterns/23.png" },
-  { id: 24, name: "Partner 24", image: "/Parterns/24.png" },
-  { id: 25, name: "Partner 25", image: "/Parterns/25.png" },
-  { id: 26, name: "Partner 26", image: "/Parterns/26.png" },
-];
-
 const PartnersSection = () => {
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch partners from Firestore
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const partnersRef = collection(db, "partners");
+        const q = query(partnersRef, orderBy("createdAt", "desc"));
+
+        const snapshot = await getDocs(q);
+        const fetchedPartners = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setPartners(fetchedPartners);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching partners:", err);
+        setError("Failed to load partners");
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-black">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-black text-white">
+        {error}
+      </div>
+    );
+  }
+
   return (
     <div className="w-full py-20 bg-black">
       <style>
@@ -41,7 +62,7 @@ const PartnersSection = () => {
               transform: translateX(0);
             }
             100% {
-              transform: translateX(calc(-248px * 26)); /* width of each item (200px) + gap (48px) * number of items */
+              transform: translateX(calc(-248px * ${partners.length}));
             }
           }
           
@@ -74,7 +95,7 @@ const PartnersSection = () => {
 
           <div className="overflow-hidden relative">
             <div className="partners-scroll flex gap-8 whitespace-nowrap">
-              {/* First set of partners */}
+              {/* Render partners */}
               {partners.map((partner) => (
                 <div key={partner.id} className="inline-block shrink-0">
                   <div
@@ -88,11 +109,15 @@ const PartnersSection = () => {
                       className="w-full h-full object-contain p-4 filter grayscale 
                                group-hover:grayscale-0 transition-all duration-300
                                group-hover:scale-110"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/placeholder.png";
+                      }}
                     />
                   </div>
                 </div>
               ))}
-              {/* Duplicate set for seamless loop */}
+              {/* Duplicate partners for seamless scrolling */}
               {partners.map((partner) => (
                 <div
                   key={`${partner.id}-dup`}
@@ -109,6 +134,10 @@ const PartnersSection = () => {
                       className="w-full h-full object-contain p-4 filter grayscale 
                                group-hover:grayscale-0 transition-all duration-300
                                group-hover:scale-110"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/placeholder.png";
+                      }}
                     />
                   </div>
                 </div>

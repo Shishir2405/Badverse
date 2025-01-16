@@ -110,7 +110,7 @@ const InternshipDetail = () => {
             </div>
             <div className="flex items-center">
               <FaBriefcase className="mr-2 text-red-500" />
-              ₹{internship.stipend}/month
+              ₹{internship.stipend}
             </div>
           </div>
         </div>

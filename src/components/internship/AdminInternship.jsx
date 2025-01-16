@@ -74,7 +74,7 @@ const AdminInternship = () => {
                   <FaClock className="mr-2" />
                   {internship.duration}
                 </div>
-                <div className="text-white">₹{internship.stipend}/month</div>
+                <div className="text-white">₹{internship.stipend}</div>
               </div>
 
               <div className="flex justify-between items-center">

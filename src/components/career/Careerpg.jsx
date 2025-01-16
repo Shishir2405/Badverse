@@ -21,7 +21,7 @@ const opportunities = [
 
 function Careerpg() {
   return (
-    <div className="min-h-screen bg-black pt-24 px-4 pt-24">
+    <div className="min-h-screen bg-black px-4 pt-28">
       <div className="max-w-6xl mx-auto">
         <div className="relative mb-16">
           <h1 className="text-4xl md:text-6xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">

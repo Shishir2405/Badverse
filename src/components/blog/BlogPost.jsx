@@ -44,11 +44,6 @@ const BlogPost = () => {
       {post.coverImageUrl && (
         <div className="relative h-[60vh] w-full">
           <div className="absolute inset-0 bg-black/50"></div>
-          <img
-            src={post.coverImageUrl}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="max-w-4xl mx-auto text-center px-4">
               <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">{post.title}</h1>

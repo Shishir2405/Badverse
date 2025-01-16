@@ -6,7 +6,6 @@ const NavItems = [
   { id: 1, title: "Home", href: "/" },
   { id: 2, title: "About", href: "#about" },
   { id: 3, title: "Teams", href: "/teams" },
-  { id: 4, title: "Contact", href: "#footer" },
   { id: 5, title: "Founders", href: "/founders" },
   { id: 6, title: "Privacy & Policy", href: "/privacy-policy" },
 ];

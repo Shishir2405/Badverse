@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { db } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import moment from "moment";
 
 const WorkshopDetails = () => {
   const { id } = useParams();
@@ -50,6 +51,7 @@ const WorkshopDetails = () => {
   }
 
   const isRegistrationClosed = workshop.availableSpots <= 0;
+  const isWorkshopPast = moment(workshop.date).isBefore(moment());
 
   return (
     <div className="container mx-auto py-8 px-4 text-white pt-24">
@@ -171,7 +173,12 @@ const WorkshopDetails = () => {
 
         {/* Registration Button */}
         <div className="border border-white rounded-lg shadow-md p-6">
-          {isRegistrationClosed ? (
+          {isWorkshopPast ? (
+            <div className="text-center">
+              <p className="text-gray-600 mb-2">Workshop Has Ended</p>
+              <p className="">This workshop is no longer available.</p>
+            </div>
+          ) : isRegistrationClosed ? (
             <div className="text-center">
               <p className="text-red-600 mb-2">Registration Closed</p>
               <p className="">This workshop is fully booked.</p>

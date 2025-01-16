@@ -5,8 +5,6 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   collection,
   getDocs,
-  deleteDoc,
-  doc,
   query,
   orderBy,
 } from "firebase/firestore";
@@ -105,6 +103,7 @@ const WorkshopCard = ({ workshop }) => {
 
 const WorkshopList = () => {
   const [workshops, setWorkshops] = useState([]);
+  const [showPastWorkshops, setShowPastWorkshops] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -132,6 +131,12 @@ const WorkshopList = () => {
     }
   };
 
+  const filteredWorkshops = workshops.filter((workshop) => {
+    const workshopDate = new Date(workshop.date);
+    const now = new Date();
+    return showPastWorkshops ? true : workshopDate >= now;
+  });
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -144,6 +149,23 @@ const WorkshopList = () => {
     <div className="container mx-auto py-8 px-4 pt-24">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-white">Upcoming Workshops</h1>
+        <div className="flex items-center gap-3">
+          <span className="text-white/75">Show past workshops</span>
+          <button
+            onClick={() => setShowPastWorkshops(!showPastWorkshops)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
+              showPastWorkshops ? 'bg-red-500' : 'bg-gray-700'
+            }`}
+            role="switch"
+            aria-checked={showPastWorkshops}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out ${
+                showPastWorkshops ? 'translate-x-6' : 'translate-x-1'
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       {error && (
@@ -152,23 +174,25 @@ const WorkshopList = () => {
         </div>
       )}
 
-      <div className="grid gap-6">
-        {workshops.map((workshop) => (
-          <WorkshopCard key={workshop.id} workshop={workshop} />
-        ))}
-
-        {workshops.length === 0 && (
-          <div className="text-center py-12 bg-black/40 backdrop-blur-sm rounded-lg border border-gray-800">
-            <p className="text-white/80">No workshops found.</p>
-            <Link
-              to="/admin/workshops/new"
-              className="text-red-400 hover:text-red-300 mt-2 inline-block transition-colors"
-            >
-              Create your first workshop
-            </Link>
-          </div>
-        )}
-      </div>
+      {filteredWorkshops.length === 0 ? (
+        <div className="text-center py-12 bg-black/40 backdrop-blur-sm rounded-lg border border-gray-800">
+          <p className="text-white/80">
+            {showPastWorkshops ? "No workshops found." : "No upcoming workshops found."}
+          </p>
+          <Link
+            to="/admin/workshops/new"
+            className="text-red-400 hover:text-red-300 mt-2 inline-block transition-colors"
+          >
+            Create your first workshop
+          </Link>
+        </div>
+      ) : (
+        <div className="grid gap-6">
+          {filteredWorkshops.map((workshop) => (
+            <WorkshopCard key={workshop.id} workshop={workshop} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useAuth } from "../../context/AuthContext";
-import { FaPlus, FaBriefcase, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaPlus, FaBriefcase, FaMapMarkerAlt, FaClock, FaSearch } from "react-icons/fa";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const JobCard = ({ job }) => {
@@ -87,12 +87,28 @@ const JobCard = ({ job }) => {
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   const { currentUser } = useAuth();
 
   useEffect(() => {
     fetchJobs();
   }, []);
+
+  useEffect(() => {
+    // Filter jobs based on search term
+    const filtered = jobs.filter((job) => {
+      const searchString = searchTerm.toLowerCase();
+      return (
+        job.title.toLowerCase().includes(searchString) ||
+        job.company.toLowerCase().includes(searchString) ||
+        job.location.toLowerCase().includes(searchString) ||
+        job.type.toLowerCase().includes(searchString)
+      );
+    });
+    setFilteredJobs(filtered);
+  }, [searchTerm, jobs]);
 
   const fetchJobs = async () => {
     try {
@@ -104,11 +120,16 @@ const JobList = () => {
         ...doc.data(),
       }));
       setJobs(jobsData);
+      setFilteredJobs(jobsData);
     } catch (error) {
       console.error("Error fetching jobs:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   if (loading) {
@@ -121,18 +142,32 @@ const JobList = () => {
 
   return (
     <div className="max-w-6xl mx-auto py-8 px-4 pt-24">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <h1 className="text-3xl font-bold text-white">Job Listings</h1>
+        <div className="relative w-full md:w-96">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search jobs by title, company, or location..."
+            className="w-full pl-10 pr-4 py-2 bg-gray-900/20 backdrop-blur-sm rounded-lg border border-gray-700 focus:border-red-500/30 focus:outline-none focus:ring-1 focus:ring-red-500/30 text-white placeholder-gray-400"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
       </div>
 
-      {jobs.length === 0 ? (
+      {filteredJobs.length === 0 ? (
         <div className="text-center py-12">
           <FaBriefcase className="mx-auto text-4xl text-red-500 mb-4" />
-          <p className="text-white/75">No jobs posted yet.</p>
+          <p className="text-white/75">
+            {searchTerm ? "No jobs found matching your search." : "No jobs posted yet."}
+          </p>
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {jobs.map((job) => (
+          {filteredJobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
         </div>

@@ -52,8 +52,8 @@ const HoverCards = () => {
     },
     {
       id: 4,
-      title: "News",
-      to: "/news",
+      title: "Internship",
+      to: "/internships",
       icon: <Newspaper />,
       description: "Stay updated with news.",
     },
@@ -66,7 +66,7 @@ const HoverCards = () => {
     },
     {
       id: 6,
-      title: "Blogs",
+      title: "BlogCast",
       to: "/blog",
       icon: <BookMarked />,
       description: "Read insightful blogs.",

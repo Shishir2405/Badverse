@@ -25,7 +25,9 @@ import {
   HeartHandshake,
   Store,
   Trophy as TrophyIcon,
-  ChevronDown
+  ChevronDown,
+  Handshake,
+  Images,
 } from "lucide-react";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { logo } from "../../assets";
@@ -39,30 +41,37 @@ const NavItems = [
     icon: <Briefcase className="h-4 w-4" />,
     subItems: [
       {
-        id: 'jobs',
+        id: "jobs",
         title: "Jobs",
         href: "/jobs",
         icon: <Briefcase className="h-4 w-4" />,
       },
       {
-        id: 'internship',
+        id: "internship",
         title: "Internship",
         href: "/internships",
         icon: <BriefcaseBusiness className="h-4 w-4" />,
       },
       {
-        id: 'industry',
+        id: "industry",
         title: "Industry Opportunity",
         href: "/career",
         icon: <Route className="h-4 w-4" />,
       },
       {
-        id: 'tickets',
-        title: "My Tickets",
+        id: "tickets",
+        title: "Workshop Tickets",
         href: "/tickets",
         icon: <TicketCheck className="h-4 w-4" />,
       },
-    ]
+      {
+        id: "tickets",
+        title: "Event Tickets",
+        href: "/events/tickets",
+        icon: <TicketCheck className="h-4 w-4" />,
+      },
+
+    ],
   },
   {
     id: 3,
@@ -71,30 +80,30 @@ const NavItems = [
     icon: <HeartHandshake className="h-4 w-4" />,
     subItems: [
       {
-        id: 'community',
+        id: "community",
         title: "Community",
         href: "/community",
         icon: <Globe className="h-4 w-4" />,
       },
       {
-        id: 'workshops',
+        id: "workshops",
         title: "Workshops",
         href: "/workshops",
         icon: <Rocket className="h-4 w-4" />,
       },
       {
-        id: 'events',
+        id: "events",
         title: "Events",
         href: "/events",
         icon: <Calendar className="h-4 w-4" />,
       },
       {
-        id: 'blogcast',
+        id: "blogcast",
         title: "BlogCast",
         href: "/blog",
         icon: <BookMarked className="h-4 w-4" />,
       },
-    ]
+    ],
   },
   {
     id: 4,
@@ -103,12 +112,12 @@ const NavItems = [
     icon: <Store className="h-4 w-4" />,
     subItems: [
       {
-        id: 'merchandise',
+        id: "merchandise",
         title: "Merchandise",
         href: "/merchandise",
         icon: <Shirt className="h-4 w-4" />,
       },
-    ]
+    ],
   },
   {
     id: 5,
@@ -117,18 +126,18 @@ const NavItems = [
     icon: <TrophyIcon className="h-4 w-4" />,
     subItems: [
       {
-        id: 'hall-of-fame',
+        id: "hall-of-fame",
         title: "Hall of Fame",
         href: "/teams",
         icon: <Users2 className="h-4 w-4" />,
       },
       {
-        id: 'founders',
+        id: "founders",
         title: "Founders",
         href: "/founders",
         icon: <Crown className="h-4 w-4" />,
       },
-    ]
+    ],
   },
 ];
 
@@ -181,6 +190,18 @@ const AdminLinks = [
     href: "/admin/privacy-policy",
     icon: <GlobeLock className="h-4 w-4" />,
   },
+  {
+    id: 9,
+    title: "Gallery Management",
+    href: "/admin/gallery",
+    icon: <Images className="h-4 w-4" />,
+  },
+  {
+    id: 10,
+    title: "Partners Management",
+    href: "/admin/partner",
+    icon: <Handshake className="h-4 w-4" />,
+  },
 ];
 
 const Navbar = () => {
@@ -194,13 +215,13 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.dropdown-container')) {
+      if (!event.target.closest(".dropdown-container")) {
         setClickedDropdown(null);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -243,15 +264,21 @@ const Navbar = () => {
           className="flex items-center justify-between w-[97%] mx-auto z-50 rounded-xl py-1 pl-2 pr-12 h-fit fixed top-4 space-x-4 shadow-lg  bg-opacity-80 backdrop-blur-sm"
         >
           <div className="flex items-center">
-            <img src="/logo.png" alt="logo" className="w-16 h-16 rounded-full" />
+            <img
+              src="/logo.png"
+              alt="logo"
+              className="w-16 h-16 rounded-full"
+            />
           </div>
 
           <div className="flex items-center space-x-4">
             {NavItems.map((item) => (
-              <div 
+              <div
                 key={item.id}
                 className="relative dropdown-container"
-                onMouseEnter={() => !clickedDropdown && setActiveDropdown(item.id)}
+                onMouseEnter={() =>
+                  !clickedDropdown && setActiveDropdown(item.id)
+                }
                 onMouseLeave={() => !clickedDropdown && setActiveDropdown(null)}
               >
                 {item.subItems ? (
@@ -261,9 +288,9 @@ const Navbar = () => {
                   >
                     {item.icon}
                     <p className="text-sm">{item.title}</p>
-                    <ChevronDown 
+                    <ChevronDown
                       className={`h-4 w-4 transition-transform duration-300 ${
-                        isDropdownActive(item.id) ? 'rotate-180' : ''
+                        isDropdownActive(item.id) ? "rotate-180" : ""
                       }`}
                     />
                   </button>
@@ -276,7 +303,7 @@ const Navbar = () => {
                     <p className="text-sm">{item.title}</p>
                   </Link>
                 )}
-                
+
                 {item.subItems && isDropdownActive(item.id) && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -309,25 +336,29 @@ const Navbar = () => {
             {currentUser ? (
               <>
                 {currentUser.role === "admin" && (
-                  <div 
+                  <div
                     className="relative dropdown-container"
-                    onMouseEnter={() => !clickedDropdown && setActiveDropdown('admin')}
-                    onMouseLeave={() => !clickedDropdown && setActiveDropdown(null)}
+                    onMouseEnter={() =>
+                      !clickedDropdown && setActiveDropdown("admin")
+                    }
+                    onMouseLeave={() =>
+                      !clickedDropdown && setActiveDropdown(null)
+                    }
                   >
                     <button
-                      onClick={(e) => handleNavClick(e, { id: 'admin' })}
+                      onClick={(e) => handleNavClick(e, { id: "admin" })}
                       className="flex gap-2 items-center text-white hover:text-red-500 transition-all duration-300"
                     >
                       <ShieldCheck className="h-4 w-4" />
                       Admin
-                      <ChevronDown 
+                      <ChevronDown
                         className={`h-4 w-4 transition-transform duration-300 ${
-                          isDropdownActive('admin') ? 'rotate-180' : ''
+                          isDropdownActive("admin") ? "rotate-180" : ""
                         }`}
                       />
                     </button>
-                    
-                    {isDropdownActive('admin') && (
+
+                    {isDropdownActive("admin") && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}

@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { FaExpand, FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
-
-const images = [
-  { id: 1, src: "/1.jpg" },
-  { id: 2, src: "/2.jpg" },
-  { id: 3, src: "/3.jpg" },
-  { id: 4, src: "/4.JPG" },
-  { id: 5, src: "/10.jpg" },
-  { id: 6, src: "/6.JPG" },
-  { id: 7, src: "/7.JPG" },
-  { id: 8, src: "/8.JPG" },
-  { id: 9, src: "/9.jpg" },
-];
+import { db } from "../../config/firebase";
+import { 
+  collection, 
+  query, 
+  orderBy, 
+  getDocs, 
+  limit, 
+  startAfter 
+} from "firebase/firestore";
 
 const MoreGallery = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [lastVisible, setLastVisible] = useState(null);
   const [imagePosition, setImagePosition] = useState({
     left: 0,
     top: 0,
@@ -33,6 +34,66 @@ const MoreGallery = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Fetch images from Firestore
+  useEffect(() => {
+    fetchGalleryImages();
+  }, []);
+
+  const fetchGalleryImages = async () => {
+    try {
+      setLoading(true);
+      const galleryRef = collection(db, "gallery");
+      const q = query(
+        galleryRef, 
+        orderBy("createdAt", "desc"), 
+        limit(20)
+      );
+
+      const snapshot = await getDocs(q);
+      const fetchedImages = snapshot.docs.map((doc, index) => ({
+        id: doc.id,
+        ...doc.data(),
+        index: index
+      }));
+
+      setImages(fetchedImages);
+      setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
+      setHasMore(fetchedImages.length === 20);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching gallery images:", error);
+      setLoading(false);
+    }
+  };
+
+  // Load more images
+  const loadMoreImages = async () => {
+    if (!lastVisible || !hasMore) return;
+
+    try {
+      const galleryRef = collection(db, "gallery");
+      const q = query(
+        galleryRef, 
+        orderBy("createdAt", "desc"), 
+        startAfter(lastVisible),
+        limit(20)
+      );
+
+      const snapshot = await getDocs(q);
+      const newImages = snapshot.docs.map((doc, index) => ({
+        id: doc.id,
+        ...doc.data(),
+        index: images.length + index
+      }));
+
+      setImages(prev => [...prev, ...newImages]);
+      setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
+      setHasMore(newImages.length === 20);
+    } catch (error) {
+      console.error("Error loading more images:", error);
+    }
+  };
+
   const rows = [];
   let row = [];
   let isOddRow = true;
@@ -40,6 +101,7 @@ const MoreGallery = () => {
   const getImagesPerRow = () =>
     isDesktop ? (isOddRow ? 5 : 4) : isOddRow ? 3 : 2;
 
+  // Prepare images for grid display
   images.forEach((image) => {
     row.push(image);
     const imagesPerRow = getImagesPerRow();
@@ -86,8 +148,17 @@ const MoreGallery = () => {
     setCurrentImage(images[prevIndex]);
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen p-4 md:p-8 pt-24">
+    <div className="min-h-screen p-4 md:p-8 pt-28">
       <div className="relative w-fit mx-auto">
         <span className="h-[1px] w-36 bg-white absolute -bottom-2 -right-9" />
         <span className="h-[1px] w-36 bg-white absolute -top-2 -left-9" />
@@ -121,6 +192,10 @@ const MoreGallery = () => {
                     src={image.src}
                     alt={`Gallery item ${image.id}`}
                     className="w-full h-full object-cover rounded-lg"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/placeholder.png'; // Fallback image
+                    }}
                   />
                 </div>
 
@@ -142,6 +217,15 @@ const MoreGallery = () => {
             ))}
           </div>
         ))}
+
+        {hasMore && (
+          <button 
+            onClick={loadMoreImages}
+            className="mt-8 px-6 py-3 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+          >
+            Load More
+          </button>
+        )}
       </div>
 
       {currentImage && (
@@ -169,6 +253,10 @@ const MoreGallery = () => {
               style={{
                 transform: isFullScreen ? "scale(1)" : "scale(0)",
                 opacity: isFullScreen ? 1 : 0,
+              }}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = '/placeholder.png'; // Fallback image
               }}
             />
 

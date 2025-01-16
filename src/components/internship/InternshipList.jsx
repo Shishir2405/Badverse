@@ -1,8 +1,7 @@
-// src/components/internships/InternshipList.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { FaBriefcase, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaBriefcase, FaMapMarkerAlt, FaClock, FaSearch } from "react-icons/fa";
 import { internshipService } from "../../services/internshipService";
 
 const InternshipCard = ({ internship }) => {
@@ -39,7 +38,8 @@ const InternshipCard = ({ internship }) => {
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      initial={{ scale: 1 }}
+      initial={{ scale: 1, opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -63,7 +63,7 @@ const InternshipCard = ({ internship }) => {
             {internship.duration}
           </div>
           <div className="text-red-400 font-semibold">
-            ₹{internship.stipend}/month
+            ₹{internship.stipend}
           </div>
         </div>
 
@@ -87,15 +87,27 @@ const InternshipCard = ({ internship }) => {
 const InternshipList = () => {
   const [internships, setInternships] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredInternships, setFilteredInternships] = useState([]);
 
   useEffect(() => {
     fetchInternships();
   }, []);
 
+  useEffect(() => {
+    const filtered = internships.filter(
+      (internship) =>
+        internship.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        internship.company.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredInternships(filtered);
+  }, [searchTerm, internships]);
+
   const fetchInternships = async () => {
     try {
       const internshipsData = await internshipService.getAllInternships();
       setInternships(internshipsData);
+      setFilteredInternships(internshipsData);
     } catch (error) {
       console.error("Error fetching internships:", error);
     } finally {
@@ -113,18 +125,44 @@ const InternshipList = () => {
 
   return (
     <div className="max-w-6xl mx-auto py-8 px-4 pt-24">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <h1 className="text-3xl font-bold text-white">Internship Listings</h1>
+        
+        {/* Search Bar */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative w-full md:w-96"
+        >
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <FaSearch className="text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Search internships..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 bg-gray-900/20 border border-gray-700 focus:border-red-500/30 rounded-lg 
+              text-white placeholder-gray-400 outline-none transition-all duration-300
+              focus:ring-2 focus:ring-red-500/20"
+          />
+        </motion.div>
       </div>
 
-      {internships.length === 0 ? (
-        <div className="text-center py-12">
+      {filteredInternships.length === 0 ? (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-12"
+        >
           <FaBriefcase className="mx-auto text-4xl text-red-500 mb-4" />
-          <p className="text-white/75">No internships posted yet.</p>
-        </div>
+          <p className="text-white/75">
+            {searchTerm ? "No internships match your search." : "No internships posted yet."}
+          </p>
+        </motion.div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {internships.map((internship) => (
+          {filteredInternships.map((internship) => (
             <InternshipCard key={internship.id} internship={internship} />
           ))}
         </div>

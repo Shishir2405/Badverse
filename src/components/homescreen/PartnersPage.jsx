@@ -1,45 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Globe, Building2, Briefcase } from 'lucide-react';
+import { Search, Globe, Building2, Briefcase, Plus } from 'lucide-react';
+import { db } from '../../config/firebase';
+import { 
+  collection, 
+  query, 
+  orderBy, 
+  getDocs, 
+  where 
+} from 'firebase/firestore';
 
-// Partner categories
-const categories = [
-  { id: 'all', name: 'All Partners', icon: Globe },
-  { id: 'technology', name: 'Technology', icon: Building2 },
-  { id: 'enterprise', name: 'Enterprise', icon: Briefcase },
-];
 
-// Partners data
-const partners = [
-  { 
-    id: 1, 
-    name: "TechCorp", 
-    image: "/Parterns/1.png",
-    category: "technology"
-  },
-  { 
-    id: 2, 
-    name: "InnovateHub", 
-    image: "/Parterns/2.png",
-    category: "enterprise"
-  },
-].concat(Array.from({ length: 24 }, (_, i) => ({
-  id: i + 3,
-  name: `Partner ${i + 3}`,
-  image: `/Parterns/${i + 3}.png`,
-  category: i % 2 === 0 ? "technology" : "enterprise"
-})));
 
 export const PartnersPage = () => {
+  const [partners, setPartners] = useState([]);
+  const [filteredPartners, setFilteredPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState(null);
 
-  // Filter partners based on category and search query
-  const filteredPartners = partners.filter(partner => {
-    const matchesCategory = selectedCategory === 'all' || partner.category === selectedCategory;
-    const matchesSearch = partner.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Fetch partners from Firestore
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        const partnersRef = collection(db, 'partners');
+        const q = query(
+          partnersRef, 
+          orderBy('createdAt', 'desc')
+        );
+
+        const snapshot = await getDocs(q);
+        const fetchedPartners = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+
+        setPartners(fetchedPartners);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching partners:', err);
+        setError('Failed to load partners');
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
+  // Filter partners when category or search query changes
+  useEffect(() => {
+    const filtered = partners.filter(partner => {
+      const matchesCategory = selectedCategory === 'all' || partner.category === selectedCategory;
+      const matchesSearch = partner.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+
+    setFilteredPartners(filtered);
+  }, [partners, selectedCategory, searchQuery]);
+
+  // Render loading state
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-black">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
+
+  // Render error state
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-black text-white">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <motion.div 
@@ -61,42 +97,7 @@ export const PartnersPage = () => {
         </motion.div>
 
         {/* Search and filter section */}
-        <div className="mb-12 space-y-6">
-          {/* Search bar */}
-          <div className="relative max-w-2xl mx-auto">
-            <Search className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search partners..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/5 backdrop-blur-sm rounded-lg 
-                         border border-white/10 focus:border-red-500/50 
-                         text-white placeholder-gray-400 outline-none transition-all"
-            />
-          </div>
-
-          {/* Category filters */}
-          <div className="flex justify-center gap-4">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all
-                             ${selectedCategory === category.id 
-                               ? 'bg-red-500 text-white' 
-                               : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
-                >
-                  <Icon className="h-4 w-4" />
-                  {category.name}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
+       
         {/* Partners grid */}
         <motion.div 
           layout
@@ -121,8 +122,15 @@ export const PartnersPage = () => {
                   alt={partner.name}
                   className="w-full h-full object-contain p-6 transition-all duration-300
                            group-hover:scale-110"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/placeholder.png';
+                  }}
                 />
               </div>
+              <p className="text-center text-white mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                {partner.name}
+              </p>
             </motion.div>
           ))}
         </motion.div>

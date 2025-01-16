@@ -55,13 +55,18 @@ import InternshipForm from "./components/internship/InternshipForm";
 import EditInternship from "./components/internship/EditInternship";
 import AdminInternship from "./components/internship/AdminInternship";
 import AdminApplications from "./components/jobs/AdminApplications";
-import WorkshopTicket from "./components/workshops/WorkshopTicket";
+import UserTicket from "./components/workshops/WorkshopTicket";
 import WorkshopTicketDetail from "./components/workshops/WorkshopTicketDetail";
 import MoreGallery from "./components/homescreen/MoreGallery";
 import OpportunityPage from "./components/career/Oppotunity";
 import PrivacyPolicy from "./components/privacy/PrivacyPolicy";
 import PrivacyPolicyAdmin from "./components/privacy/PrivacyPolicyAdmin";
 import { PartnersPage } from "./components/homescreen/PartnersPage";
+import GalleryUploadForm from "./components/gallery/GalleryUploadForm";
+import PartnersUploadForm from "./components/partner/PartnersUploadForm";
+import EventPaymentSuccess from "./components/event/EventPaymentSuccess";
+import EventPaymentFailure from "./components/event/EventPaymentFailure";
+import EventTickets from "./components/event/EventTicket";
 import "./App.css";
 
 export default function App() {
@@ -96,11 +101,10 @@ export default function App() {
             <Route path="/events/:id" element={<EventDetails />} />
             <Route path="/internships" element={<InternshipList />} />
             <Route path="/internships/:id" element={<InternshipDetail />} />
-            <Route path="/tickets" element={<WorkshopTicket />} />
+            <Route path="/tickets" element={<UserTicket />} />
             <Route path="/gallery" element={<MoreGallery />} />
             <Route path="/partners" element={<PartnersPage />} />
 
-            
             <Route
               path="/workshops/ticket/:id"
               element={<WorkshopTicketDetail />}
@@ -124,8 +128,8 @@ export default function App() {
               path="/workshops/:id/register"
               element={<WorkshopRegistration />}
             />
-            <Route path="/payment/success" element={<PaymentSuccess />} />
-            <Route path="/payment/failure" element={<PaymentFailure />} />
+            {/* <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/failure" element={<PaymentFailure />} /> */}
 
             {/* Protected User Routes */}
             <Route
@@ -136,6 +140,16 @@ export default function App() {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/events/payment-success"
+              element={<EventPaymentSuccess />}
+            />
+            <Route
+              path="/events/payment-failure"
+              element={<EventPaymentFailure />}
+            />
+            <Route path="/events/tickets" element={<EventTickets />} />
+
             <Route
               path="/verify-certificate"
               element={
@@ -152,6 +166,24 @@ export default function App() {
               element={
                 <AdminRoute>
                   <AdminJob />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="/admin/gallery"
+              element={
+                <AdminRoute>
+                  <GalleryUploadForm />
+                </AdminRoute>
+              }
+            />
+
+            <Route
+              path="/admin/partner"
+              element={
+                <AdminRoute>
+                  <PartnersUploadForm />
                 </AdminRoute>
               }
             />
