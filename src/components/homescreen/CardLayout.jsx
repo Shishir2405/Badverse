@@ -74,7 +74,7 @@ const HoverCards = () => {
   ];
 
   return (
-    <div className="p-8 flex items-center justify-center">
+    <div className="p-8 flex items-center justify-center -mt-72">
       <div className="max-w-6xl w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cards.map((card) => (

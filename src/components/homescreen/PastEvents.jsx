@@ -77,7 +77,7 @@ export default function PastEvents() {
             className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl p-4 relative flex flex-col justify-between hover:bg-slate-600 transition-colors duration-300"
           >
             <motion.div
-              className="absolute top-4 left-4"
+              className="absolute top-1 left-4"
               whileHover={{ scale: 1.1 }}
             >
               <img
@@ -193,7 +193,7 @@ export default function PastEvents() {
             className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-2xl p-4 relative flex flex-col justify-between hover:bg-slate-600 transition-colors duration-300"
           >
             <motion.div
-              className="absolute top-4 left-4"
+              className="absolute top-1 left-4"
               whileHover={{ scale: 1.1 }}
             >
               <img
@@ -231,13 +231,13 @@ export default function PastEvents() {
             className="aspect-[16/11] w-full lg:w-96 bg-slate-700 rounded-xl p-4 relative flex flex-col justify-between hover:bg-slate-600 transition-colors duration-300"
           >
             <motion.div
-              className="absolute top-4 left-4"
+              className="absolute top-2 left-4 mb-6"
               whileHover={{ scale: 1.1 }}
             >
               <img
                 src={rgpvImage}
                 alt="RGPV Bhopal"
-                className="w-20 h-20 rounded-full object-cover border-2 border-red-500"
+                className="w-20 h-20 mb-6 rounded-full object-cover border-2 border-red-500"
               />
             </motion.div>
             <div className="h-fit mt-auto">
@@ -245,7 +245,7 @@ export default function PastEvents() {
               <p className="text-neutral-200 text-sm">
                 At RGPV Bhopal, B.A.D. Talks created an electrifying atmosphere!
                 From hands-on workshops to inspirational talks, students
-                connected, collaborated, and left with fresh ideas and
+                connected,
                 determination to make a difference in their entrepreneurial
                 journeys.
               </p>

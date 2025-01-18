@@ -13,7 +13,7 @@ export default function HeroPage() {
           <h2 className="bg-gradient-to-tr text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl from-red-600 to-[#db0606] text-transparent bg-clip-text font-extrabold leading-none relative">
             BADVERSE
           </h2>
-          <div className="absolute -top-[100px] sm:-top-[140px] md:-top-[160px] lg:-top-[200px] xl:-top-[390px] left-8 sm:left-12 md:left-4 lg:-left-4 w-full h-full">
+          <div className="absolute -top-[90px] sm:-top-[140px] md:-top-[160px] lg:-top-[200px] xl:-top-[390px] left-8 sm:left-12 md:left-4 lg:-left-4 w-full h-full">
             {/* SVG Triangle remains the same */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -100,72 +100,71 @@ export default function HeroPage() {
             and insights to thrive in the professional world and seize
             real-world opportunities.
           </p>
-          <div className=" flex space-x-4">
+          <div className="grid grid-cols-2 sm:flex gap-4 sm:space-x-4">
+            {/* First button - Jobs */}
             <button
               type="submit"
-              className="flex justify-center gap-2 items-center  shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto  before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
+              className="flex col-span-1 justify-center gap-2 items-center shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
             >
-              <Link to="/jobs">
-                {" "}
-                <p className="group-hover:text-white ease-linear duration-300  text-black ">
+              <Link to="/jobs" className="flex items-center gap-2">
+                <p className="group-hover:text-white ease-linear duration-300 text-black">
                   Jobs
                 </p>
+                <svg
+                  className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border group-hover:border-none p-2 rotate-45"
+                  viewBox="0 0 16 19"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
+                    className="fill-gray-800 group-hover:fill-gray-800"
+                  ></path>
+                </svg>
               </Link>
-
-              <svg
-                className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border  group-hover:border-none p-2 rotate-45"
-                viewBox="0 0 16 19"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-                  className="fill-gray-800 group-hover:fill-gray-800"
-                ></path>
-              </svg>
             </button>
+
+            {/* Second button - Internships */}
             <button
               type="submit"
-              className="flex justify-center gap-2 items-center  shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto  before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
+              className="flex col-span-1 justify-center gap-2 items-center shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
             >
-              <Link to="/internships">
-                {" "}
-                <p className="group-hover:text-white ease-linear duration-300  text-black ">
-                  Internships..
+              <Link to="/internships" className="flex items-center gap-2">
+                <p className="group-hover:text-white ease-linear duration-300 text-black">
+                  Internships
                 </p>
+                <svg
+                  className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border group-hover:border-none p-2 rotate-45"
+                  viewBox="0 0 16 19"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
+                    className="fill-gray-800 group-hover:fill-gray-800"
+                  ></path>
+                </svg>
               </Link>
-
-              <svg
-                className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border  group-hover:border-none p-2 rotate-45"
-                viewBox="0 0 16 19"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-                  className="fill-gray-800 group-hover:fill-gray-800"
-                ></path>
-              </svg>
             </button>
+
+            {/* Third button - Community (will be on second row in mobile) */}
             <button
               type="submit"
-              className="flex justify-center gap-2 items-center  shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto  before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
+              className="flex col-span-2 justify-center gap-2 items-center mt-4 sm:mt-0 shadow-xl text-base bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-red-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1 overflow-hidden border-2 border-white rounded-full group hover:border-white"
             >
-              <Link to="/community">
-                {" "}
-                <p className="group-hover:text-white ease-linear duration-300  text-black ">
+              <Link to="/community" className="flex items-center gap-2">
+                <p className="group-hover:text-white ease-linear duration-300 text-black">
                   Community
                 </p>
+                <svg
+                  className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border group-hover:border-none p-2 rotate-45"
+                  viewBox="0 0 16 19"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
+                    className="fill-gray-800 group-hover:fill-gray-800"
+                  ></path>
+                </svg>
               </Link>
-
-              <svg
-                className="w-6 h-6 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border  group-hover:border-none p-2 rotate-45"
-                viewBox="0 0 16 19"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z"
-                  className="fill-gray-800 group-hover:fill-gray-800"
-                ></path>
-              </svg>
             </button>
           </div>
         </div>
