@@ -56,26 +56,7 @@ h1 {
   background: #a8a8a8; /* Handle on hover */
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 
-  ::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-  }
-}
 
 html {
   scroll-behavior: smooth;
