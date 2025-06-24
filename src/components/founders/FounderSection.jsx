@@ -28,31 +28,31 @@ const FounderSection = () => {
       linkedin:
         "https://www.linkedin.com/in/prof-vinay-nangia-760a6360/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
     },
-    {
-      id: 4,
-      name: "Saiyam Kumar",
-      title: "COO & Co-founder",
-      image: "/saiyam2.png",
-      desc: "Saiyam Kumar, COO & Co-founder of BADVERSE, is a visionary entrepreneur building 5x startups, including DevItUp and Dharika. Passionate about innovation, tech, and helping students elevate themselves.",
-      linkedin: "https://www.linkedin.com/in/saiyam0211/",
-    },
-    {
-      id: 5,
-      name: "Smit Rami",
-      title: "CTO",
-      image: "/smit2.png",
-      desc: "Smit Rami, CTO at BADVERSE, is a Cybersecurity Analyst and Trainer dedicated to providing accessible, cost-effective protection and empowering clients against cyber threats through expert, innovative solutions.",
-      linkedin: "https://www.linkedin.com/in/smit-rami/",
-    },
-    {
-      id: 6,
-      name: "Shivanshi Gupta",
-      title: "Project Lead",
-      image: "/shivanshi2.png",
-      desc: "Lead Developer of BADVERSE and cofounder of Mittal Branding, known for delivering innovative strategies and impactful solutions for diverse projects with creative vision and technical precision as a web developer.",
-      linkedin:
-        "https://www.linkedin.com/in/shivanshi-gupta-frontend-developer/",
-    },
+    // {
+    //   id: 4,
+    //   name: "Saiyam Kumar",
+    //   title: "COO & Co-founder",
+    //   image: "/saiyam2.png",
+    //   desc: "Saiyam Kumar, COO & Co-founder of BADVERSE, is a visionary entrepreneur building 5x startups, including DevItUp and Dharika. Passionate about innovation, tech, and helping students elevate themselves.",
+    //   linkedin: "https://www.linkedin.com/in/saiyam0211/",
+    // },
+    // {
+    //   id: 5,
+    //   name: "Smit Rami",
+    //   title: "CTO",
+    //   image: "/smit2.png",
+    //   desc: "Smit Rami, CTO at BADVERSE, is a Cybersecurity Analyst and Trainer dedicated to providing accessible, cost-effective protection and empowering clients against cyber threats through expert, innovative solutions.",
+    //   linkedin: "https://www.linkedin.com/in/smit-rami/",
+    // },
+    // {
+    //   id: 6,
+    //   name: "Shivanshi Gupta",
+    //   title: "Project Lead",
+    //   image: "/shivanshi2.png",
+    //   desc: "Lead Developer of BADVERSE and cofounder of Mittal Branding, known for delivering innovative strategies and impactful solutions for diverse projects with creative vision and technical precision as a web developer.",
+    //   linkedin:
+    //     "https://www.linkedin.com/in/shivanshi-gupta-frontend-developer/",
+    // },
   ];
 
   return (
